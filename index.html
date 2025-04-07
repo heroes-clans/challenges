@@ -1,1862 +1,2068 @@
 <!DOCTYPE html>
-<html lang="es">
+<html lang="es" class="scroll-smooth">
 <head>
-    <!-- ... enlaces :) ... -->
-    
-    <link rel="icon" type="image/png" href="https://i.postimg.cc/T1BdN05c/63-sin-t-tulo-20250212175847.png">
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>CATÁLOGO DE BOOSTS</title>
-    <link href="https://unpkg.com/tailwindcss@^2/dist/tailwind.min.css" rel="stylesheet">
-    <link href="https://fonts.googleapis.com/css2?family=Press+Start+2P&display=swap" rel="stylesheet">
-    <style>
-        
-     
-        body {
-            font-family: 'Press Start 2P', cursive;
-            background: #0a0a2a;
-            color: #ffffff;
-        }
+    <title>CHALLENGES</title>
+    
+    
+<!-- Bootstrap CSS -->
+<link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet">
 
-        .hero {
+    
+    <!-- Tailwind CSS -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    
+    <!-- GSAP para animaciones avanzadas -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.2/gsap.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.2/ScrollTrigger.min.js"></script>
+    
+    <!-- Lottie para animaciones vectoriales -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/lottie-web/5.12.2/lottie.min.js"></script>
+    
+    <!-- Three.js para elementos 3D -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/0.157.0/three.min.js"></script>
+    
+    <!-- Inter font -->
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700;800;900&display=swap" rel="stylesheet">
+    
+    <script>
+        tailwind.config = {
+            darkMode: 'class',
+            theme: {
+                extend: {
+                    colors: {
+                        'heroes-red': '#E53E3E',
+                        'heroes-black': '#0A0A0A',
+                        'heroes-white': '#FFFFFF',
+                        'heroes-crimson': '#DC143C',
+                    },
+                    fontFamily: {
+                        'inter': ['Inter', 'sans-serif'],
+                    },
+                    animation: {
+                        'pulse-slow': 'pulse 4s cubic-bezier(0.4, 0, 0.6, 1) infinite',
+                        'float': 'float 6s ease-in-out infinite',
+                        'shine': 'shine 2s linear infinite',
+                    },
+                    keyframes: {
+                        float: {
+                            '0%, 100%': { transform: 'translateY(0)' },
+                            '50%': { transform: 'translateY(-10px)' },
+                        },
+                        shine: {
+                            '0%': { backgroundPosition: '200% 0' },
+                            '100%': { backgroundPosition: '-200% 0' },
+                        },
+                    }
+                }
+            }
+        }
+    </script>
+    
+        <style>
+        /* Estilos base */
+        body {
+            font-family: 'Inter', sans-serif;
+            background-color: #0A0A0A;
+            color: #FFFFFF;
+            overflow-x: hidden;
+        }
+        
+        .navbar-link {
             position: relative;
-            height: 100vh;
+            color: #FFFFFF;
+            font-weight: 700;
+            transition: all 0.3s ease;
+        }
+        
+        .navbar-link::after {
+            content: '';
+            position: absolute;
+            width: 0;
+            height: 3px;
+            bottom: -5px;
+            left: 0;
+            background-color: #E53E3E;
+            transition: width 0.3s ease;
+        }
+        
+        .navbar-link:hover {
+            color: #E53E3E;
+        }
+        
+        .navbar-link:hover::after {
+            width: 100%;
+        }
+        
+        /* Efecto de cursor personalizado */
+        .custom-cursor {
+            position: fixed;
+            width: 20px;
+            height: 20px;
+            border-radius: 50%;
+            background-color: rgba(229, 62, 62, 0.5);
+            pointer-events: none;
+            z-index: 9999;
+            transform: translate(-50%, -50%);
+            mix-blend-mode: difference;
+            transition: transform 0.1s ease;
+        }
+        
+        /* Gradiante animado para texto */
+        .text-gradient {
+            background: linear-gradient(90deg, #E53E3E, #FFF, #E53E3E);
+            background-size: 200% auto;
+            -webkit-background-clip: text;
+            background-clip: text;
+            -webkit-text-fill-color: transparent;
+            animation: shine 3s linear infinite;
+        }
+        
+        .golden-border {
+            background: linear-gradient(90deg, #E53E3E, #FFF8E1, #E53E3E);
+            background-size: 200% auto;
+            animation: shine 3s linear infinite;
+        }
+        
+        /* Efecto hover para categorías */
+        .category-card {
+            transition: all 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+            position: relative;
             overflow: hidden;
         }
-
-        .clan-vega { color: #3B82F6; }      /* Azul */
-        .clan-arturo { color: #F59E0B; }    /* Amarillo */ 
-        .clan-sirius { color: #10B981; }    /* Verde */
-        .clan-antares { color: #EF4444; }   /* Rojo */
-
-        .video-bg {
-    position: absolute;
-    top: 0;
-    left: 0;
-    width: 100%;
-    height: 100%;
-    object-fit: cover;
-    z-index: -1;
-    filter: brightness(0.3);
-}
-
-
-        .stars {
-            position: fixed;
+        
+        .category-card::before {
+            content: '';
+            position: absolute;
+            top: -10px;
+            left: -10px;
+            right: -10px;
+            bottom: -10px;
+            background: linear-gradient(45deg, #E53E3E, transparent, #E53E3E);
+            background-size: 400% 400%;
+            z-index: -1;
+            animation: gradient-shift 5s ease infinite;
+            opacity: 0;
+            transition: opacity 0.3s ease;
+        }
+        
+        .category-card:hover {
+            transform: translateY(-10px) scale(1.03);
+            box-shadow: 0 15px 35px rgba(229, 62, 62, 0.2);
+        }
+        
+        .category-card:hover::before {
+            opacity: 1;
+        }
+        
+        @keyframes gradient-shift {
+            0% { background-position: 0% 50%; }
+            50% { background-position: 100% 50%; }
+            100% { background-position: 0% 50%; }
+        }
+        
+        /* Estilo para los slots de ganadores */
+        .winner-slot {
+            background: rgba(255, 255, 255, 0.05);
+            backdrop-filter: blur(10px);
+            border: 2px solid transparent;
+            background-clip: padding-box;
+            transition: all 0.4s ease;
+            position: relative;
+            overflow: hidden;
+            max-width: 800px;
+            margin: 0 auto;
+        }
+        
+        .winner-slot::before {
+            content: '';
+            position: absolute;
+            inset: 0;
+            border-radius: inherit;
+            padding: 2px;
+            background: linear-gradient(45deg, #E53E3E, transparent, #E53E3E);
+            -webkit-mask: linear-gradient(#fff 0 0) content-box, linear-gradient(#fff 0 0);
+            -webkit-mask-composite: xor;
+            mask-composite: exclude;
+            animation: rotate 3s linear infinite;
+        }
+        
+        @keyframes rotate {
+            from { transform: rotate(0deg); }
+            to { transform: rotate(360deg); }
+        }
+        
+        /* Animación para escala */
+        .scale-in {
+            opacity: 0;
+            transform: scale(0.8);
+        }
+        
+        /* Animación para el héroe */
+        .hero-text-animation {
+            clip-path: polygon(0 0, 100% 0, 100% 100%, 0% 100%);
+        }
+        
+        /* Animator 3D Trophy */
+        #trophy-container {
+            width: 100%;
+            height: 300px;
+            margin-top: 2rem;
+        }
+        
+        /* Menu mobile */
+        .mobile-menu {
+            transform: translateX(-100%);
+            transition: transform 0.3s ease-in-out;
+        }
+        
+        .mobile-menu.active {
+            transform: translateX(0);
+        }
+        
+        /* Lottie container */
+        .lottie-container {
+            width: 100%;
+            height: 100%;
+            overflow: hidden;
+        }
+        
+        /* Particle effect */
+        .particle {
+            position: absolute;
+            background-color: #E53E3E;
+            border-radius: 50%;
+            pointer-events: none;
+            opacity: 0;
+        }
+        
+        /* Nominee hover effect */
+        .nominee-item {
+            transition: all 0.3s ease-out;
+            position: relative;
+            overflow: hidden;
+        }
+        
+        .nominee-item::after {
+            content: '';
+            position: absolute;
             top: 0;
             left: 0;
             width: 100%;
             height: 100%;
-            pointer-events: none;
-            background: 
-                radial-gradient(white, rgba(255,255,255,.2) 2px, transparent 40px),
-                radial-gradient(white, rgba(255,255,255,.15) 1px, transparent 30px),
-                radial-gradient(white, rgba(255,255,255,.1) 2px, transparent 40px);
-            background-size: 550px 550px, 350px 350px, 250px 250px;
-            animation: stars 10s linear infinite;
+            background: linear-gradient(45deg, rgba(229, 62, 62, 0.2), transparent);
+            opacity: 0;
+            transition: opacity 0.3s ease;
         }
-
-        @keyframes stars {
-            0% { background-position: 0 0, 0 0, 0 0; }
-            100% { background-position: 550px 550px, 350px 350px, 250px 250px; }
-        }
-
         
-
-        .slot-left {
-            flex-direction: row;
-        }
-
-        .slot-right {
-            flex-direction: row-reverse;
-        }
-
-        
-  
-
-        
-
-        .rune-card {
-            background: rgba(255, 255, 255, 0.1);
-            backdrop-filter: blur(10px);
-            border: 2px solid rgba(255, 255, 255, 0.2);
-            transition: all 0.3s ease;
-            image-rendering: pixelated;
-        }
-
-        .rune-card:hover {
+        .nominee-item:hover {
             transform: translateY(-5px);
-            box-shadow: 0 0 20px rgba(255, 255, 255, 0.3);
+            box-shadow: 0 10px 20px rgba(0, 0, 0, 0.2);
         }
-
-        .clan-container {
-            background: rgba(0, 0, 0, 0.5);
-            border: 2px solid rgba(255, 255, 255, 0.1);
-            padding: 20px;
-            border-radius: 8px;
+        
+        .nominee-item:hover::after {
+            opacity: 1;
+        }
+        
+        /* Fancy scroll bar */
+        ::-webkit-scrollbar {
+            width: 10px;
+        }
+        
+        ::-webkit-scrollbar-track {
+            background: #0A0A0A;
+        }
+        
+        ::-webkit-scrollbar-thumb {
+            background: #E53E3E;
+            border-radius: 5px;
+        }
+        
+        ::-webkit-scrollbar-thumb:hover {
+            background: #fff;
+        }
+        
+        /* Animación para el texto de los Oscars */
+        .oscar-text {
+            position: relative;
+        }
+        
+        .oscar-text::before {
+            content: '';
+            position: absolute;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(90deg, transparent, #E53E3E, transparent);
+            left: -100%;
+            animation: slide 3s infinite;
+        }
+        
+        @keyframes slide {
+            0% { left: -100%; }
+            50% { left: 100%; }
+            100% { left: 100%; }
+        }
+        
+        /* Hover effect for buttons */
+        .hover-effect {
+            position: relative;
+            overflow: hidden;
             transition: all 0.3s ease;
         }
-
-        .clan-container:hover {
-            border-color: rgba(255, 255, 255, 0.3);
-            box-shadow: 0 0 20px rgba(255, 255, 255, 0.1);
+        
+        .hover-effect::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: -100%;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.2), transparent);
+            transition: all 0.3s ease;
         }
+        
+        .hover-effect:hover::before {
+            left: 100%;
+        }
+        
+        .hover-effect:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 10px 20px rgba(0, 0, 0, 0.2);
+        }
+        
+        /* MEJORAS DE RESPONSIVIDAD CHALLENGES ARTWORK */
+        
+        /* Animación para el artwork de los Challenges */
+        #challenges-artwork {
+            animation: float 6s ease-in-out infinite;
+            filter: drop-shadow(0 0 20px rgba(229, 62, 62, 0.2));
+            transition: all 0.5s ease;
+        }
+        
+        @keyframes float {
+            0%, 100% { transform: translateY(0); }
+            50% { transform: translateY(-15px); }
+        }
+        
+        /* Mejoras responsivas */
+        @media (max-width: 768px) {
+            .nominees-filter {
+                flex-wrap: nowrap;
+                padding-bottom: 1rem;
+                margin-bottom: 1rem;
+                justify-content: flex-start;
+            }
+            
+            .nominee-filter {
+                min-width: max-content;
+            }
+            
+            /* Filtros de nominados organizados en 2 filas en móvil */
+.nominees-filter {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 10px;
+    justify-content: center;
+    margin: 0 auto 2rem;
+    padding: 0.5rem;
+}
 
-       .popup-overlay {
-        position: fixed;
-        top: 0;
-        left: 0;
-        width: 100%;
-        height: 100%;
-        background: rgba(0, 0, 0, 0.85);
-        backdrop-filter: blur(8px);
-        display: none;
-        justify-content: center;
-        align-items: center;
-        z-index: 1000;
-        opacity: 0;
-        transition: opacity 0.3s ease;
+.nominee-filter {
+    background: transparent;
+    color: white;
+    font-weight: 700;
+    padding: 0.75rem 1rem;
+    border-radius: 8px;
+    border: 2px solid rgba(255, 255, 255, 0.3);
+    transition: all 0.3s ease;
+    font-size: 1rem;
+    text-align: center;
+}
+
+.nominee-filter.active {
+    color: #E53E3E;
+    border-color: #E53E3E;
+    background-color: rgba(229, 62, 62, 0.1);
+}
+
+.nominee-filter:hover:not(.active) {
+    color: #E53E3E;
+    border-color: #E53E3E;
+}
+
+/* Distribución en 2 filas para móvil */
+@media (max-width: 768px) {
+    .nominees-filter {
+        gap: 8px;
+        padding: 0.5rem;
     }
     
-    .popup-content {
-        background: rgba(15, 23, 42, 0.95);
-        padding: 2rem;
-        border-radius: 1rem;
-        max-width: 90%;
-        width: 400px;
-        position: relative;
-        transform: scale(0.95);
-        transition: transform 0.3s ease;
-        border: 1px solid rgba(255, 255, 255, 0.1);
-        box-shadow: 0 25px 50px -12px rgba(0, 0, 0, 0.5);
+    /* Distribución de primera fila - 4 botones */
+    .nominee-filter:nth-child(-n+4) {
+        width: calc(25% - 8px);
+        font-size: 0.85rem;
+        padding: 0.7rem 0.3rem;
     }
+    
+    /* Distribución de segunda fila - 3 botones restantes */
+    .nominee-filter:nth-child(n+5) {
+        width: calc(33.33% - 8px);
+        font-size: 0.85rem;
+        padding: 0.7rem 0.3rem;
+    }
+}
 
+/* Ajustes adicionales para pantallas muy pequeñas */
+@media (max-width: 480px) {
+    .nominee-filter:nth-child(-n+4) {
+        font-size: 0.75rem;
+        padding: 0.6rem 0.2rem;
+    }
+    
+    .nominee-filter:nth-child(n+5) {
+        font-size: 0.75rem;
+        padding: 0.6rem 0.2rem;
+    }
+}
 
-
-        @keyframes fadeIn {
-            from { opacity: 0; }
-            to { opacity: 1; }
+            
+            #challenges-artwork {
+                max-width: 80%;
+                margin: 0 auto;
+            }
+            
+            .hero-text-animation {
+                text-align: center;
+            }
+            
+            .scale-in {
+                text-align: center;
+            }
+            
+            .mobile-menu {
+                top: 4rem;
+            }
         }
-
-        @keyframes slideUp {
-            from { transform: translateY(20px); opacity: 0; }
-            to { transform: translateY(0); opacity: 1; }
+        
+        /* Fix para el espacio entre secciones */
+        section {
+            padding-top: 5rem;
+            padding-bottom: 5rem;
         }
-
-        .text-glow {
-            text-shadow: 0 0 10px rgba(255, 255, 255, 0.5);
-        }
-
-        .coins-display {
-            font-size: 12px;
-            color: #FFD700;
-            text-shadow: 0 0 5px rgba(255, 215, 0, 0.5);
-        }
-
-        .title-big {
-            font-size: 48px;
-            letter-spacing: 2px;
-            text-shadow: 0 0 10px rgba(255, 255, 255, 0.5);
-        }
-
-        @keyframes glowEffect {
-            0% { filter: brightness(1); }
-            50% { filter: brightness(1.5); }
-            100% { filter: brightness(1); }
-        }
-
-        .clan-header {
+        
+        #home {
+            padding-top: 6rem;
+            min-height: 100vh;
             display: flex;
             align-items: center;
-            gap: 1rem;
-            margin-bottom: 1rem;
         }
-
-        .clan-logo {
-            width: 40px;
-            height: 40px;
-            object-fit: contain;
+        
+        /* Ajuste altura del separador entre secciones */
+        .section-spacer {
+            height: 0;
         }
-
-        .clan-name {
-            animation: glowEffect 2s infinite;
+        
+        /* Mejoras para las tarjetas de nominados */
+        .nominees-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(250px, 1fr));
+            gap: 1.5rem;
         }
-
-        .title-glow {
-            text-shadow: 0 0 10px rgba(255, 255, 255, 0.7),
-                         0 0 20px rgba(255, 255, 255, 0.5),
-                         0 0 30px rgba(255, 255, 255, 0.3);
-            animation: titleGlow 10s infinite;
-        }
-
-        @keyframes titleGlow {
-            0% { text-shadow: 0 0 10px rgba(255, 255, 255, 0.7); }
-            50% { text-shadow: 0 0 20px rgba(255, 255, 255, 1),
-                           0 0 30px rgba(255, 255, 255, 0.8),
-                           0 0 40px rgba(255, 255, 255, 0.6); }
-            100% { text-shadow: 0 0 10px rgba(255, 255, 255, 0.7); }
-        }
-
-        .fade-in-section {
-            opacity: 0;
-            transform: translateY(20px);
-            transition: opacity 0.6s ease-out, transform 0.6s ease-out;
-        }
-
-        .fade-in-section.is-visible {
+        
+        .nominee-item {
+            height: 100%;
+            display: flex;
+            flex-direction: column;
             opacity: 1;
-            transform: translateY(0);
+            transform: scale(1);
+            transition: opacity 0.3s ease, transform 0.3s ease;
         }
         
-      
-
-
-    transition: all 0.3s ease;
-
-
-
-/* Animación suave para los elementos al hacer scroll */
-.fade-in {
-    opacity: 0;
-    transform: translateY(20px);
-    transition: opacity 0.6s ease-out, transform 0.6s ease-out;
-}
-
-.fade-in.visible {
-    opacity: 1;
-    transform: translateY(0);
-}
-
-/* Animación para las runas en el catálogo */
-.rune-card {
-    transition: transform 0.3s ease, box-shadow 0.3s ease;
-}
-
-.rune-card:hover {
-    transform: translateY(-5px);
-    box-shadow: 0 10px 20px rgba(0, 0, 0, 0.2);
-}
-
-/* Animación para el popup */
-.popup-overlay {
-    transition: opacity 0.3s ease;
-}
-
-.popup-content {
-    transition: transform 0.3s ease, opacity 0.3s ease;
-}
-        .coins-display {
-        display: flex;
-        align-items: center;
-        gap: 4px;
-        font-size: 12px;
-        color: #FFD700;
-        text-shadow: 0 0 5px rgba(255, 215, 0, 0.5);
-        line-height: 1;
-    }
-
-    .coin-icon {
-        width: 12px !important;
-        height: 12px !important;
-        object-fit: contain !important;
-        display: inline-flex !important;
-        align-self: center !important;
-        margin-top: -1px !important; /* Ajustado de -2px a -1px */
-        vertical-align: middle !important;
-        position: relative !important;
-        top: 0px; /* Ajustado de -1px a 0px para bajar ligeramente la moneda */
-        animation: coinGlow 5s infinite;
-        filter: drop-shadow(0 0 2px rgba(255, 215, 0, 0.5));
-    }
-
-    @keyframes coinGlow {
-        0% {
-            filter: drop-shadow(0 0 2px rgba(255, 215, 0, 0.5));
+        .nominee-item.hidden {
+            display: none;
         }
-        50% {
-            filter: drop-shadow(0 0 8px rgba(255, 215, 0, 0.8));
-        }
-        100% {
-            filter: drop-shadow(0 0 2px rgba(255, 215, 0, 0.5));
-        }
-    } 
         
-.button-container {
-    margin-bottom: 1rem; /* Espacio entre botones */
-    position: relative;
-    display: inline-block;
-}
-
-/* Añadir un contenedor más grande */
-.container-boosts {
-    margin-bottom: 1rem;
-    position: relative;
-    display: inline-block;
-    padding: 12px; /* Añadido */
-    border-radius: 10px; /* Añadido */
-    background: rgba(245, 158, 11, 0.1); /* Añadido */
-}
-
-.new-badge {
-    position: absolute;
-    top: -15px;
-    left: -15px;
-    color: #ff0000;
-    font-size: 1.2rem;
-    font-weight: bold;
-    animation: breathe 2s ease-in-out infinite;
-    text-shadow: 0 0 5px rgba(255, 0, 0, 0.5);
-    z-index: 1;
-}
-
-@keyframes breathe {
-    0% {
-        transform: rotate(-15deg) scale(1);
-    }
-    50% {
-        transform: rotate(-15deg) scale(1.1);
-    }
-    100% {
-        transform: rotate(-15deg) scale(1);
-    }
-}
-        
-        
-        .glowing-logo {
-        filter: drop-shadow(0 0 15px rgba(239, 68, 68, 0.8)); /* Rojo inicial */
-        animation: multiColorGlow 4s infinite;
-    }
-
-    @keyframes multiColorGlow {
-        0% {
-            filter: drop-shadow(0 0 15px rgba(239, 68, 68, 0.8)); /* Rojo */
-        }
-        25% {
-            filter: drop-shadow(0 0 15px rgba(59, 130, 246, 0.8)); /* Azul */
-        }
-        50% {
-            filter: drop-shadow(0 0 15px rgba(16, 185, 129, 0.8)); /* Verde */
-        }
-        75% {
-            filter: drop-shadow(0 0 15px rgba(245, 158, 11, 0.8)); /* Amarillo */
-        }
-        100% {
-            filter: drop-shadow(0 0 15px rgba(239, 68, 68, 0.8)); /* Rojo */
-        }
-    }
-    
-    
-  .progress-bar-container {
+        /* Star particle effect */
+.star-particle {
     position: fixed;
-    top: 0;
-    left: 0;
-    width: 4px;
-    height: 100vh;
-    background: rgba(255, 255, 255, 0.1);
-    z-index: 1000;
+    pointer-events: none;
+    opacity: 0;
+    z-index: 9999;
+    transform: translate(-50%, -50%) scale(0.1);
+    clip-path: polygon(50% 0%, 61% 35%, 98% 35%, 68% 57%, 79% 91%, 50% 70%, 21% 91%, 32% 57%, 2% 35%, 39% 35%);
+    box-shadow: 0 0 10px rgba(229, 62, 62, 0.5); /* Añadido un brillo */
 }
 
-.progress-bar {
-    width: 100%;
-    background: #94a3b8;
-    height: 0%;
+ /* Estilos para el modal de challenges */
+#challenge-modal {
+    opacity: 0;
+    pointer-events: none;
     transition: all 0.3s ease;
-    box-shadow: 0 0 10px rgba(148, 163, 184, 0.5);
+    z-index: 9999 !important;
 }
 
-@keyframes fireAnimation {
-    0% { background-position: 0% 50%; }
-    50% { background-position: 100% 50%; }
-    100% { background-position: 0% 50%; }
+#challenge-modal.active {
+    opacity: 1 !important;
+    pointer-events: auto !important;
 }
 
 
-.animated-button {
-    position: relative;
-    padding: 1rem 2rem;
-    background: rgba(0, 149, 255, 0.8); /* Cambiado a un azul más brillante */
-    color: white;
-    font-family: 'Press Start 2P', cursive;
-    font-size: 0.9rem;
-    text-transform: uppercase;
-    letter-spacing: 1px;
-    border: none;
+/* Barra de dificultad */
+.difficulty-bar {
+    height: 8px;
     border-radius: 4px;
-    overflow: hidden;
-    transition: all 0.3s ease;
-    cursor: pointer;
-}
-
-/* Glowing border effect */
-.animated-button::before {
-    content: '';
-    position: absolute;
-    inset: -2px;
-    background: linear-gradient(45deg, 
-        #00f7ff, /* Azul cyan brillante */
-        #0051ff, /* Azul eléctrico */
-        #001eff, /* Azul real */
-        #0099ff, /* Azul cielo brillante */
-        #00ddff, /* Azul turquesa */
-        #0400ff, /* Azul marino */
-        #00f7ff  /* Volver al inicio para un degradado suave */
-    );
-    background-size: 400%;
-    z-index: -1;
-    filter: blur(5px);
-    animation: glowing 12s linear infinite; /* Reducido a 12s para un efecto más dinámico */
-    opacity: 0;
-    transition: opacity 0.3s ease-in-out;
-}
-
-
-/* Button hover effects */
-.animated-button:hover {
-    transform: scale(1.05);
-    background: rgba(37, 99, 235, 0.9);
-    box-shadow: 0 0 25px rgba(37, 99, 235, 0.5);
-}
-
-.animated-button:hover::before {
-    opacity: 1;
-}
-
-.animated-button:active {
-    transform: scale(0.95);
-}
-
-/* Button after element for extra glow */
-.animated-button::after {
-    z-index: -1;
-    content: '';
-    position: absolute;
-    width: 100%;
-    height: 100%;
-    background: rgba(0, 149, 255, 0.8);
-    left: 0;
-    top: 0;
-    border-radius: 4px;
-}
-
-
-@keyframes glowing {
-    0% { background-position: 0 0; }
-    50% { background-position: 400% 0; }
-    100% { background-position: 0 0; }
-}
-
-
-
-
-
-    /* ... estilos existentes ... */
-    
-    /* Clases para animaciones */
-    .animate-fade-up {
-        opacity: 0;
-        transform: translateY(20px);
-        animation: fadeUp 2s ease forwards;
-    }
-    
-    .animate-fade-down {
-        opacity: 0;
-        transform: translateY(-20px);
-        animation: fadeDown 2s ease forwards;
-    }
-    
-    .animate-fade-right {
-        opacity: 0;
-        transform: translateX(-20px);
-        animation: fadeRight 2s ease forwards;
-    }
-    
-    .animate-fade-left {
-        opacity: 0;
-        transform: translateX(20px);
-        animation: fadeLeft 2s ease forwards;
-    }
-    
-    /* Keyframes para las animaciones */
-    @keyframes fadeUp {
-        to {
-            opacity: 1;
-            transform: translateY(0);
-        }
-    }
-    
-    @keyframes fadeDown {
-        to {
-            opacity: 1;
-            transform: translateY(0);
-        }
-    }
-    
-    @keyframes fadeRight {
-        to {
-            opacity: 1;
-            transform: translateX(0);
-        }
-    }
-    
-    @keyframes fadeLeft {
-        to {
-            opacity: 1;
-            transform: translateX(0);
-        }
-    }
-    
-    /* Delay para las animaciones */
-    .delay-100 { animation-delay: 100ms; }
-    .delay-200 { animation-delay: 200ms; }
-    .delay-300 { animation-delay: 300ms; }
-    .delay-400 { animation-delay: 400ms; }
-
-
-
-.fade-in-section {
-    opacity: 0;
-    transform: translateY(30px);
-    transition: opacity 1.5s ease-out, transform 1.5s ease-out;
-    will-change: opacity, transform;
-}
-
-.fade-in-section.is-visible {
-    opacity: 1;
-    transform: translateY(0);
-}
-
-/* Diferentes variantes de animación */
-.fade-in-left {
-    opacity: 0;
-    transform: translateX(-30px);
-    transition: opacity 1.5s ease-out, transform 1.5s ease-out;
-}
-
-.fade-in-right {
-    opacity: 0;
-    transform: translateX(30px);
-    transition: opacity 2s ease-out, transform 2s ease-out;
-}
-
-.fade-in-bottom {
-    opacity: 0;
-    transform: translateY(30px);
-    transition: opacity 1.5s ease-out, transform 1.5s ease-out;
-}
-
-.fade-in-left.is-visible,
-.fade-in-right.is-visible,
-.fade-in-bottom.is-visible {
-    opacity: 1;
-    transform: translate(0);
-}
-
-
-.clan-slot {
-    border: 2px solid rgba(255, 255, 255, 0.2);
-    min-height: 70px; /* Reducido de 100px a 70px */
-    transition: all 0.3s ease;
-    margin-bottom: 12px; /* Reducido de 15px a 12px */
-    position: relative;
-    display: flex;
-    align-items: center;
-    padding: 8px 10px; /* Ajustado el padding vertical */
-    background: rgba(255, 255, 255, 0.05);
-    border-radius: 8px;
-}
-       
-
-.clan-slot:hover {
-    transform: translateY(-2px);
-    box-shadow: 0 0 15px rgba(255, 255, 255, 0.2);
-    border-color: rgba(255, 255, 255, 0.4);
-}
-
-
-}
-
-/* Efecto arcoíris para los logos de runas */
-.clan-slot img.rune-logo {
-    animation: rainbowGlow 4s linear infinite;
-}
-
-@keyframes rainbowGlow {
-    0% { filter: drop-shadow(0 0 8px rgba(239, 68, 68, 0.8)); }  /* Rojo */
-    25% { filter: drop-shadow(0 0 8px rgba(59, 130, 246, 0.8)); }  /* Azul */
-    50% { filter: drop-shadow(0 0 8px rgba(16, 185, 129, 0.8)); }  /* Verde */
-    75% { filter: drop-shadow(0 0 8px rgba(245, 158, 11, 0.8)); }  /* Amarillo */
-    100% { filter: drop-shadow(0 0 8px rgba(239, 68, 68, 0.8)); }  /* Rojo */
-}
-
-/* Modifica los estilos existentes para los nombres de runas según el tipo */
-[data-rune-type="blue"] .rune-name {
-    text-shadow: 0 0 10px rgba(59, 130, 246, 0.8);
-    animation: breathingGlowBlue 3s ease-in-out infinite;
-}
-
-[data-rune-type="red"] .rune-name {
-    text-shadow: 0 0 10px rgba(239, 68, 68, 0.8);
-    animation: breathingGlowRed 3s ease-in-out infinite;
-}
-
-[data-rune-type="yellow"] .rune-name {
-    text-shadow: 0 0 10px rgba(245, 158, 11, 0.8);
-    animation: breathingGlowYellow 3s ease-in-out infinite;
-}
-
-/* Animaciones breathing glow para cada color */
-@keyframes breathingGlowBlue {
-    0% {
-        text-shadow: 0 0 10px rgba(59, 130, 246, 0.8),
-                     0 0 20px rgba(59, 130, 246, 0.3);
-    }
-    50% {
-        text-shadow: 0 0 15px rgba(59, 130, 246, 1),
-                     0 0 30px rgba(59, 130, 246, 0.6),
-                     0 0 40px rgba(59, 130, 246, 0.4);
-    }
-    100% {
-        text-shadow: 0 0 10px rgba(59, 130, 246, 0.8),
-                     0 0 20px rgba(59, 130, 246, 0.3);
-    }
-}
-
-@keyframes breathingGlowRed {
-    0% {
-        text-shadow: 0 0 10px rgba(239, 68, 68, 0.8),
-                     0 0 20px rgba(239, 68, 68, 0.3);
-    }
-    50% {
-        text-shadow: 0 0 15px rgba(239, 68, 68, 1),
-                     0 0 30px rgba(239, 68, 68, 0.6),
-                     0 0 40px rgba(239, 68, 68, 0.4);
-    }
-    100% {
-        text-shadow: 0 0 10px rgba(239, 68, 68, 0.8),
-                     0 0 20px rgba(239, 68, 68, 0.3);
-    }
-}
-
-@keyframes breathingGlowYellow {
-    0% {
-        text-shadow: 0 0 10px rgba(245, 158, 11, 0.8),
-                     0 0 20px rgba(245, 158, 11, 0.3);
-    }
-    50% {
-        text-shadow: 0 0 15px rgba(245, 158, 11, 1),
-                     0 0 30px rgba(245, 158, 11, 0.6),
-                     0 0 40px rgba(245, 158, 11, 0.4);
-    }
-    100% {
-        text-shadow: 0 0 10px rgba(245, 158, 11, 0.8),
-                     0 0 20px rgba(245, 158, 11, 0.3);
-    }
-}
-
-/* Estilo para slots vacíos */
-.clan-slot:not([data-rune-type]) .rune-name {
-    text-shadow: 0 0 10px rgba(255, 255, 255, 0.3);
-    animation: breathingGlowEmpty 3s ease-in-out infinite;
-}
-
-@keyframes breathingGlowEmpty {
-    0% {
-        text-shadow: 0 0 10px rgba(255, 255, 255, 0.3),
-                     0 0 20px rgba(255, 255, 255, 0.1);
-    }
-    50% {
-        text-shadow: 0 0 15px rgba(255, 255, 255, 0.4),
-                     0 0 30px rgba(255, 255, 255, 0.2);
-    }
-    100% {
-        text-shadow: 0 0 10px rgba(255, 255, 255, 0.3),
-                     0 0 20px rgba(255, 255, 255, 0.1);
-    }
-}
-
-
-.clan-slot {
-    border: 2px solid rgba(255, 255, 255, 0.2);
-    min-height: 70px; /* Reducido de 100px a 70px */
-    transition: all 0.3s ease;
-    margin-bottom: 12px; /* Reducido de 15px a 12px */
-    position: relative;
-    display: flex;
-    align-items: center;
-    padding: 8px 10px; /* Ajustado el padding vertical */
-    background: rgba(255, 255, 255, 0.05);
-    border-radius: 8px;
-}
-
-
-
-.clan-slot:hover {
-    transform: translateY(-2px);
-    box-shadow: 0 0 15px rgba(255, 255, 255, 0.2);
-    border-color: rgba(255, 255, 255, 0.4);
-}
-
-
-
-/* Efectos glow específicos para cada tipo de runa */
-[data-rune-type="blue"] .rune-logo {
-    filter: drop-shadow(0 0 8px rgba(59, 130, 246, 0.6));
-}
-
-[data-rune-type="red"] .rune-logo {
-    filter: drop-shadow(0 0 8px rgba(239, 68, 68, 0.6));
-}
-
-[data-rune-type="yellow"] .rune-logo {
-    filter: drop-shadow(0 0 8px rgba(245, 158, 11, 0.6));
-}
-
-/* Nombres de las runas según su tipo */
-[data-rune-type="blue"] .rune-name {
-    color: #93c5fd;
-}
-
-[data-rune-type="red"] .rune-name {
-    color: #fca5a5;
-}
-
-[data-rune-type="yellow"] .rune-name {
-    color: #fcd34d;
-}
-
-
-
-/* Actualizar el efecto arcoíris para aplicarlo directamente a las imágenes */
-.clan-slot img.rune-logo {
-    animation: rainbowGlow 4s linear infinite;
-    filter: drop-shadow(0 0 16px rgba(255, 255, 255, 1));
-}
-
-@keyframes rainbowGlow {
-    0% { filter: drop-shadow(0 0 16px rgba(239, 68, 68, 2)); }  /* Rojo */
-    25% { filter: drop-shadow(0 0 16px rgba(59, 130, 246, 2)); }  /* Azul */
-    50% { filter: drop-shadow(0 0 16px rgba(16, 185, 129, 2)); }  /* Verde */
-    75% { filter: drop-shadow(0 0 16px rgba(245, 158, 11, 2)); }  /* Amarillo */
-    100% { filter: drop-shadow(0 0 16px rgba(239, 68, 68, 2)); }  /* Rojo */
-}
-
-/* Para los slots vacíos, mantener un estilo simple sin círculo */
-.clan-slot div.rune-logo {
-    background: none;
-}
-            
-                          
-                /* Agregar después de tus estilos existentes */
-
-
-
-/* Mejora del efecto hover para las cartas de runas */
-.rune-card {
-    transform-style: preserve-3d;
-    transition: all 0.5s cubic-bezier(0.23, 1, 0.32, 1);
-}
-
-.rune-card:hover {
-    transform: translateY(-10px) rotateX(5deg) rotateY(5deg);
-    box-shadow: 
-        0 15px 35px rgba(0, 0, 0, 0.5),
-        0 0 15px rgba(255, 255, 255, 0.2);
-}
-
-/* Efecto floating para los logos de clanes */
-.clan-logo {
-    animation: floating 3s ease-in-out infinite;
-}
-
-@keyframes floating {
-    0% { transform: translateY(0px); }
-    50% { transform: translateY(-2px); }
-    100% { transform: translateY(0px); }
-}
-
-/* Mejora del efecto glassmorphism */
-.clan-container {
-    
-    
-    backdrop-filter: blur(10px);
-    border: 1px solid rgba(255, 255, 255, 0.18);
-    box-shadow: 0 8px 32px 0 rgba(31, 38, 135, 0.37);
-}
-
-/* Efecto para el popup */
-.popup-content {
-    transform: perspective(1000px);
-    transition: all 0.5s cubic-bezier(0.23, 1, 0.32, 1);
-    
-    backdrop-filter: blur(20px);
-}
-
-.popup-content:hover {
-    transform: perspective(1000px) rotateX(2deg) rotateY(2deg);
-}
-          
-  .rune-details img {
-    width: auto; /* Cambiado de width: 100% */
-    height: 128px; /* Altura fija *
-    margin: 0 auto;
-    object-fit: contain; /* Asegura que la imagen mantenga su proporción */
-}
-            
- .rune-details img:hover {
-    transform: scale(1.05);
-    filter: drop-shadow(0 0 20px rgba(255, 255, 255, 0.3));
-}
-           
-   .rune-details h3 {
-    font-size: 1.3rem;
-    font-weight: bold;
-    color: white;
-    text-shadow: 0 0 10px rgba(255, 255, 255, 0.3);
-    margin: 0;
-    margin-top: -22px; /* Añade esta línea */
-}         
-            
-
-
-           
-  
-  
-  
-  .slot-left {
-    flex-direction: row;
-    gap: 8px;
-}
-
-.slot-right {
-    flex-direction: row-reverse;
-    gap: 8px;
-}
-
-.rune-name {
-    flex-grow: 1;
-    text-align: left;
-    font-size: 0.8em;
-    margin-left: -4px;
-}
-
-.slot-right .rune-name {
-    text-align: right;
-    margin-right: -4px;
-}
-
-  
- .rune-logo {
-    width: 40px; /* Reducido de 48px */
-    height: 40px; /* Reducido de 48px */
-    flex-shrink: 0;
-    transition: all 0.3s ease;
-    object-fit: contain;
-}
-
-
-  
-
-
-                        
-    </style>
-    
-    <style>
-        <!-- ESTILOS DE EL CARRUSEL DE BOOSTS 3D-->
-        .carousel-3d-container {
-    perspective: 1000px;
-    padding: 40px 0;
-    max-width: 1200px;
-    margin: 0 auto;
+    background: linear-gradient(to right, #4ade80, #facc15, #ef4444);
     position: relative;
 }
 
-.carousel-3d {
-    position: relative;
-    height: 400px;
-    transform-style: preserve-3d;
-    transition: transform 1s;
-}
-
-.carousel-item {
-    position: absolute;
-    width: 100%;
-    height: 100%;
-    transition: all 1s;
-    opacity: 0;
-    visibility: hidden;
-}
-
-.carousel-item.active {
-    opacity: 1;
-    visibility: visible;
-}
-
-.boost-card {
-    position: relative;
-    width: 80%;
-    max-width: 600px;
-    height: 350px;
-    margin: 0 auto;
-    background: rgba(255, 255, 255, 0.1);
-    backdrop-filter: blur(10px);
-    border-radius: 20px;
-    overflow: hidden;
-    transform-style: preserve-3d;
-    transition: all 0.5s ease;
-    border: 1px solid rgba(255, 255, 255, 0.2);
-}
-
-.boost-card:hover {
-    transform: translateY(-10px) scale(1.02);
-    box-shadow: 0 15px 30px rgba(0, 0, 0, 0.3);
-    border-color: rgba(255, 255, 255, 0.4);
-}
-
-.boost-content {
-    padding: 30px;
+/* Placeholder para tarjetas de récord vacías */
+.record-placeholder {
     display: flex;
     flex-direction: column;
     align-items: center;
+    justify-content: center;
     height: 100%;
+    padding: 1.5rem;
 }
 
-.boost-image {
-    width: 150px;
-    height: 150px;
-    object-fit: contain;
-    margin-bottom: 20px;
-    filter: drop-shadow(0 0 10px rgba(255, 255, 255, 0.3));
-    transition: all 0.3s ease;
-}
-
-.boost-card:hover .boost-image {
-    transform: scale(1.1);
-    filter: drop-shadow(0 0 20px rgba(255, 255, 255, 0.5));
-}
-
-.boost-info {
-    text-align: center;
-}
-
-.boost-title {
-    font-size: 1.5rem;
-    margin-bottom: 15px;
-    color: #fff;
-    text-shadow: 0 0 10px rgba(255, 255, 255, 0.5);
-}
-
-.boost-description {
-    font-size: 0.9rem;
-    color: rgba(255, 255, 255, 0.8);
-    margin-bottom: 20px;
-    line-height: 1.4;
-}
-
-.carousel-controls {
-    position: absolute;
-    width: 100%;
-    display: flex;
-    justify-content: space-between;
-    top: 50%;
-    transform: translateY(-50%);
-    z-index: 10;
-}
-
-.carousel-button {
-    background: rgba(255, 255, 255, 0.1);
-    border: none;
-    width: 40px;
-    height: 40px;
+.record-placeholder-icon {
+    width: 48px;
+    height: 48px;
+    border: 2px dashed #E53E3E;
     border-radius: 50%;
-    cursor: pointer;
-    color: white;
-    font-size: 1.5rem;
     display: flex;
     align-items: center;
     justify-content: center;
-    transition: all 0.3s ease;
-    backdrop-filter: blur(5px);
-    margin: 0 20px;
+    margin-bottom: 1rem;
 }
 
-.carousel-button:hover {
-    background: rgba(255, 255, 255, 0.2);
-    transform: scale(1.1);
+/* Animación de pulso para placeholders */
+@keyframes placeholder-pulse {
+    0%, 100% { opacity: 0.6; }
+    50% { opacity: 0.9; }
 }
 
-
-.design-slider {
-    position: relative;
-    width: 100%;
-    max-width: 1200px;
-    margin: 0 auto;
-    height: 600px;
-    overflow: hidden;
-    background: rgba(0, 0, 0, 0.2);
-    backdrop-filter: blur(10px);
-    border-radius: 20px;
-    border: 1px solid rgba(255, 255, 255, 0.1);
+.pulse-placeholder {
+    animation: placeholder-pulse 2s ease-in-out infinite;
 }
-
-.slider-content {
-    position: relative;
-    height: 100%;
-    transition: transform 0.5s ease-in-out;
-}
-
-.slider-item {
-    position: absolute;
-    width: 100%;
-    height: 100%;
-    display: flex;
-    flex-direction: column-reverse;
-    align-items: center;
-    padding: 2rem;
-    opacity: 0;
-    transition: all 0.8s ease-in-out;
-    visibility: hidden;
-    margin-top: 30px; /* Añade esta línea */
-}
-
-@media (min-width: 768px) {
-    .slider-item {
-        flex-direction: row;
-    }
-}
-
-.slider-item.active {
-    opacity: 1;
-    visibility: visible;
-    transform: translateX(0);
-}
-
-.slider-item:not(.active) {
-    transform: translateX(100%);
-}
-
-.slider-text {
-    flex: 1;
-    padding: 2rem;
-    text-align: center;
-    transform: translateY(20px);
-    opacity: 0;
-    transition: all 0.8s ease-in-out 0.3s;
-}
-
-@media (min-width: 768px) {
-    .slider-text {
-        text-align: left;
-        padding-right: 4rem;
-    }
-}
-
-.slider-item.active .slider-text {
-    transform: translateY(0);
-    opacity: 1;
-}
-
-.slider-image {
-    flex: 1;
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    transform: translateY(20px);
-    opacity: 0;
-    transition: all 0.8s ease-in-out 0.5s;
-    margin-top: 15px; /* Añade esta línea */
-}
-
-
-.slider-item.active .slider-image {
-    transform: translateY(0);
-    opacity: 1;
-}
-
-.slider-image img {
-    height: auto;
-    width: 80%;
-    max-width: 400px;
-    filter: drop-shadow(0 0 20px rgba(255, 255, 255, 0.2));
-    transition: all 0.3s ease;
-}
-
-@media (max-width: 767px) {
-    .slider-image img {
-        width: 100%;
-        max-width: 300px;
-        margin-top: 10px; /* Añade esta línea */
-        transform: translateY(10px); /* Añade esta línea */
-    }
-}
-
-.slider-controls {
-    position: absolute;
-    bottom: 2rem;
-    left: 75%;
-    transform: translateX(-50%);
-    display: flex;
-    gap: 1rem;
-    z-index: 10;
-}
-
-.slider-button {
-    background: rgba(255, 255, 255, 0.1);
-    border: 1px solid rgba(255, 255, 255, 0.2);
-    color: white;
-    width: 40px;
-    height: 40px;
-    border-radius: 50%;
-    cursor: pointer;
-    transition: all 0.3s ease;
-    backdrop-filter: blur(5px);
-}
-
-.slider-button:hover {
-    background: rgba(255, 255, 255, 0.2);
-    transform: scale(1.1);
-}
-
-.slider-dots {
-    position: absolute;
-    bottom: 1rem;
-    left: 50%;
-    transform: translateX(-50%);
-    display: flex;
-    gap: 0.5rem;
-    z-index: 10;
-    
-}
-
-.slider-dot {
-    width: 8px;
-    height: 8px;
-    border-radius: 50%;
-    background: rgba(255, 255, 255, 0.3);
-    cursor: pointer;
-    transition: all 0.3s ease;
-}
-
-.slider-dot.active {
-    background: rgba(255, 255, 255, 0.8);
-    transform: scale(1.2);
-}
-
     </style>
     
-    <style> 
-        <!-- ESTILOS DEL BOTÓN DE BOOSTS-->
-        
-       .button-boosts {
-    position: relative;
-    padding: 1rem 2rem;
-    background: rgba(245, 158, 11, 0.8);
-    color: white;
-    font-family: 'Press Start 2P', cursive;
-    font-size: 0.9rem;
-    text-transform: uppercase;
-    letter-spacing: 1px;
-    border: none;
-    border-radius: 4px;
-    overflow: hidden;
-    transition: all 0.3s ease;
-    cursor: pointer;
-    display: inline-block; /* Añadido */
-    min-width: 200px; /* Añadido */
-    text-align: center; /* Añadido */
-}
-
-
-/* Efecto de borde brillante mejorado */
-.button-boosts::before {
-    content: '';
-    position: absolute;
-    inset: -3px; /* Aumentado de -2px a -3px */
-    background: linear-gradient(45deg, 
-        #fcd34d,
-        #f59e0b,
-        #d97706,
-        #f59e0b,
-        #fcd34d,
-        #d97706,
-        #fcd34d
-    );
-    background-size: 400%;
-    z-index: -1;
-    filter: blur(8px); /* Aumentado de 5px a 8px */
-    animation: glowing 12s linear infinite;
-    opacity: 0;
-    transition: opacity 0.3s ease-in-out;
-}
-/* Efectos hover mejorados */
-.button-boosts:hover {
-    transform: scale(1.05);
-    background: rgba(245, 158, 11, 0.9);
-    box-shadow: 0 0 30px rgba(245, 158, 11, 0.5); /* Aumentado */
-}
-
-/* Efectos hover */
-.button-boosts:hover {
-    transform: scale(1.05);
-    background: rgba(245, 158, 11, 0.9);
-    box-shadow: 0 0 25px rgba(245, 158, 11, 0.5);
-}
-
-.button-boosts:hover::before {
-    opacity: 1;
-}
-
-
-.button-boosts:active {
-    transform: scale(0.95);
-}
-
-/* Elemento after para brillo extra */
-.button-boosts::after {
-    z-index: -1;
-    content: '';
-    position: absolute;
-    width: 100%;
-    height: 100%;
-    background: rgba(245, 158, 11, 0.8);
-    left: 0;
-    top: 0;
-    border-radius: 4px;
-}
-
-
-
-
-    </style>
-    
-    <style>
-    /* Estilos para los slots de inventario */
-    .inventory-slot {
-        width: 100%;
-        aspect-ratio: 1/1;
-        background: rgba(255, 255, 255, 0.05);
-        border: 2px solid rgba(255, 255, 255, 0.2);
-        border-radius: 8px;
-        display: flex;
-        align-items: center;
-        justify-content: center;
-        position: relative;
-        transition: all 0.3s ease;
-        cursor: pointer;
-    }
-    
-       .item-details img {
-            width: auto;
-            height: 128px;
-            margin: 0 auto;
-            object-fit: contain;
-            display: block;
-            transition: all 0.3s ease;
-        }
-        
-         .item-details img:hover {
-            transform: scale(1.05);
-            filter: drop-shadow(0 0 20px rgba(255, 255, 255, 0.3));
-        }
-        
-    
-    .item-details h3 {
-            font-size: 1.3rem;
-            font-weight: bold;
-            color: white;
-            text-shadow: 0 0 10px rgba(255, 255, 255, 0.3);
-            margin: 1rem 0;
-            text-align: center;
-        }
-        
-    .inventory-slot:hover {
-        transform: translateY(-5px);
-        box-shadow: 0 0 15px rgba(255, 255, 255, 0.2);
-        border-color: rgba(255, 255, 255, 0.4);
-    }
-    
-    .inventory-slot.empty:hover {
-        background: rgba(255, 255, 255, 0.1);
-    }
-    
-    .inventory-item {
-        width: 70%;
-        height: 70%;
-        object-fit: contain;
-        transition: all 0.3s ease;
-        filter: drop-shadow(0 0 5px rgba(255, 255, 255, 0.5));
-    }
-    
-    .inventory-slot:hover .inventory-item {
-        transform: scale(1.1);
-        filter: drop-shadow(0 0 10px rgba(255, 255, 255, 0.8));
-    }
-    
-    .item-count {
-        position: absolute;
-        bottom: 3px;
-        right: 6px;
-        background: rgba(0, 0, 0, 0.7);
-        color: white;
-        font-size: 0.7rem;
-        min-width: 18px;
-        height: 18px;
-        border-radius: 9px;
-        display: flex;
-        align-items: center;
-        justify-content: center;
-        border: 1px solid rgba(255, 255, 255, 0.3);
-    }
-    
-    /* Estilos específicos según el tipo de item */
-    [data-item-type="divine-shield"] .inventory-item {
-        filter: drop-shadow(0 0 8px rgba(59, 130, 246, 0.6));
-    }
-    
-    [data-item-type="divine-choice"] .inventory-item {
-        filter: drop-shadow(0 0 8px rgba(245, 158, 11, 0.6));
-    }
-    
-    [data-item-type="divine-ray"] .inventory-item {
-        filter: drop-shadow(0 0 8px rgba(239, 68, 68, 0.6));
-    }
-    
-    /* Animación para slots con items */
-    .inventory-slot:not(.empty) {
-        animation: pulseSlot 3s infinite;
-    }
-    
-    @keyframes pulseSlot {
-        0% { border-color: rgba(255, 255, 255, 0.2); }
-        50% { border-color: rgba(255, 255, 255, 0.5); }
-        100% { border-color: rgba(255, 255, 255, 0.2); }
-    }
-    
-     .popup-close-btn {
-        position: absolute;
-        top: 1rem;
-        right: 1rem;
-        color: white;
-        font-size: 1.5rem;
-        cursor: pointer;
-        transition: all 0.3s ease;
-        background: none;
-        border: none;
-        padding: 0.25rem 0.5rem;
-        line-height: 1;
-    }
-    
-    .popup-close-btn:hover {
-        color: rgba(255, 255, 255, 0.7);
-        transform: scale(1.1);
-    }
-    
-    .availability-container {
-  margin-top: 15px;
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  gap: 10px;
-}
-
-.available {
-  color: #4CAF50;
-  font-weight: bold;
-  padding: 5px 10px;
-  border-radius: 4px;
-  background-color: rgba(76, 175, 80, 0.1);
-}
-
-.unavailable {
-  color: #F44336;
-  font-weight: bold;
-  padding: 5px 10px;
-  border-radius: 4px;
-  background-color: rgba(244, 67, 54, 0.1);
-}
-
-.store-button {
-  display: inline-block;
-  padding: 10px 20px;
-  background-color: #5D5CDE;
-  color: white;
-  text-decoration: none;
-  border-radius: 5px;
-  font-weight: bold;
-  transition: background-color 0.3s;
-}
-
-.store-button:hover {
-  background-color: #4a49b3;
-}
-
-</style>
-
-
-
-    
+    <!-- Lucide Icons -->
+    <script src="https://unpkg.com/lucide@latest"></script>
 </head>
+
 <body>
+    <!-- Cursor personalizado -->
+    <div class="custom-cursor"></div>
+    <!-- Navbar -->
+<nav class="fixed top-0 w-full bg-heroes-black bg-opacity-80 backdrop-blur-md z-50 px-4 md:px-0">
+    <div class="container mx-auto py-4 flex justify-between items-center">
+        <div class="flex items-center space-x-2">
+            <img src="https://i.postimg.cc/CKVSLwcQ/117-sin-t-tulo-20250323142054.png" alt="Heroes Challenges Logo" class="h-10 w-auto">
+            <span class="text-heroes-red font-black text-xl md:block hidden">CHALLENGES</span>
+        </div>
+        
+        <!-- Desktop Navigation -->
+        <div class="hidden md:flex space-x-8">
+            <a href="#home" class="navbar-link">HOME</a>
+            <a href="#about" class="navbar-link">ABOUT</a>
+            <a href="#categories" class="navbar-link">CATEGORÍAS</a>
+            <a href="#challenges" class="navbar-link">CHALLENGES</a>
+            <a href="#records" class="navbar-link">RÉCORDS</a>
+        </div>
+        
+        <!-- Mobile Navigation Toggle -->
+        <div class="md:hidden">
+            <button id="menu-toggle" class="text-heroes-red focus:outline-none">
+                <svg xmlns="http://www.w3.org/2000/svg" class="h-8 w-8" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16M4 18h16" />
+                </svg>
+            </button>
+        </div>
+    </div>
     
-    <div class="progress-bar-container">
-    <div class="progress-bar"></div>
+    <!-- Mobile Menu -->
+    <div id="mobile-menu" class="mobile-menu fixed top-16 left-0 w-full h-screen bg-heroes-black bg-opacity-95 z-40 flex flex-col items-center pt-10 space-y-8">
+        <a href="#home" class="navbar-link text-2xl">HOME</a>
+        <a href="#about" class="navbar-link text-2xl">ABOUT</a>
+        <a href="#categories" class="navbar-link text-2xl">CATEGORÍAS</a>
+        <a href="#challenges" class="navbar-link text-2xl">CHALLENGES</a>
+        <a href="#records" class="navbar-link text-2xl">RÉCORDS</a>
+    </div>
+</nav>
+
+<!-- Hero Section -->
+<section id="home" class="min-h-screen flex items-center justify-center pt-20 pb-16 px-4 overflow-hidden relative">
+    <div class="absolute inset-0 z-0">
+        <svg xmlns="http://www.w3.org/2000/svg" width="100%" height="100%">
+            <defs>
+                <pattern id="grid" width="20" height="20" patternUnits="userSpaceOnUse">
+                    <path d="M 20 0 L 0 0 0 20" fill="none" stroke="#E53E3E" stroke-width="0.5" stroke-opacity="0.15"/>
+                </pattern>
+            </defs>
+            <rect width="100%" height="100%" fill="url(#grid)" />
+        </svg>
+    </div>
+    
+    <div class="container mx-auto z-10">
+        <div class="flex flex-col lg:flex-row items-center">
+            <div class="lg:w-1/2 flex flex-col items-start space-y-6 mb-10 lg:mb-0">
+                <h1 class="text-5xl md:text-7xl lg:text-8xl font-black hero-text-animation">
+                    <span class="text-gradient inline-block">HEROES</span>
+                    <span class="block text-heroes-red">CHALLENGES</span>
+                </h1>
+                <h2 class="text-2xl md:text-3xl font-bold text-white scale-in">Retos que pondrán a prueba tus habilidades a cambio de recompensas</h2>
+                <p class="text-lg md:text-xl text-gray-300 max-w-xl scale-in">
+                    Demuestra tu constancia, disciplina y determinación completando retos que te harán crecer mientras apoyas a tu clan.
+                </p>
+                <div class="flex space-x-4 scale-in">
+                    <a href="#categories" class="bg-heroes-red text-heroes-black px-8 py-3 rounded-md font-bold hover-effect">
+                        CHALLENGES
+                    </a>
+                    <a href="#about" class="border-2 border-heroes-red text-heroes-red px-8 py-3 rounded-md font-bold hover-effect">
+                        VER INFO
+                    </a>
+                </div>
+            </div>
+            
+            <div class="lg:w-1/2 relative flex justify-center items-center">
+                <div id="challenges-artwork" class="w-full max-w-md xl:max-w-lg">
+                    <img src="https://i.postimg.cc/0QB18TdN/Photo-Room-20250406-163526.png" alt="Heroes Challenges Artwork" class="w-full h-auto">
+                </div>
+            </div>
+        </div>
+        
+        <div class="absolute bottom-10 left-1/2 -translate-x-1/2 animate-bounce">
+            <svg xmlns="http://www.w3.org/2000/svg" class="h-10 w-10 text-heroes-red" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 14l-7 7m0 0l-7-7m7 7V3" />
+            </svg>
+        </div>
+    </div>
+</section>
+
+<!-- About Section -->
+<section id="about" class="py-20 px-4 relative overflow-hidden">
+    <div class="container mx-auto">
+        <h2 class="text-4xl md:text-5xl font-black text-center mb-16 scale-in">
+            <span class="text-gradient">SOBRE LOS</span>
+            <span class="block text-heroes-red">CHALLENGES</span>
+        </h2>
+        
+        <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-10 relative z-10">
+            <div class="bg-heroes-black bg-opacity-70 p-5 rounded-lg border border-heroes-red border-opacity-30 scale-in category-card flex flex-col items-center">
+                <div class="w-80 h-80 mb-6 flex items-center justify-center overflow-hidden">
+                    <img src="https://i.postimg.cc/qvf9Fnqp/Photo-Room-20250328-174817.png" alt="Propósito" class="w-full h-auto object-contain transition-transform hover:scale-105 duration-300">
+                </div>
+                <h3 class="text-2xl font-bold text-heroes-red mb-4 text-center">PROPÓSITO</h3>
+                <p class="text-gray-300 text-center">Los Challenges nacieron para potenciar las habilidades de cada héroe, impulsar la sana competencia y dar una estructura al crecimiento personal a través de retos.</p>
+            </div>
+            
+            <div class="bg-heroes-black bg-opacity-70 p-5 rounded-lg border border-heroes-red border-opacity-30 scale-in category-card flex flex-col items-center">
+                <div class="w-80 h-80 mb-6 flex items-center justify-center overflow-hidden">
+                    <img src="https://i.postimg.cc/HLdFYgbK/Photo-Room-20250328-180357.png" alt="Funcionamiento" class="w-full h-auto object-contain transition-transform hover:scale-105 duration-300">
+                </div>
+                <h3 class="text-2xl font-bold text-heroes-red mb-4 text-center">FUNCIONAMIENTO</h3>
+                <p class="text-gray-300 text-center">Elige tu challenge, compite, gana puntos para tu clan y desbloquea recompensas varias. Los récords se mantienen en la tabla para que todos puedan verlos y superarlos.</p>
+            </div>
+            
+            <div class="bg-heroes-black bg-opacity-70 p-5 rounded-lg border border-heroes-red border-opacity-30 scale-in category-card flex flex-col items-center">
+                <div class="w-80 h-80 mb-6 flex items-center justify-center overflow-hidden">
+                    <img src="https://i.postimg.cc/bwQKfJSk/Photo-Room-20250328-180708.png" alt="Recompensas" class="w-full h-auto object-contain transition-transform hover:scale-105 duration-300">
+                </div>
+                <h3 class="text-2xl font-bold text-heroes-red mb-4 text-center">RECOMPENSAS</h3>
+                <p class="text-gray-300 text-center">Cada challenge completado otorga puntos para tu clan, insignias exclusivas para tu perfil, y recompensas especiales para los que baten récords o completan series de desafíos.</p>
+            </div>
+        </div>
+        
+        <div class="mt-20 bg-heroes-black bg-opacity-70 p-8 rounded-lg border border-heroes-red border-opacity-30 scale-in max-w-4xl mx-auto">
+            <h3 class="text-3xl font-black text-heroes-red mb-6 text-center">TIPOS DE CHALLENGES</h3>
+            
+            <ul class="space-y-4">
+                <li class="flex items-start space-x-4">
+                    <div class="w-8 h-8 bg-heroes-red rounded-full flex-shrink-0 flex items-center justify-center mt-1">
+                        <svg xmlns="http://www.w3.org/2000/svg" class="h-4 w-4 text-heroes-black" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7" />
+                        </svg>
+                    </div>
+                    <div>
+                        <h4 class="text-xl font-bold text-white">De Constancia</h4>
+                        <p class="text-gray-300">Desafíos diseñados para fortalecer tu resistencia, formar hábitos y desarrollar disciplina más a largo plazo. No se trata de hacer locuras, sino de mantener el rumbo día tras día.</p>
+                    </div>
+                </li>
+                <li class="flex items-start space-x-4">
+                    <div class="w-8 h-8 bg-heroes-red rounded-full flex-shrink-0 flex items-center justify-center mt-1">
+                        <svg xmlns="http://www.w3.org/2000/svg" class="h-4 w-4 text-heroes-black" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7" />
+                        </svg>
+                    </div>
+                    <div>
+                        <h4 class="text-xl font-bold text-white">Espontáneos</h4>
+                        <p class="text-gray-300">Retos intensos y de corta duración que te empujan hasta el límite de tus capacidades. Perfectos para quienes buscan adrenalina y quieren ver resultados rápidos.</p>
+                    </div>
+                </li>
+                <li class="flex items-start space-x-4">
+                    <div class="w-8 h-8 bg-heroes-red rounded-full flex-shrink-0 flex items-center justify-center mt-1">
+                        <svg xmlns="http://www.w3.org/2000/svg" class="h-4 w-4 text-heroes-black" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7" />
+                        </svg>
+                    </div>
+                    <div>
+                        <h4 class="text-xl font-bold text-white">Competiciones especiales</h4>
+                        <p class="text-gray-300">Eventos temáticos por tiempo limitado con recompensas exclusivas. Solo los más valientes y persistentes conseguirán completarlos.</p>
+                    </div>
+                </li>
+                <li class="flex items-start space-x-4">
+                    
+                   
+                </li>
+            </ul>
+        </div>
+    </div>
+</section>
+
+<!-- Categories Section -->
+<section id="categories" class="py-20 px-4 bg-gradient-to-b from-heroes-black to-black relative">
+    <div class="container mx-auto">
+        <h2 class="text-4xl md:text-5xl font-black text-center mb-16 scale-in">
+            <span class="text-heroes-red">CATEGORÍAS</span>
+        </h2>
+        
+        <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
+            <!-- Categoría 1 - MEDITACIÓN -->
+            <div class="bg-heroes-black p-6 rounded-lg border border-heroes-red border-opacity-20 scale-in category-card">
+                <div class="flex justify-center items-center mb-6 h-48 overflow-hidden">
+                    <i data-lucide="brain" class="w-32 h-32 text-heroes-red"></i>
+                </div>
+                <h3 class="text-xl font-bold text-heroes-red mb-2">Meditación</h3>
+                <p class="text-gray-300">Entrena tu mente, alcanza niveles más profundos de concentración y encuentra esa calma interior que tanto buscas. Desde meditaciones diarias hasta maratones intensivas.</p>
+            </div>
+            
+            <!-- Categoría 2 - DEEPWORKING -->
+            <div class="bg-heroes-black p-6 rounded-lg border border-heroes-red border-opacity-20 scale-in category-card">
+                <div class="flex justify-center items-center mb-6 h-48 overflow-hidden">
+                    <i data-lucide="timer" class="w-32 h-32 text-heroes-red"></i>
+                </div>
+                <h3 class="text-xl font-bold text-heroes-red mb-2">Deepworking</h3>
+                <p class="text-gray-300">Elimina distracciones y alcanza ese estado de flujo donde tu productividad se dispara. Perfecto si buscas concentrarte a fondo y hacer que cada minuto de trabajo cuente.</p>
+            </div>
+            
+            <!-- Categoría 3 - PASOS -->
+            <div class="bg-heroes-black p-6 rounded-lg border border-heroes-red border-opacity-20 scale-in category-card">
+                <div class="flex justify-center items-center mb-6 h-48 overflow-hidden">
+                    <i data-lucide="footprints" class="w-32 h-32 text-heroes-red"></i>
+                </div>
+                <h3 class="text-xl font-bold text-heroes-red mb-2">Pasos</h3>
+                <p class="text-gray-300">Mueve ese cuerpo y activa tu mente. Supera tus propios límites con desafíos que van desde caminatas diarias hasta verdaderas maratones que pondrán a prueba tu resistencia física.</p>
+            </div>
+            
+            <!-- Categoría 4 - LECTURA -->
+            <div class="bg-heroes-black p-6 rounded-lg border border-heroes-red border-opacity-20 scale-in category-card">
+                <div class="flex justify-center items-center mb-6 h-48 overflow-hidden">
+                    <i data-lucide="book-open" class="w-32 h-32 text-heroes-red"></i>
+                </div>
+                <h3 class="text-xl font-bold text-heroes-red mb-2">Lectura</h3>
+                <p class="text-gray-300">Devora libros, expande tus horizontes y alimenta tu cerebro con nuevas ideas. Compite por leer más, ya sea por páginas, libros completos o manteniendo una racha diaria.</p>
+            </div>
+            
+            <!-- Categoría 5 - AGRADECIMIENTO -->
+            <div class="bg-heroes-black p-6 rounded-lg border border-heroes-red border-opacity-20 scale-in category-card">
+                <div class="flex justify-center items-center mb-6 h-48 overflow-hidden">
+                    <i data-lucide="heart-handshake" class="w-32 h-32 text-heroes-red"></i>
+                </div>
+                <h3 class="text-xl font-bold text-heroes-red mb-2">Agradecimiento</h3>
+                <p class="text-gray-300">Cultiva el hábito de dar gracias por lo que tienes y verás cómo cambia tu forma de ver el mundo. Una práctica sencilla pero poderosa que cambia tu mentalidad y atrae lo positivo.</p>
+            </div>
+            
+            <!-- Categoría 6 - NUEVAS CATEGORÍAS PRÓXIMAMENTE -->
+            <div class="bg-heroes-black p-6 rounded-lg border border-heroes-red border-opacity-20 scale-in category-card">
+                <div class="flex justify-center items-center mb-6 h-48 overflow-hidden">
+                    <i data-lucide="sparkles" class="w-32 h-32 text-heroes-red"></i>
+                </div>
+                <h3 class="text-xl font-bold text-heroes-red mb-2">Próximamente más...</h3>
+                <p class="text-gray-300">Estamos cocinando nuevos challenge para mantenerte fuera de tu zona de confort y en constante evolución. Mantente al tanto porque se vienen cosas épicas.</p>
+            </div>
+            
+            <!-- Banner de Récords -->
+            <div class="bg-heroes-black p-6 rounded-lg border border-heroes-red border-opacity-20 scale-in category-card col-span-1 lg:col-span-3">
+                <div class="flex justify-center items-center mb-6 h-56 overflow-hidden">
+                    <i data-lucide="trophy" class="w-40 h-40 text-heroes-red"></i>
+                </div>
+                <h3 class="text-xl font-bold text-heroes-red mb-2">Tabla de Récords</h3>
+                <p class="text-gray-300">¿Te crees capaz de hacer historia? Aquí mostramos a los héroes que han llevado estos desafíos al extremo. Tu nombre podría brillar en esta tabla si tienes lo que hace falta. ¿Te atreves?</p>
+            </div>
+        </div>
+    </div>
+</section>
+
+<!-- Records Section -->
+<section id="records" class="py-20 px-4 bg-gradient-to-b from-black to-heroes-black relative">
+    <div class="container mx-auto">
+        <h2 class="text-4xl md:text-5xl font-black text-center mb-16 scale-in">
+            <span class="text-gradient">RÉCORDS ACTUALES</span>
+            <span class="block text-heroes-red text-lg mt-2">Actualizado semanalmente</span>
+        </h2>
+        
+        <div class="grid grid-cols-1 gap-8 max-w-4xl mx-auto">
+            <!-- Récord principal - BEST MONK -->
+            <div class="winner-slot p-6 rounded-xl scale-in h-64 flex items-center justify-center">
+                <div class="record-placeholder pulse-placeholder text-center">
+                    <div class="record-placeholder-icon mb-4 mx-auto">
+                        <i data-lucide="brain" class="h-8 w-8 text-heroes-red"></i>
+                    </div>
+                    <h3 class="text-3xl font-black text-heroes-red mb-2">BEST MONK</h3>
+                    <p class="text-gray-400 max-w-lg mx-auto">¿Serás tú quien establezca el récord de meditación? El trono está vacío, esperando a su primer campeón.</p>
+                </div>
+            </div>
+            
+            <!-- Otros récords - Todos placeholders -->
+            <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+                <!-- BEST READER -->
+                <div class="winner-slot p-4 rounded-xl scale-in h-48 flex items-center justify-center">
+                    <div class="record-placeholder pulse-placeholder text-center">
+                        <div class="record-placeholder-icon mx-auto">
+                            <i data-lucide="book-open" class="h-6 w-6 text-heroes-red"></i>
+                        </div>
+                        <h3 class="text-2xl font-bold text-heroes-red mb-1">BEST READER</h3>
+                        <p class="text-gray-400 text-center text-sm">Récord por conquistar</p>
+                    </div>
+                </div>
+                
+                <!-- BEST WALKER -->
+                <div class="winner-slot p-4 rounded-xl scale-in h-48 flex items-center justify-center">
+                    <div class="record-placeholder pulse-placeholder text-center">
+                        <div class="record-placeholder-icon mx-auto">
+                            <i data-lucide="footprints" class="h-6 w-6 text-heroes-red"></i>
+                        </div>
+                        <h3 class="text-2xl font-bold text-heroes-red mb-1">BEST WALKER</h3>
+                        <p class="text-gray-400 text-center text-sm">Récord por conquistar</p>
+                    </div>
+                </div>
+                
+                <!-- BEST DEEPWORKER -->
+                <div class="winner-slot p-4 rounded-xl scale-in h-48 flex items-center justify-center">
+                    <div class="record-placeholder pulse-placeholder text-center">
+                        <div class="record-placeholder-icon mx-auto">
+                            <i data-lucide="timer" class="h-6 w-6 text-heroes-red"></i>
+                        </div>
+                        <h3 class="text-2xl font-bold text-heroes-red mb-1">BEST DEEPWORKER</h3>
+                        <p class="text-gray-400 text-center text-sm">Récord por conquistar</p>
+                    </div>
+                </div>
+                
+                <!-- BEST THANKFUL -->
+                <div class="winner-slot p-4 rounded-xl scale-in h-48 flex items-center justify-center">
+                    <div class="record-placeholder pulse-placeholder text-center">
+                        <div class="record-placeholder-icon mx-auto">
+                            <i data-lucide="heart-handshake" class="h-6 w-6 text-heroes-red"></i>
+                        </div>
+                        <h3 class="text-2xl font-bold text-heroes-red mb-1">BEST THANKFUL</h3>
+                        <p class="text-gray-400 text-center text-sm">Próximamente</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+        
+        <!-- Mensaje motivacional -->
+        <div class="mt-16 text-center scale-in">
+            <p class="text-xl text-heroes-red font-bold mb-4">¿Tienes lo que hace falta para aparecer aquí?</p>
+            <p class="text-gray-300">Dale con todo a los Challenges y demuestra de qué estás hecho. La primera plaza en cada categoría está esperando a su dueño.</p>
+        </div>
+        
+        <!-- Lottie animation container -->
+        <div class="lottie-container absolute bottom-0 left-0 w-full h-64 pointer-events-none" id="confetti-container"></div>
+    </div>
+</section>
+
+<!-- Challenges Section (antes Nominees) -->
+<section id="challenges" class="py-20 px-4 relative">
+    <div class="absolute inset-0 z-0">
+        <svg xmlns="http://www.w3.org/2000/svg" width="100%" height="100%">
+            <defs>
+                <pattern id="grid-alt" width="20" height="20" patternUnits="userSpaceOnUse">
+                    <path d="M 20 0 L 0 0 0 20" fill="none" stroke="#E53E3E" stroke-width="0.5" stroke-opacity="0.05"/>
+                </pattern>
+            </defs>
+            <rect width="100%" height="100%" fill="url(#grid-alt)" />
+        </svg>
+    </div>
+    
+    <div class="container mx-auto relative z-10">
+        <h2 class="text-4xl md:text-5xl font-black text-center mb-16 scale-in">
+            <span class="text-heroes-red">CHALLENGES ACTIVOS</span>
+        </h2>
+        
+        <div class="mb-12">
+            <div class="flex justify-center space-x-2 md:space-x-4 mb-8 overflow-x-auto py-4 nominees-filter">
+    <button class="px-4 py-2 text-heroes-red border border-heroes-red rounded-md font-bold nominee-filter active" data-category="all">
+        TODOS
+    </button>
+    <button class="px-4 py-2 text-white hover:text-heroes-red hover:border-heroes-red border border-white border-opacity-30 rounded-md font-bold nominee-filter" data-category="meditation">
+        MEDITACIÓN
+    </button>
+    <button class="px-4 py-2 text-white hover:text-heroes-red hover:border-heroes-red border border-white border-opacity-30 rounded-md font-bold nominee-filter" data-category="deepwork">
+        DEEPWORKING
+    </button>
+    <button class="px-4 py-2 text-white hover:text-heroes-red hover:border-heroes-red border border-white border-opacity-30 rounded-md font-bold nominee-filter" data-category="steps">
+        PASOS
+    </button>
+    <button class="px-4 py-2 text-white hover:text-heroes-red hover:border-heroes-red border border-white border-opacity-30 rounded-md font-bold nominee-filter" data-category="reading">
+        LECTURA
+    </button>
+    <button class="px-4 py-2 text-white hover:text-heroes-red hover:border-heroes-red border border-white border-opacity-30 rounded-md font-bold nominee-filter" data-category="soon">
+        PRÓXIMAMENTE
+    </button>
 </div>
 
+            <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-6 nominees-grid">
+    <!-- MEDITACIÓN - MONK I -->
+    <div class="bg-heroes-black bg-opacity-70 rounded-lg overflow-hidden scale-in nominee-item" data-category="meditation" data-challenge-id="monk1">
+        <div class="h-60 bg-gradient-to-r from-heroes-red to-red-500 flex items-center justify-center p-4 overflow-hidden">
+            <i data-lucide="brain" class="w-24 h-24 text-white"></i>
+        </div>
+        <div class="p-4">
+            <span class="text-xs font-semibold inline-block py-1 px-2 uppercase rounded-full text-heroes-black bg-heroes-red mb-2">
+                Meditación - Constancia
+            </span>
+            <h3 class="text-xl font-bold text-white mb-2">MONK I</h3>
+            <p class="text-gray-400 text-sm">3 días meditando una hora. Un reto perfecto para iniciarse en la meditación y construir una base sólida de práctica diaria.</p>
+        </div>
+    </div>
     
-    <div class="stars"></div>
+    <!-- MEDITACIÓN - MONK II -->
+    <div class="bg-heroes-black bg-opacity-70 rounded-lg overflow-hidden scale-in nominee-item" data-category="meditation" data-challenge-id="monk2">
+        <div class="h-60 bg-gradient-to-r from-heroes-red to-red-500 flex items-center justify-center p-4 overflow-hidden">
+            <i data-lucide="brain" class="w-24 h-24 text-white"></i>
+        </div>
+        <div class="p-4">
+            <span class="text-xs font-semibold inline-block py-1 px-2 uppercase rounded-full text-heroes-black bg-heroes-red mb-2">
+                Meditación - Constancia
+            </span>
+            <h3 class="text-xl font-bold text-white mb-2">MONK II</h3>
+            <p class="text-gray-400 text-sm">3 días seguidos meditando 3 horas. Lleva tu práctica meditativa al siguiente nivel con sesiones más profundas y transformadoras.</p>
+        </div>
+    </div>
+    
+    <!-- MEDITACIÓN - EXTREME MONK I -->
+    <div class="bg-heroes-black bg-opacity-70 rounded-lg overflow-hidden scale-in nominee-item" data-category="meditation" data-challenge-id="extrememonk1">
+        <div class="h-60 bg-gradient-to-r from-heroes-red to-red-500 flex items-center justify-center p-4 overflow-hidden">
+            <i data-lucide="brain" class="w-24 h-24 text-white"></i>
+        </div>
+        <div class="p-4">
+            <span class="text-xs font-semibold inline-block py-1 px-2 uppercase rounded-full text-heroes-black bg-heroes-red mb-2">
+                Meditación - Espontáneo
+            </span>
+            <h3 class="text-xl font-bold text-white mb-2">EXTREME MONK I</h3>
+            <p class="text-gray-400 text-sm">4 horas de meditación en un solo día. Un desafío intenso para experimentar estados meditativos profundos en una sola sesión.</p>
+        </div>
+    </div>
+    
+    <!-- MEDITACIÓN - EXTREME MONK II -->
+    <div class="bg-heroes-black bg-opacity-70 rounded-lg overflow-hidden scale-in nominee-item" data-category="meditation" data-challenge-id="extrememonk2">
+        <div class="h-60 bg-gradient-to-r from-heroes-red to-red-500 flex items-center justify-center p-4 overflow-hidden">
+            <i data-lucide="brain" class="w-24 h-24 text-white"></i>
+        </div>
+        <div class="p-4">
+            <span class="text-xs font-semibold inline-block py-1 px-2 uppercase rounded-full text-heroes-black bg-heroes-red mb-2">
+                Meditación - Espontáneo
+            </span>
+            <h3 class="text-xl font-bold text-white mb-2">EXTREME MONK II</h3>
+            <p class="text-gray-400 text-sm">5 horas de meditación en un solo día. Un reto para verdaderos guerreros mentales que quieren experimentar niveles extraordinarios de conciencia.</p>
+        </div>
+    </div>
+    
+    <!-- MEDITACIÓN - BEST MONK -->
+    <div class="bg-heroes-black bg-opacity-70 rounded-lg overflow-hidden scale-in nominee-item" data-category="meditation" data-challenge-id="bestmonk">
+        <div class="h-60 bg-gradient-to-r from-heroes-red to-red-500 flex items-center justify-center p-4 overflow-hidden">
+            <i data-lucide="brain" class="w-24 h-24 text-white"></i>
+        </div>
+        <div class="p-4">
+            <span class="text-xs font-semibold inline-block py-1 px-2 uppercase rounded-full text-heroes-black bg-heroes-red mb-2">
+                Meditación - Récord
+            </span>
+            <h3 class="text-xl font-bold text-white mb-2">BEST MONK</h3>
+            <p class="text-gray-400 text-sm">Supera o iguala el récord actual en meditación. ¿Tienes lo que hace falta para entrar en el salón de la fama de los meditadores?</p>
+        </div>
+    </div>
+    
+        <!-- DEEPWORKING - DEEPWORKER I -->
+    <div class="bg-heroes-black bg-opacity-70 rounded-lg overflow-hidden scale-in nominee-item" data-category="deepwork" data-challenge-id="deepworker1">
+        <div class="h-60 bg-gradient-to-r from-heroes-red to-red-500 flex items-center justify-center p-4 overflow-hidden">
+            <i data-lucide="timer" class="w-24 h-24 text-white"></i>
+        </div>
+        <div class="p-4">
+            <span class="text-xs font-semibold inline-block py-1 px-2 uppercase rounded-full text-heroes-black bg-heroes-red mb-2">
+                Deepworking - Constancia
+            </span>
+            <h3 class="text-xl font-bold text-white mb-2">DEEPWORKER I</h3>
+            <p class="text-gray-400 text-sm">3 días haciendo 3h diarias de deepwork. Establece una rutina de trabajo profundo y experimenta cómo se dispara tu productividad.</p>
+        </div>
+    </div>
+    
+    <!-- DEEPWORKING - DEEPWORKER II -->
+    <div class="bg-heroes-black bg-opacity-70 rounded-lg overflow-hidden scale-in nominee-item" data-category="deepwork" data-challenge-id="deepworker2">
+        <div class="h-60 bg-gradient-to-r from-heroes-red to-red-500 flex items-center justify-center p-4 overflow-hidden">
+            <i data-lucide="timer" class="w-24 h-24 text-white"></i>
+        </div>
+        <div class="p-4">
+            <span class="text-xs font-semibold inline-block py-1 px-2 uppercase rounded-full text-heroes-black bg-heroes-red mb-2">
+                Deepworking - Constancia
+            </span>
+            <h3 class="text-xl font-bold text-white mb-2">DEEPWORKER II</h3>
+            <p class="text-gray-400 text-sm">3 días haciendo 5h diarias de deepwork. Eleva tu capacidad de concentración con este desafío para profesionales comprometidos.</p>
+        </div>
+    </div>
+    
+    <!-- DEEPWORKING - EXTREME DEEPWORKER I -->
+    <div class="bg-heroes-black bg-opacity-70 rounded-lg overflow-hidden scale-in nominee-item" data-category="deepwork" data-challenge-id="extremedeepworker1">
+        <div class="h-60 bg-gradient-to-r from-heroes-red to-red-500 flex items-center justify-center p-4 overflow-hidden">
+            <i data-lucide="timer" class="w-24 h-24 text-white"></i>
+        </div>
+        <div class="p-4">
+            <span class="text-xs font-semibold inline-block py-1 px-2 uppercase rounded-full text-heroes-black bg-heroes-red mb-2">
+                Deepworking - Espontáneo
+            </span>
+            <h3 class="text-xl font-bold text-white mb-2">EXTREME DEEPWORKER I</h3>
+            <p class="text-gray-400 text-sm">7h de deepwork en un día. Una inmersión total en el trabajo profundo que pondrá a prueba tus límites de concentración.</p>
+        </div>
+    </div>
+        <!-- DEEPWORKING - EXTREME DEEPWORKER II -->
+    <div class="bg-heroes-black bg-opacity-70 rounded-lg overflow-hidden scale-in nominee-item" data-category="deepwork" data-challenge-id="extremedeepworker2">
+        <div class="h-60 bg-gradient-to-r from-heroes-red to-red-500 flex items-center justify-center p-4 overflow-hidden">
+            <i data-lucide="timer" class="w-24 h-24 text-white"></i>
+        </div>
+        <div class="p-4">
+            <span class="text-xs font-semibold inline-block py-1 px-2 uppercase rounded-full text-heroes-black bg-heroes-red mb-2">
+                Deepworking - Espontáneo
+            </span>
+            <h3 class="text-xl font-bold text-white mb-2">EXTREME DEEPWORKER II</h3>
+            <p class="text-gray-400 text-sm">9h de deepwork en un día. Un desafío brutal solo para los maestros del enfoque y la productividad extrema.</p>
+        </div>
+    </div>
+    
+    <!-- DEEPWORKING - BEST DEEPWORKER -->
+    <div class="bg-heroes-black bg-opacity-70 rounded-lg overflow-hidden scale-in nominee-item" data-category="deepwork" data-challenge-id="bestdeepworker">
+        <div class="h-60 bg-gradient-to-r from-heroes-red to-red-500 flex items-center justify-center p-4 overflow-hidden">
+            <i data-lucide="timer" class="w-24 h-24 text-white"></i>
+        </div>
+        <div class="p-4">
+            <span class="text-xs font-semibold inline-block py-1 px-2 uppercase rounded-full text-heroes-black bg-heroes-red mb-2">
+                Deepworking - Récord
+            </span>
+            <h3 class="text-xl font-bold text-white mb-2">BEST DEEPWORKER</h3>
+            <p class="text-gray-400 text-sm">Rompe o iguala el récord actual en DEEPWORK. Demuestra que eres la máquina de productividad definitiva.</p>
+        </div>
+    </div>
+    
+        <!-- PASOS - WALKER I -->
+    <div class="bg-heroes-black bg-opacity-70 rounded-lg overflow-hidden scale-in nominee-item" data-category="steps" data-challenge-id="walker1">
+        <div class="h-60 bg-gradient-to-r from-heroes-red to-red-500 flex items-center justify-center p-4 overflow-hidden">
+            <i data-lucide="footprints" class="w-24 h-24 text-white"></i>
+        </div>
+        <div class="p-4">
+            <span class="text-xs font-semibold inline-block py-1 px-2 uppercase rounded-full text-heroes-black bg-heroes-red mb-2">
+                Pasos - Constancia
+            </span>
+            <h3 class="text-xl font-bold text-white mb-2">WALKER I</h3>
+            <p class="text-gray-400 text-sm">3 días haciendo 15k de pasos. Activa tu cuerpo y mente con este desafío que te mantendrá en movimiento constante.</p>
+        </div>
+    </div>
+    
+    <!-- PASOS - WALKER II -->
+    <div class="bg-heroes-black bg-opacity-70 rounded-lg overflow-hidden scale-in nominee-item" data-category="steps" data-challenge-id="walker2">
+        <div class="h-60 bg-gradient-to-r from-heroes-red to-red-500 flex items-center justify-center p-4 overflow-hidden">
+            <i data-lucide="footprints" class="w-24 h-24 text-white"></i>
+        </div>
+        <div class="p-4">
+            <span class="text-xs font-semibold inline-block py-1 px-2 uppercase rounded-full text-heroes-black bg-heroes-red mb-2">
+                Pasos - Constancia
+            </span>
+            <h3 class="text-xl font-bold text-white mb-2">WALKER II</h3>
+            <p class="text-gray-400 text-sm">3 días haciendo 25k de pasos. Lleva tu actividad física diaria al siguiente nivel con este reto para caminantes serios.</p>
+        </div>
+    </div>
+    
+    <!-- PASOS - EXTREME WALKER I -->
+    <div class="bg-heroes-black bg-opacity-70 rounded-lg overflow-hidden scale-in nominee-item" data-category="steps" data-challenge-id="extremewalker1">
+        <div class="h-60 bg-gradient-to-r from-heroes-red to-red-500 flex items-center justify-center p-4 overflow-hidden">
+            <i data-lucide="footprints" class="w-24 h-24 text-white"></i>
+        </div>
+        <div class="p-4">
+            <span class="text-xs font-semibold inline-block py-1 px-2 uppercase rounded-full text-heroes-black bg-heroes-red mb-2">
+                Pasos - Espontáneo
+            </span>
+            <h3 class="text-xl font-bold text-white mb-2">EXTREME WALKER I</h3>
+            <p class="text-gray-400 text-sm">35k de pasos en un día. Una prueba de resistencia física que requerirá determinación y energía a partes iguales.</p>
+        </div>
+    </div>
+    
+    <!-- PASOS - EXTREME WALKER II -->
+    <div class="bg-heroes-black bg-opacity-70 rounded-lg overflow-hidden scale-in nominee-item" data-category="steps" data-challenge-id="extremewalker2">
+        <div class="h-60 bg-gradient-to-r from-heroes-red to-red-500 flex items-center justify-center p-4 overflow-hidden">
+            <i data-lucide="footprints" class="w-24 h-24 text-white"></i>
+        </div>
+        <div class="p-4">
+            <span class="text-xs font-semibold inline-block py-1 px-2 uppercase rounded-full text-heroes-black bg-heroes-red mb-2">
+                Pasos - Espontáneo
+            </span>
+            <h3 class="text-xl font-bold text-white mb-2">EXTREME WALKER II</h3>
+            <p class="text-gray-400 text-sm">50k de pasos en un día. Un desafío épico para quienes quieren poner a prueba los límites de su cuerpo y mente.</p>
+        </div>
+    </div>
+    
+    <!-- PASOS - BEST WALKER -->
+    <div class="bg-heroes-black bg-opacity-70 rounded-lg overflow-hidden scale-in nominee-item" data-category="steps" data-challenge-id="bestwalker">
+        <div class="h-60 bg-gradient-to-r from-heroes-red to-red-500 flex items-center justify-center p-4 overflow-hidden">
+            <i data-lucide="footprints" class="w-24 h-24 text-white"></i>
+        </div>
+        <div class="p-4">
+            <span class="text-xs font-semibold inline-block py-1 px-2 uppercase rounded-full text-heroes-black bg-heroes-red mb-2">
+                Pasos - Récord
+            </span>
+            <h3 class="text-xl font-bold text-white mb-2">BEST WALKER</h3>
+            <p class="text-gray-400 text-sm">Superar o igualar al Récord Actual en Pasos. Conviértete en leyenda con una hazaña que dejará huella.</p>
+        </div>
+    </div>
+    
+    <!-- LECTURA - READER I -->
+<div class="bg-heroes-black bg-opacity-70 rounded-lg overflow-hidden scale-in nominee-item" data-category="reading" data-challenge-id="reader1">
+    <div class="h-60 bg-gradient-to-r from-heroes-red to-red-500 flex items-center justify-center p-4 overflow-hidden">
+        <i data-lucide="book-open" class="w-24 h-24 text-white"></i>
+    </div>
+    <div class="p-4">
+        <span class="text-xs font-semibold inline-block py-1 px-2 uppercase rounded-full text-heroes-black bg-heroes-red mb-2">
+            Lectura - Constancia
+        </span>
+        <h3 class="text-xl font-bold text-white mb-2">READER I</h3>
+        <p class="text-gray-400 text-sm">3 días leyendo 3h diarias. Perfecto para empezar a leer de forma consistente y crear un hábito que transformará tu mente.</p>
+    </div>
+</div>
 
-    <div class="parallax-wrapper">
-        <section class="hero">
-    <video class="video-bg" autoplay muted loop playsinline>
-    <source src="hero2.mp4" type="video/mp4">
-</video>
+<!-- LECTURA - READER II -->
+<div class="bg-heroes-black bg-opacity-70 rounded-lg overflow-hidden scale-in nominee-item" data-category="reading" data-challenge-id="reader2">
+    <div class="h-60 bg-gradient-to-r from-heroes-red to-red-500 flex items-center justify-center p-4 overflow-hidden">
+        <i data-lucide="book-open" class="w-24 h-24 text-white"></i>
+    </div>
+    <div class="p-4">
+        <span class="text-xs font-semibold inline-block py-1 px-2 uppercase rounded-full text-heroes-black bg-heroes-red mb-2">
+            Lectura - Constancia
+        </span>
+        <h3 class="text-xl font-bold text-white mb-2">READER II</h3>
+        <p class="text-gray-400 text-sm">3 días leyendo 5h diarias. Para los que ya tienen el hábito y quieren llevarlo al siguiente nivel. Tu cerebro te lo agradecerá.</p>
+    </div>
+</div>
 
-    <div class="absolute inset-0 flex items-center justify-center text-center">
-    <div>               
-        
-        <h1 class="title-big mb-8 title-glow animate-fade-up delay-400">CHALLENGES</h1>
-        <p class="text-lg mb-8 animate-fade-up delay-300">COMMING SOON T6</p>
-        
-        <!-- Contenedor para ambos botones -->
-        <div class="flex flex-col items-center gap-4">
+<!-- LECTURA - EXTREME READER I -->
+<div class="bg-heroes-black bg-opacity-70 rounded-lg overflow-hidden scale-in nominee-item" data-category="reading" data-challenge-id="extremereader1">
+    <div class="h-60 bg-gradient-to-r from-heroes-red to-red-500 flex items-center justify-center p-4 overflow-hidden">
+        <i data-lucide="book-open" class="w-24 h-24 text-white"></i>
+    </div>
+    <div class="p-4">
+        <span class="text-xs font-semibold inline-block py-1 px-2 uppercase rounded-full text-heroes-black bg-heroes-red mb-2">
+            Lectura - Espontáneo
+        </span>
+        <h3 class="text-xl font-bold text-white mb-2">EXTREME READER I</h3>
+        <p class="text-gray-400 text-sm">6h de lectura en un solo día. Un maratón para los amantes de los libros que quieren expandir su mente en tiempo récord.</p>
+    </div>
+</div>
+
+<!-- LECTURA - EXTREME READER II -->
+<div class="bg-heroes-black bg-opacity-70 rounded-lg overflow-hidden scale-in nominee-item" data-category="reading" data-challenge-id="extremereader2">
+    <div class="h-60 bg-gradient-to-r from-heroes-red to-red-500 flex items-center justify-center p-4 overflow-hidden">
+        <i data-lucide="book-open" class="w-24 h-24 text-white"></i>
+    </div>
+    <div class="p-4">
+        <span class="text-xs font-semibold inline-block py-1 px-2 uppercase rounded-full text-heroes-black bg-heroes-red mb-2">
+            Lectura - Espontáneo
+        </span>
+        <h3 class="text-xl font-bold text-white mb-2">EXTREME READER II</h3>
+        <p class="text-gray-400 text-sm">7h de lectura en un solo día. Solo para verdaderos ratones de biblioteca. ¿Te atreves a pasar casi un día entero leyendo?</p>
+    </div>
+</div>
+
+<!-- LECTURA - BEST READER -->
+<div class="bg-heroes-black bg-opacity-70 rounded-lg overflow-hidden scale-in nominee-item" data-category="reading" data-challenge-id="bestreader">
+    <div class="h-60 bg-gradient-to-r from-heroes-red to-red-500 flex items-center justify-center p-4 overflow-hidden">
+        <i data-lucide="book-open" class="w-24 h-24 text-white"></i>
+    </div>
+    <div class="p-4">
+        <span class="text-xs font-semibold inline-block py-1 px-2 uppercase rounded-full text-heroes-black bg-heroes-red mb-2">
+            Lectura - Récord
+        </span>
+        <h3 class="text-xl font-bold text-white mb-2">BEST READER</h3>
+        <p class="text-gray-400 text-sm">Rompe el récord actual de lectura. Para los que quieren pasar a la historia como el héroe más leído y culto del clan.</p>
+    </div>
+</div>
+
+<!-- PRÓXIMAMENTE - PLACEHOLDER -->
+<div class="bg-heroes-black bg-opacity-70 rounded-lg overflow-hidden scale-in nominee-item" data-category="soon">
+    <div class="h-60 bg-gradient-to-r from-heroes-red to-red-500 flex items-center justify-center p-4 overflow-hidden">
+        <i data-lucide="heart-handshake" class="w-24 h-24 text-white"></i>
+    </div>
+    <div class="p-4">
+        <span class="text-xs font-semibold inline-block py-1 px-2 uppercase rounded-full text-heroes-black bg-heroes-red mb-2">
+            Próximamente
+        </span>
+        <h3 class="text-xl font-bold text-white mb-2">Agradecimiento</h3>
+        <p class="text-gray-400 text-sm">Pronto lanzaremos desafíos para cultivar la gratitud y desarrollar mentalidad de abundancia. Estate atento.</p>
+    </div>
+</div>
+            </div>
+        </div>
+    </div>
+</section>
+
+<!-- Footer -->
+<footer class="py-10 px-4 border-t border-heroes-red border-opacity-20">
+    <div class="container mx-auto">
+        <div class="flex flex-col md:flex-row justify-between items-center">
+            <div class="mb-6 md:mb-0">
+                <div class="flex items-center space-x-2">
+                    <img src="https://i.postimg.cc/CKVSLwcQ/117-sin-t-tulo-20250323142054.png" alt="Heroes Challenges Logo" class="h-10 w-auto">
+                    <span class="text-heroes-red font-black text-xl">CHALLENGES</span>
+                </div>
+                <p class="text-gray-400 mt-2">Supera tus límites. Construye tu disciplina.</p>
+            </div>
             
+            <div class="flex flex-col md:flex-row space-y-4 md:space-y-0 md:space-x-8">
+                <a href="#home" class="text-white hover:text-heroes-red transition-colors">Home</a>
+                <a href="#about" class="text-white hover:text-heroes-red transition-colors">About</a>
+                <a href="#categories" class="text-white hover:text-heroes-red transition-colors">Categorías</a>
+                <a href="#challenges" class="text-white hover:text-heroes-red transition-colors">Challenges</a>
+                <a href="#records" class="text-white hover:text-heroes-red transition-colors">Récords</a>
+            </div>
+        </div>
+        
+        <div class="mt-8 pt-8 border-t border-gray-800 text-center">
+            <p class="text-gray-400">© 2025 Heroes Academy. Todos los derechos reservados.</p>
+        </div>
+    </div>
+</footer>
+
+<!-- Modal para los Challenges -->
+<div id="challenge-modal" class="fixed inset-0 z-[9999] flex items-center justify-center opacity-0 pointer-events-none transition-all duration-300">
+    <div class="absolute inset-0 bg-black bg-opacity-80 backdrop-blur-sm" id="modal-backdrop"></div>
+    <div class="bg-heroes-black border-2 border-heroes-red rounded-xl w-full max-w-2xl mx-4 z-10 overflow-hidden">
+        <div class="relative">
+            <!-- Header con imagen -->
+            <div id="modal-header" class="h-48 md:h-60 bg-gradient-to-r from-heroes-red to-red-500 flex items-center justify-center overflow-hidden">
+                <div class="w-24 h-24 text-white">
+                    <i data-lucide="brain" id="modal-icon" class="w-full h-full"></i>
+                </div>
+                <button id="close-modal" class="absolute top-4 right-4 bg-heroes-black bg-opacity-70 rounded-full p-1 hover:bg-opacity-100 transition-all">
+                    <svg xmlns="http://www.w3.org/2000/svg" class="h-8 w-8 text-heroes-red" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12" />
+                    </svg>
+                </button>
+            </div>
+            
+            <!-- Contenido del modal -->
+            <div class="p-6">
+                <!-- Título y tipo -->
+                <div class="flex justify-between items-start mb-4">
+                    <div>
+                        <h3 id="modal-title" class="text-2xl md:text-3xl font-black text-heroes-red"></h3>
+                        <span id="modal-category" class="text-xs font-semibold inline-block py-1 px-2 uppercase rounded-full text-heroes-black bg-heroes-red mt-2"></span>
+                    </div>
+                </div>
+                
+                <!-- Dificultad -->
+                <div class="mb-6">
+                    <h4 class="text-lg font-bold text-white mb-2">Dificultad</h4>
+                    <div class="flex items-center space-x-4">
+                        <div class="flex-1 bg-gray-800 h-4 rounded-full overflow-hidden">
+                            <div id="difficulty-bar" class="h-full rounded-full bg-gradient-to-r from-green-500 via-yellow-500 to-red-500" style="width: 20%"></div>
+                        </div>
+                        <span id="difficulty-text" class="text-white font-bold"></span>
+                    </div>
+                </div>
+                
+                <!-- Descripción -->
+                <div class="mb-6">
+                    <h4 class="text-lg font-bold text-white mb-2">Descripción</h4>
+                    <p id="modal-description" class="text-gray-300"></p>
+                </div>
+                
+                <!-- Recompensa -->
+                <div class="mb-6">
+                    <h4 class="text-lg font-bold text-white mb-2">Recompensa</h4>
+                    <div class="flex items-center space-x-2">
+                        <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6 text-heroes-red" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 8c-1.657 0-3 .895-3 2s1.343 2 3 2 3 .895 3 2-1.343 2-3 2m0-8c1.11 0 2.08.402 2.599 1M12 8V7m0 1v8m0 0v1m0-1c-1.11 0-2.08-.402-2.599-1M21 12a9 9 0 11-18 0 9 9 0 0118 0z" />
+                        </svg>
+                        <p id="modal-reward" class="text-gray-300"></p>
+                    </div>
+                </div>
+                
+                <!-- Plantilla para WhatsApp -->
+                <div class="mb-6">
+                    <h4 class="text-lg font-bold text-white mb-2">Plantilla para participar</h4>
+                    <div class="bg-gray-900 p-4 rounded-md">
+                        <p id="whatsapp-template" class="text-gray-300 text-sm whitespace-pre-line"></p>
+                        <div class="mt-3 flex flex-wrap gap-2">
+                            <button id="copy-template" class="bg-heroes-red text-heroes-black px-4 py-2 rounded-md font-bold text-sm hover-effect">
+                                COPIAR PLANTILLA
+                            </button>
+                            <a id="whatsapp-link" href="#" target="_blank" class="inline-block bg-green-600 text-white px-4 py-2 rounded-md font-bold text-sm hover-effect">
+                                ENVIAR A WHATSAPP
+                            </a>
+                        </div>
+                    </div>
+                </div>
+                
+                <!-- Iframe para pruebas -->
+                <div>
+                    <h4 class="text-lg font-bold text-white mb-2">Enviar pruebas</h4>
+                    <div class="bg-gray-900 p-4 rounded-md">
+                        <p class="text-gray-300 text-sm mb-3">Haz clic en el botón para enviar tus evidencias y completar el desafío:</p>
+                        <a id="notion-link" href="#" target="_blank" class="inline-block bg-blue-600 text-white px-4 py-2 rounded-md font-bold text-sm hover-effect">
+                            ENVIAR PRUEBA EN NOTION
+                        </a>
+                    </div>
+                </div>
+            </div>
         </div>
     </div>
 </div>
 
-          
-</section>
-    </div>
-  
-
-
-
-
-
-
-
-
-            
-
-                 
-<script>
-// Parallax suave
-let lastScrollTop = 0;
-window.addEventListener('scroll', function() {
-    const scrolled = window.pageYOffset;
-    const parallax = document.querySelector('.video-bg');
-    const delta = scrolled - lastScrollTop;
-    lastScrollTop = scrolled;
-    
-    window.requestAnimationFrame(function() {
-        parallax.style.transform = 'translateY(' + (scrolled * 0.5) + 'px)';
-    });
-});
-
-// Animación de fade-in al hacer scroll
-function fadeInOnScroll() {
-    const elements = document.querySelectorAll('.fade-in');
-    elements.forEach(element => {
-        const elementTop = element.getBoundingClientRect().top;
-        const elementBottom = element.getBoundingClientRect().bottom;
-        if (elementTop < window.innerHeight && elementBottom > 0) {
-            element.classList.add('visible');
-        }
-    });
-}
-
-window.addEventListener('scroll', fadeInOnScroll);
-window.addEventListener('load', fadeInOnScroll);
-
-// Funciones del popup
-function showPopup(runeName, runeDescription, runePrice, runeImage) {
-    const popup = document.getElementById('runePopup');
-    popup.style.opacity = '0';
-    popup.style.display = 'flex';
-    document.body.style.overflow = 'hidden';
-    
-    const details = popup.querySelector('.rune-details');
-    details.querySelector('h3').textContent = runeName;
-    details.querySelector('p').textContent = runeDescription;
-    details.querySelector('.coins-display span').textContent = runePrice;
-    
-    if (runeImage) {
-        details.querySelector('img').src = runeImage;
-        details.querySelector('img').style.display = 'block';
-    } else {
-        details.querySelector('img').style.display = 'none';
-    }
-
-    setTimeout(() => {
-        popup.style.opacity = '1';
-    }, 10);
-}
-
-function closePopup() {
-    const popup = document.getElementById('runePopup');
-    popup.style.opacity = '0';
-    setTimeout(() => {
-        popup.style.display = 'none';
-        document.body.style.overflow = 'auto';
-    }, 300);
-}
-
-document.getElementById('runePopup').addEventListener('click', function(e) {
-    if (e.target === this) {
-        closePopup();
-    }
-});
-
-// Aplicar la clase fade-in a los elementos que quieres animar
-document.addEventListener('DOMContentLoaded', function() {
-    const sections = document.querySelectorAll('section');
-    sections.forEach(section => {
-        section.classList.add('fade-in');
-    });
-});
-</script>
-
-
-
 
 <script>
+// Inicializar GSAP
+gsap.registerPlugin(ScrollTrigger);
 
-
-function closePopup() {
-    const popup = document.getElementById('runePopup');
-    popup.style.display = 'none';
-    document.body.style.overflow = 'auto';
+// Datos de los challenges
+const challengesData = {
+    // MEDITACIÓN
+    monk1: {
+        title: "MONK I",
+        category: "Meditación - Constancia",
+        image: "https://i.postimg.cc/QMSkMpRJ/Photo-Room-20250329-111415.png",
+        description: "Este challenge consiste en meditar UNA HORA DIARIA durante 3 DÍAS CONSECUTIVOS. Perfecta para principiantes que quieren establecer una base sólida o practicantes intermedios que desean reforzar su disciplina meditativa. La clave está en mantener la concentración durante períodos prolongados y construir el hábito día tras día.",
+        difficulty: 1,
+        difficultyText: "Principiante",
+        reward: "2 puntos para tu clan",
+        whatsappTemplate: "🧘‍♂️ CHALLENGE: MONK I 🧘‍♂️\n\nYo, [TU NOMBRE], del clan [NOMBRE DEL CLAN], me comprometo a completar el desafío MONK I a partir del [FECHA DE INICIO].\n\nConsiste en: Meditar 1 hora diaria durante 3 días consecutivos.\n\nEnviaré pruebas diarias de mi progreso a través del formulario correspondiente.",
+        notionLink: "https://www.notion.so/aleesalas/1cda8b71bcb6810ea8d1c7385a48c342?pvs=106"
+    },
+    monk2: {
+        title: "MONK II",
+        category: "Meditación - Constancia",
+        image: "https://i.postimg.cc/QMSkMpRJ/Photo-Room-20250329-111415.png",
+        description: "Lleva tu práctica meditativa al SIGUIENTE NIVEL con este desafío: medita TRES HORAS DIARIAS durante 3 DÍAS CONSECUTIVOS. Este reto está diseñado para practicantes que ya tienen cierta experiencia y buscan profundizar significativamente en su práctica. Prepárate para experimentar estados de concentración y claridad mental nunca antes alcanzados.",
+        difficulty: 2,
+        difficultyText: "Intermedio",
+        reward: "3 puntos para tu clan",
+        whatsappTemplate: "🧘‍♂️ CHALLENGE: MONK II 🧘‍♂️\n\nYo, [TU NOMBRE], del clan [NOMBRE DEL CLAN], me comprometo a completar el desafío MONK II a partir del [FECHA DE INICIO].\n\nConsiste en: Meditar 3 horas diarias durante 3 días consecutivos.\n\nEnviaré pruebas diarias de mi progreso a través del formulario correspondiente.",
+        notionLink: "https://www.notion.so/aleesalas/1cda8b71bcb6810ea8d1c7385a48c342?pvs=106"
+    },
+    extrememonk1: {
+        title: "EXTREME MONK I",
+        category: "Meditación - Espontáneo",
+        image: "https://i.postimg.cc/QMSkMpRJ/Photo-Room-20250329-111415.png",
+        description: "Este desafío extremo te reta a completar CUATRO HORAS DE MEDITACIÓN EN UN SOLO DÍA. Puedes dividirlas en sesiones o intentar una maratón continua si te sientes capaz. Este reto pondrá a prueba tus límites mentales y físicos, llevándote a experimentar estados meditativos profundos que normalmente requieren años de práctica para alcanzar.",
+        difficulty: 3,
+        difficultyText: "Avanzado",
+        reward: "2 puntos para tu clan",
+        whatsappTemplate: "🧘‍♂️ CHALLENGE: EXTREME MONK I 🧘‍♂️\n\nYo, [TU NOMBRE], del clan [NOMBRE DEL CLAN], me comprometo a completar el desafío EXTREME MONK I el día [FECHA].\n\nConsiste en: Meditar 4 horas en un solo día.\n\nEnviaré pruebas de mi logro a través del formulario correspondiente al terminar.",
+        notionLink: "https://www.notion.so/aleesalas/1cda8b71bcb681b58681c36a0f21ade2?pvs=106"
+    },
+    extrememonk2: {
+        title: "EXTREME MONK II",
+        category: "Meditación - Espontáneo",
+        image: "https://i.postimg.cc/QMSkMpRJ/Photo-Room-20250329-111415.png",
+        description: "El desafío definitivo para guerreros mentales: CINCO HORAS DE MEDITACIÓN EN UN SOLO DÍA. Este reto es solo para los más valientes y disciplinados. Durante estas cinco horas, explorarás las profundidades de tu mente como nunca antes. Prepárate para una experiencia transformadora que pondrá a prueba cada fibra de tu ser y te revelará aspectos de ti mismo que ni sabías que existían.",
+        difficulty: 4,
+        difficultyText: "Experto",
+        reward: "3 puntos para tu clan",
+        whatsappTemplate: "🧘‍♂️ CHALLENGE: EXTREME MONK II 🧘‍♂️\n\nYo, [TU NOMBRE], del clan [NOMBRE DEL CLAN], me comprometo a completar el desafío EXTREME MONK II el día [FECHA].\n\nConsiste en: Meditar 5 horas en un solo día.\n\nEnviaré pruebas de mi logro a través del formulario correspondiente al terminar.",
+        notionLink: "https://www.notion.so/aleesalas/1cda8b71bcb681b58681c36a0f21ade2?pvs=106"
+    },
+    bestmonk: {
+        title: "BEST MONK",
+        category: "Meditación - Récord",
+        image: "https://i.postimg.cc/QMSkMpRJ/Photo-Room-20250329-111415.png",
+        description: "¿Te sientes capaz de HACER HISTORIA? Este desafío consiste en SUPERAR O IGUALAR EL RÉCORD ACTUAL en meditación. Consulta la tabla de récords para conocer la marca a batir y prepárate para una experiencia que podría convertirte en leyenda. Solo los más disciplinados y dedicados podrán reclamar el título del mejor meditador entre los Héroes.",
+        difficulty: 5,
+        difficultyText: "Legendario",
+        reward: "5 puntos para tu clan + reconocimiento especial",
+        whatsappTemplate: "🧘‍♂️ CHALLENGE: BEST MONK 🧘‍♂️\n\nYo, [TU NOMBRE], del clan [NOMBRE DEL CLAN], me comprometo a intentar romper el récord actual de meditación el día [FECHA].\n\nConsiste en: Superar el récord actual de [RÉCORD ACTUAL] horas de meditación.\n\nEnviaré pruebas detalladas de mi intento a través del formulario correspondiente.",
+        notionLink: "https://www.notion.so/aleesalas/1cda8b71bcb681b58681c36a0f21ade2?pvs=106"
+    },
+        // DEEPWORKING
+    deepworker1: {
+        title: "DEEPWORKER I",
+        category: "Deepworking - Constancia",
+        image: "https://i.postimg.cc/MG8qGByH/Photo-Room-20250329-111350.png",
+        description: "Desafía tu capacidad de concentración completando TRES HORAS DE TRABAJO PROFUNDO DIARIO durante 3 DÍAS CONSECUTIVOS. Este reto está diseñado para entrenar tu mente en el arte del enfoque total, eliminando distracciones y maximizando tu productividad. Perfecto para quienes quieren establecer una base sólida de trabajo de calidad en su rutina diaria.",
+        difficulty: 1,
+        difficultyText: "Principiante",
+        reward: "2 puntos para tu clan",
+        whatsappTemplate: "💻 CHALLENGE: DEEPWORKER I 💻\n\nYo, [TU NOMBRE], del clan [NOMBRE DEL CLAN], me comprometo a completar el desafío DEEPWORKER I a partir del [FECHA DE INICIO].\n\nConsiste en: 3 horas diarias de trabajo profundo durante 3 días consecutivos.\n\nEnviaré pruebas diarias de mi progreso a través del formulario correspondiente.",
+        notionLink: "https://www.notion.so/aleesalas/1cda8b71bcb6810ea8d1c7385a48c342?pvs=106"
+    },
+    deepworker2: {
+        title: "DEEPWORKER II",
+        category: "Deepworking - Constancia",
+        image: "https://i.postimg.cc/MG8qGByH/Photo-Room-20250329-111350.png",
+        description: "Lleva tu productividad al SIGUIENTE NIVEL con este intenso desafío: CINCO HORAS DE TRABAJO PROFUNDO DIARIO durante 3 DÍAS CONSECUTIVOS. Este reto exigente está diseñado para quienes ya tienen cierta experiencia con el trabajo concentrado y buscan expandir significativamente su capacidad. Te sorprenderá lo que puedes lograr cuando entrenas tu mente para mantener el foco durante períodos prolongados.",
+        difficulty: 2,
+        difficultyText: "Intermedio",
+        reward: "3 puntos para tu clan",
+        whatsappTemplate: "💻 CHALLENGE: DEEPWORKER II 💻\n\nYo, [TU NOMBRE], del clan [NOMBRE DEL CLAN], me comprometo a completar el desafío DEEPWORKER II a partir del [FECHA DE INICIO].\n\nConsiste en: 5 horas diarias de trabajo profundo durante 3 días consecutivos.\n\nEnviaré pruebas diarias de mi progreso a través del formulario correspondiente.",
+        notionLink: "https://www.notion.so/aleesalas/1cda8b71bcb6810ea8d1c7385a48c342?pvs=106"
+    },
+    extremedeepworker1: {
+        title: "EXTREME DEEPWORKER I",
+        category: "Deepworking - Espontáneo",
+        image: "https://i.postimg.cc/MG8qGByH/Photo-Room-20250329-111350.png",
+        description: "Un desafío brutal para tu capacidad de concentración: SIETE HORAS DE TRABAJO PROFUNDO EN UN SOLO DÍA. Este reto pondrá a prueba tus límites mentales y transformará lo que crees posible en términos de productividad. Puedes dividirlo en bloques con pequeños descansos entre ellos, pero el objetivo es acumular 7 horas de trabajo completamente enfocado y sin distracciones.",
+        difficulty: 3,
+        difficultyText: "Avanzado",
+        reward: "2 puntos para tu clan",
+        whatsappTemplate: "💻 CHALLENGE: EXTREME DEEPWORKER I 💻\n\nYo, [TU NOMBRE], del clan [NOMBRE DEL CLAN], me comprometo a completar el desafío EXTREME DEEPWORKER I el día [FECHA].\n\nConsiste en: 7 horas de trabajo profundo en un solo día.\n\nEnviaré pruebas de mi logro a través del formulario correspondiente al terminar.",
+        notionLink: "https://www.notion.so/aleesalas/1cda8b71bcb681b58681c36a0f21ade2?pvs=106"
+    },
+    extremedeepworker2: {
+        title: "EXTREME DEEPWORKER II",
+        category: "Deepworking - Espontáneo",
+        image: "https://i.postimg.cc/MG8qGByH/Photo-Room-20250329-111350.png",
+        description: "El desafío definitivo para maestros de la concentración: NUEVE HORAS DE TRABAJO PROFUNDO EN UN SOLO DÍA. Este reto es solo para los más disciplinados y resistentes mentalmente. Pocas personas en el mundo pueden mantener este nivel de enfoque intenso, ¿serás tú uno de ellos? Prepárate para una jornada que redefinirá los límites de tu productividad personal.",
+        difficulty: 4,
+        difficultyText: "Experto",
+        reward: "3 puntos para tu clan",
+        whatsappTemplate: "💻 CHALLENGE: EXTREME DEEPWORKER II 💻\n\nYo, [TU NOMBRE], del clan [NOMBRE DEL CLAN], me comprometo a completar el desafío EXTREME DEEPWORKER II el día [FECHA].\n\nConsiste en: 9 horas de trabajo profundo en un solo día.\n\nEnviaré pruebas de mi logro a través del formulario correspondiente al terminar.",
+        notionLink: "https://www.notion.so/aleesalas/1cda8b71bcb681b58681c36a0f21ade2?pvs=106"
+    },
+    bestdeepworker: {
+        title: "BEST DEEPWORKER",
+        category: "Deepworking - Récord",
+        image: "https://i.postimg.cc/MG8qGByH/Photo-Room-20250329-111350.png",
+        description: "¿Crees ser la MÁQUINA DE PRODUCTIVIDAD definitiva? Este desafío consiste en ROMPER O IGUALAR EL RÉCORD ACTUAL en DeepWork. Consulta la tabla de récords para conocer la marca a superar y prepárate para entrar en la historia como el Héroe más productivo de todos los tiempos. Un reto que pondrá a prueba los límites de la concentración humana.",
+        difficulty: 5,
+        difficultyText: "Legendario",
+        reward: "5 puntos para tu clan + reconocimiento especial",
+        whatsappTemplate: "💻 CHALLENGE: BEST DEEPWORKER 💻\n\nYo, [TU NOMBRE], del clan [NOMBRE DEL CLAN], me comprometo a intentar romper el récord actual de DeepWork el día [FECHA].\n\nConsiste en: Superar el récord actual de [RÉCORD ACTUAL] horas de trabajo profundo.\n\nEnviaré pruebas detalladas de mi intento a través del formulario correspondiente.",
+        notionLink: "https://www.notion.so/aleesalas/1cda8b71bcb681b58681c36a0f21ade2?pvs=106"
+    },
+        // PASOS
+    walker1: {
+        title: "WALKER I",
+        category: "Pasos - Constancia",
+        image: "https://i.postimg.cc/85S5x3yy/Photo-Room-20250329-113215.png",
+        description: "Activa tu cuerpo y mente dando 15,000 PASOS DIARIOS durante 3 DÍAS CONSECUTIVOS. Este desafío te mantendrá en movimiento constante, mejorando tu salud física y mental mientras construyes un hábito de actividad diaria. Perfecto para quienes buscan comenzar a moverse más sin necesidad de entrenamientos intensos o complicados.",
+        difficulty: 1,
+        difficultyText: "Principiante",
+        reward: "2 puntos para tu clan",
+        whatsappTemplate: "🚶 CHALLENGE: WALKER I 🚶\n\nYo, [TU NOMBRE], del clan [NOMBRE DEL CLAN], me comprometo a completar el desafío WALKER I a partir del [FECHA DE INICIO].\n\nConsiste en: 15,000 pasos diarios durante 3 días consecutivos.\n\nEnviaré pruebas diarias de mi progreso a través del formulario correspondiente.",
+        notionLink: "https://www.notion.so/aleesalas/1cda8b71bcb6810ea8d1c7385a48c342?pvs=106"
+    },
+    walker2: {
+        title: "WALKER II",
+        category: "Pasos - Constancia",
+        image: "https://i.postimg.cc/85S5x3yy/Photo-Room-20250329-113215.png",
+        description: "Lleva tu actividad física al SIGUIENTE NIVEL completando 25,000 PASOS DIARIOS durante 3 DÍAS CONSECUTIVOS. Este desafío exigente está diseñado para quienes ya tienen cierta experiencia caminando y quieren elevar significativamente su juego. Prepárate para sentir el burn en las piernas y experimentar la claridad mental que viene con el movimiento prolongado.",
+        difficulty: 2,
+        difficultyText: "Intermedio",
+        reward: "3 puntos para tu clan",
+        whatsappTemplate: "🚶 CHALLENGE: WALKER II 🚶\n\nYo, [TU NOMBRE], del clan [NOMBRE DEL CLAN], me comprometo a completar el desafío WALKER II a partir del [FECHA DE INICIO].\n\nConsiste en: 25,000 pasos diarios durante 3 días consecutivos.\n\nEnviaré pruebas diarias de mi progreso a través del formulario correspondiente.",
+        notionLink: "https://www.notion.so/aleesalas/1cda8b71bcb6810ea8d1c7385a48c342?pvs=106"
+    },
+    extremewalker1: {
+        title: "EXTREME WALKER I",
+        category: "Pasos - Espontáneo",
+        image: "https://i.postimg.cc/85S5x3yy/Photo-Room-20250329-113215.png",
+        description: "Un desafío brutal para tus piernas: 35,000 PASOS EN UN SOLO DÍA. Este reto pondrá a prueba tanto tu resistencia física como tu determinación mental. Prepárate para una jornada intensa de movimiento que requerirá planificación, perseverancia y un buen par de zapatillas. Al final del día, no solo habrás quemado un montón de calorías sino que también habrás demostrado tu capacidad para superar retos difíciles.",
+        difficulty: 3,
+        difficultyText: "Avanzado",
+        reward: "2 puntos para tu clan",
+        whatsappTemplate: "🚶 CHALLENGE: EXTREME WALKER I 🚶\n\nYo, [TU NOMBRE], del clan [NOMBRE DEL CLAN], me comprometo a completar el desafío EXTREME WALKER I el día [FECHA].\n\nConsiste en: 35,000 pasos en un solo día.\n\nEnviaré pruebas de mi logro a través del formulario correspondiente al terminar.",
+        notionLink: "https://www.notion.so/aleesalas/1cda8b71bcb681b58681c36a0f21ade2?pvs=106"
+    },
+    extremewalker2: {
+        title: "EXTREME WALKER II",
+        category: "Pasos - Espontáneo",
+        image: "https://i.postimg.cc/85S5x3yy/Photo-Room-20250329-113215.png",
+        description: "El desafío definitivo para caminantes: 50,000 PASOS EN UN SOLO DÍA. Este reto es solo para los más resistentes y dedicados. Estamos hablando de aproximadamente 40km de recorrido, casi una maratón completa. Necesitarás preparación mental, física y logística para completar este épico desafío que pocos han logrado superar.",
+        difficulty: 4,
+        difficultyText: "Experto",
+        reward: "4 puntos para tu clan",
+        whatsappTemplate: "🚶 CHALLENGE: EXTREME WALKER II 🚶\n\nYo, [TU NOMBRE], del clan [NOMBRE DEL CLAN], me comprometo a completar el desafío EXTREME WALKER II el día [FECHA].\n\nConsiste en: 50,000 pasos en un solo día.\n\nEnviaré pruebas de mi logro a través del formulario correspondiente al terminar.",
+        notionLink: "https://www.notion.so/aleesalas/1cda8b71bcb681b58681c36a0f21ade2?pvs=106"
+    },
+    bestwalker: {
+        title: "BEST WALKER",
+        category: "Pasos - Récord",
+        image: "https://i.postimg.cc/85S5x3yy/Photo-Room-20250329-113215.png",
+        description: "¿Crees tener las PIERNAS MÁS FUERTES y la VOLUNTAD MÁS INQUEBRANTABLE? Este desafío consiste en SUPERAR O IGUALAR EL RÉCORD ACTUAL en pasos. Consulta la tabla de récords para conocer la marca a batir y prepárate para una hazaña física que podría convertirte en leyenda entre todos los Héroes. Un reto que dejará huella, literalmente.",
+        difficulty: 5,
+        difficultyText: "Legendario",
+        reward: "5 puntos para tu clan + reconocimiento especial",
+        whatsappTemplate: "🚶 CHALLENGE: BEST WALKER 🚶\n\nYo, [TU NOMBRE], del clan [NOMBRE DEL CLAN], me comprometo a intentar romper el récord actual de pasos el día [FECHA].\n\nConsiste en: Superar el récord actual de [RÉCORD ACTUAL] pasos en un día.\n\nEnviaré pruebas detalladas de mi intento a través del formulario correspondiente.",
+        notionLink: "https://www.notion.so/aleesalas/1cda8b71bcb681b58681c36a0f21ade2?pvs=106"
+    },
+        // LECTURA
+    reader1: {
+        title: "READER I",
+        category: "Lectura - Constancia",
+        image: "https://i.postimg.cc/v8XBS05z/Photo-Room-20250329-114550.png",
+        description: "Sumérgete en el conocimiento leyendo 3 HORAS DIARIAS durante 3 DÍAS CONSECUTIVOS. Este desafío está diseñado para ayudarte a establecer un hábito de lectura significativo, expandiendo tu mente con nuevas ideas y perspectivas. Perfecto para quienes buscan incorporar más lectura a su vida de manera consistente y estructurada.",
+        difficulty: 1,
+        difficultyText: "Principiante",
+        reward: "2 puntos para tu clan",
+        whatsappTemplate: "📚 CHALLENGE: READER I 📚\n\nYo, [TU NOMBRE], del clan [NOMBRE DEL CLAN], me comprometo a completar el desafío READER I a partir del [FECHA DE INICIO].\n\nConsiste en: 3 horas de lectura diarias durante 3 días consecutivos.\n\nEnviaré pruebas diarias de mi progreso a través del formulario correspondiente.",
+        notionLink: "https://www.notion.so/aleesalas/1cda8b71bcb6810ea8d1c7385a48c342?pvs=106"
+    },
+    reader2: {
+        title: "READER II",
+        category: "Lectura - Constancia",
+        image: "https://i.postimg.cc/v8XBS05z/Photo-Room-20250329-114550.png",
+        description: "Convierte tu mente en una esponja de conocimiento leyendo 5 HORAS DIARIAS durante 3 DÍAS CONSECUTIVOS. Este desafío intensivo está diseñado para quienes ya tienen experiencia con la lectura prolongada y quieren llevar su hábito al siguiente nivel. Te sorprenderá cuánto puedes aprender y cómo se expande tu perspectiva cuando dedicas bloques significativos de tiempo a la lectura profunda.",
+        difficulty: 2,
+        difficultyText: "Intermedio",
+        reward: "3 puntos para tu clan",
+        whatsappTemplate: "📚 CHALLENGE: READER II 📚\n\nYo, [TU NOMBRE], del clan [NOMBRE DEL CLAN], me comprometo a completar el desafío READER II a partir del [FECHA DE INICIO].\n\nConsiste en: 5 horas de lectura diarias durante 3 días consecutivos.\n\nEnviaré pruebas diarias de mi progreso a través del formulario correspondiente.",
+        notionLink: "https://www.notion.so/aleesalas/1cda8b71bcb6810ea8d1c7385a48c342?pvs=106"
+    },
+    extremereader1: {
+        title: "EXTREME READER I",
+        category: "Lectura - Espontáneo",
+        image: "https://i.postimg.cc/v8XBS05z/Photo-Room-20250329-114550.png",
+        description: "Un maratón intelectual para amantes de los libros: 6 HORAS DE LECTURA EN UN SOLO DÍA. Este reto pondrá a prueba tu capacidad de concentración y absorción de información. Puedes dividirlo en bloques con pequeños descansos entre ellos, pero el objetivo es acumular 6 horas de lectura profunda y focalizada. Tu mente se expandirá como nunca antes tras completar este desafío.",
+        difficulty: 3,
+        difficultyText: "Avanzado",
+        reward: "2 puntos para tu clan",
+        whatsappTemplate: "📚 CHALLENGE: EXTREME READER I 📚\n\nYo, [TU NOMBRE], del clan [NOMBRE DEL CLAN], me comprometo a completar el desafío EXTREME READER I el día [FECHA].\n\nConsiste en: 6 horas de lectura en un solo día.\n\nEnviaré pruebas de mi logro a través del formulario correspondiente al terminar.",
+        notionLink: "https://www.notion.so/aleesalas/1cda8b71bcb681b58681c36a0f21ade2?pvs=106"
+    },
+    extremereader2: {
+        title: "EXTREME READER II",
+        category: "Lectura - Espontáneo",
+        image: "https://i.postimg.cc/v8XBS05z/Photo-Room-20250329-114550.png",
+        description: "El desafío definitivo para devoradores de libros: 7 HORAS DE LECTURA EN UN SOLO DÍA. Este reto es solo para los más disciplinados y apasionados por la lectura. Equivale aproximadamente a terminar un libro de tamaño medio en un solo día, una hazaña que pocos pueden presumir. Al final de este maratón intelectual, habrás transformado literalmente tu mente con nuevas ideas y perspectivas.",
+        difficulty: 4,
+        difficultyText: "Experto",
+        reward: "3 puntos para tu clan",
+        whatsappTemplate: "📚 CHALLENGE: EXTREME READER II 📚\n\nYo, [TU NOMBRE], del clan [NOMBRE DEL CLAN], me comprometo a completar el desafío EXTREME READER II el día [FECHA].\n\nConsiste en: 7 horas de lectura en un solo día.\n\nEnviaré pruebas de mi logro a través del formulario correspondiente al terminar.",
+        notionLink: "https://www.notion.so/aleesalas/1cda8b71bcb681b58681c36a0f21ade2?pvs=106"
+    },
+    bestreader: {
+        title: "BEST READER",
+        category: "Lectura - Récord",
+        image: "https://i.postimg.cc/v8XBS05z/Photo-Room-20250329-114550.png",
+        description: "¿Crees ser el RATÓN DE BIBLIOTECA definitivo entre los Héroes? Este desafío consiste en ROMPER O IGUALAR EL RÉCORD ACTUAL en lectura. Consulta la tabla de récords para conocer la marca a superar y prepárate para una hazaña intelectual que podría colocarte en el panteón de los más grandes lectores de todos los tiempos.",
+        difficulty: 5,
+        difficultyText: "Legendario",
+        reward: "5 puntos para tu clan + reconocimiento especial",
+        whatsappTemplate: "📚 CHALLENGE: BEST READER 📚\n\nYo, [TU NOMBRE], del clan [NOMBRE DEL CLAN], me comprometo a intentar romper el récord actual de lectura el día [FECHA].\n\nConsiste en: Superar el récord actual de [RÉCORD ACTUAL] horas de lectura o páginas leídas.\n\nEnviaré pruebas detalladas de mi intento a través del formulario correspondiente.",
+        notionLink: "https://www.notion.so/aleesalas/1cda8b71bcb681b58681c36a0f21ade2?pvs=106"
+    }
+};
+// Función para generar un número aleatorio entre min y max
+function random(min, max) {
+    return Math.random() * (max - min) + min;
 }
 
-document.getElementById('runePopup').addEventListener('click', function(e) {
-    if (e.target === this) {
-        closePopup();
-    }
-});
-
-
-</script>
-
-<script>
-    document.addEventListener('DOMContentLoaded', function() {
-    const progressBar = document.querySelector('.progress-bar');
+// Función para manejar el cursor personalizado
+function initCustomCursor() {
+    const cursor = document.querySelector('.custom-cursor');
+    const links = document.querySelectorAll('a, button');
     
-    window.addEventListener('scroll', () => {
-        // Calcula el progreso total
-        const windowHeight = window.innerHeight;
-        const documentHeight = document.documentElement.scrollHeight - windowHeight;
-        const scrolled = window.scrollY;
-        const progress = (scrolled / documentHeight) * 100;
-        
-        progressBar.style.height = `${progress}%`;
-
-        // Puntos de cambio de color (ajusta estos valores según tu contenido)
-        const heroSection = document.querySelector('.hero').offsetTop;
-        const clansSection = document.querySelector('#clans').offsetTop;
-        const catalogSection = document.querySelector('#catalog').offsetTop;
-        const blueRunesSection = document.querySelector('.text-blue-400')?.offsetTop || catalogSection;
-        const redRunesSection = document.querySelector('.text-red-400')?.offsetTop;
-        const yellowRunesSection = document.querySelector('.text-yellow-400')?.offsetTop;
-
-        const currentScroll = window.scrollY + (windowHeight / 3);
-
-        // Actualiza los colores basado en la posición del scroll
-        if (currentScroll < clansSection) {
-            // Sección intro - Celeste claro
-            progressBar.style.background = '#a5d8ff';
-            progressBar.style.boxShadow = '0 0 10px rgba(165, 216, 255, 0.5)';
-            progressBar.style.animation = 'none';
-        } 
-        else if (currentScroll < catalogSection) {
-            // Sección clanes - Celeste claro con efecto brillante
-            progressBar.style.background = 'linear-gradient(45deg, #a5d8ff, #d0ebff, #a5d8ff)';
-            progressBar.style.backgroundSize = '200% 200%';
-            progressBar.style.animation = 'fireAnimation 3s ease infinite';
-            progressBar.style.boxShadow = '0 0 15px rgba(165, 216, 255, 0.6)';
-        }
-         
-    });
-
-    // Dispara el evento scroll al cargar para inicializar la barra
-    window.dispatchEvent(new Event('scroll'));
-});
-
-</script>
-
-
-
-<script>
-document.addEventListener('DOMContentLoaded', function() {
-    // Función para verificar si un elemento está en el viewport
-    function isElementInViewport(el) {
-        const rect = el.getBoundingClientRect();
-        return (
-            rect.top >= 0 &&
-            rect.left >= 0 &&
-            rect.bottom <= (window.innerHeight || document.documentElement.clientHeight) &&
-            rect.right <= (window.innerWidth || document.documentElement.clientWidth)
-        );
-    }
-
-    // Función para agregar animaciones cuando los elementos son visibles
-    function handleScrollAnimations() {
-        const animatedElements = document.querySelectorAll('.animate-fade-up, .animate-fade-down, .animate-fade-right, .animate-fade-left');
-        
-        animatedElements.forEach(element => {
-            if (isElementInViewport(element) && !element.classList.contains('animated')) {
-                element.classList.add('animated');
-            }
+    document.addEventListener('mousemove', (e) => {
+        gsap.to(cursor, {
+            x: e.clientX,
+            y: e.clientY,
+            duration: 0.1,
+            ease: 'power2.out'
         });
-    }
-
-    // Escuchar el evento scroll
-    window.addEventListener('scroll', handleScrollAnimations);
-    // Ejecutar una vez al cargar la página
-    handleScrollAnimations();
-});
-</script>
-
-<script>
-// Observador de Intersección para las animaciones fade-in
-const observerOptions = {
-    root: null,
-    rootMargin: '0px',
-    threshold: 0.15
-};
-
-const observerCallback = (entries, observer) => {
-    entries.forEach(entry => {
-        if (entry.isIntersecting) {
-            entry.target.classList.add('is-visible');
-            observer.unobserve(entry.target); // Deja de observar una vez que se ha animado
-        }
-    });
-};
-
-const observer = new IntersectionObserver(observerCallback, observerOptions);
-
-// Función para inicializar las animaciones
-function initFadeAnimations() {
-    // Selecciona todos los elementos que quieres animar
-    const fadeElements = document.querySelectorAll(
-        '.fade-in-section, .fade-in-left, .fade-in-right, .fade-in-bottom'
-    );
-    
-    fadeElements.forEach(element => {
-        observer.observe(element);
-    });
-}
-
-// Inicializa las animaciones cuando el DOM está listo
-document.addEventListener('DOMContentLoaded', initFadeAnimations);
-</script>
-
-
-<script>
-    // Item details object that contains information for each item
-    const itemDetails = {
-        'divine-shield': {
-            name: 'ESCUDO DIVINO',
-            description: 'Te protege de quedar en cuarto lugar, como mínimo te dejará con los mismos puntos que el 3er lugar.',
-            image: 'https://i.postimg.cc/k538Bw8s/Photo-Room-20250212-205529.png'
-        },
-        'divine-choice': {
-            name: 'ELECCIÓN DIVINA',
-            description: 'Te da la oportunidad de elegir la temática de la próxima competición. Piénsalo bien.',
-            image: 'https://i.postimg.cc/jqz15k7g/Photo-Room-20250212-210011.png'
-        },
-        'divine-ray': {
-            name: 'RAYO DIVINO',
-            description: 'Se activa un evento en el que aleatoriamente a un clan le cae un rayo y se le descuentan X cantidad de puntos de su contador.',
-            image: 'https://i.postimg.cc/MGQDLv0P/Photo-Room-20250215-213659.png'
-        },
-        'meteoric-inspiration': {
-            name: 'INSPIRACIÓN METEÓRICA',
-            description: 'Aumenta en un 20% todos los puntos ganados durante 48 horas para todo el clan.',
-            image: 'https://i.postimg.cc/hvtK9VPB/Photo-Room-20250302-203848-1.png'
-        },
-        'total-eclipse': {
-            name: 'ECLIPSE TOTAL',
-            description: 'Cancela el efecto de una runa de otro clan durante una batalla. El clan afectado es notificado pero no sabe quién lo causó.',
-            image: 'https://i.postimg.cc/Nj3GWyb6/Photo-Room-20250302-203849-2.png'
-        },
-        'treasure-chest': {
-            name: 'COFRE DEL TESORO',
-            description: 'Recibes 2-10 H.COINS de forma aleatoria al abrirlo (la cantidad es revelada solo después de comprar).',
-            image: 'https://i.postimg.cc/HnN1XKhw/Photo-Room-20250302-203849-3.png'
-        },
-        'wild-rune': {
-            name: 'RUNA SALVAJE',
-            description: 'Activa el efecto de una runa aleatoria que no posees durante una batalla.',
-            image: 'https://i.postimg.cc/ZYsSGB5W/Photo-Room-20250302-203850-4.png'
-        },
-        'nebular-enhancer': {
-            name: 'POTENCIADOR NEBULAR',
-            description: 'Si tu clan queda en último lugar en una batalla, recibes un +3 Multi para la siguiente.',
-            image: 'https://i.postimg.cc/900j4VJX/Photo-Room-20250302-203850-5.png'
-        },
-        'transfer-ritual': {
-            name: 'RITUAL DE TRANSFERENCIA',
-            description: 'Transfiere 10 puntos de batalla de tu al clan de tu elección. ¡Puedes ayudar a los más necesitados!',
-            image: 'https://i.postimg.cc/j5sTbyf7/Photo-Room-20250302-203850-6.png'
-        },
-        'temporal-distortion': {
-            name: 'DISTORSIÓN TEMPORAL',
-            description: 'Extiende la duración de la batalla actual por 24 horas adicionales para tu clan.',
-            image: 'https://i.postimg.cc/cLn0MxZr/Photo-Room-20250302-203850-7.png'
-        },
-        'black-hole': {
-            name: 'AGUJERO NEGRO',
-            description: 'Absorbe hasta 20 puntos de un clan rival de tu elección y añádelos a tu contador. Los afectados sabrán que perdieron puntos pero no sabrán quién los robó.',
-            image: 'https://i.postimg.cc/d0RFp5hF/Photo-Room-20250302-203850-8.png'
-        },
-        'cursed-chest': {
-            name: 'COFRE MALDITO',
-            description: 'Envía un cofre "regalo" a otro clan. Cuando lo abran, sufrirán una penalización aleatoria. Existe un 10% de probabilidad de que el efecto se revierta contra ti. Cuidadito.',
-            image: 'https://i.postimg.cc/5tW1shNp/Photo-Room-20250302-203850-9.png'
-        },
-        'schrodinger-box': {
-            name: 'CAJA DE SCHRODINGER',
-            description: 'Contiene simultáneamente una cantidad aleatoria de Heroes Coins (de 1 - 5) o una penalización (variable). Solo cuando lo abras sabrás cuál de las dos se manifestará.',
-            image: 'https://i.postimg.cc/65T9qVmV/Photo-Room-20250302-203850-10.png'
-        },
-        'quantum-container': {
-            name: 'CONTENEDOR CUÁNTICO',
-            description: 'Contiene un boost aleatorio de la tienda.',
-            image: 'https://i.postimg.cc/BQyJK8rr/Photo-Room-20250302-203850-11.png'
-        },
-        'friendship-offering': {
-            name: 'OFRENDA DE AMISTAD',
-            description: 'Regala 5 puntos directos a un clan de tu elección. El clan receptor sabrá quién envió el regalo.',
-            image: 'https://i.postimg.cc/2j0kC928/Photo-Room-20250302-203850-12.png'
-        },
-        'energy-transfer': {
-            name: 'TRANSFERENCIA DE ENERGÍA',
-            description: 'Transfiere voluntariamente hasta 10 H.COINS de tu clan a otro. Esta transferencia genera un bonus de +1 H.COIN adicional para el receptor. Si te sobra el dinero, ellos te lo agradecerán.',
-            image: 'https://i.postimg.cc/wM4gF37s/Photo-Room-20250302-203850-13.png'
-        },
-        'solidarity-boost': {
-            name: 'IMPULSO SOLIDARIO',
-            description: 'Si un clan está en último lugar, puedes enviarles este impulso que les da +10 puntos inmediatos. El efecto se duplica si el clan que lo envía está en primer lugar.',
-            image: 'https://i.postimg.cc/TPn2GRHZ/Photo-Room-20250302-203850-14.png'
-        },
-        'surprise-gift': {
-            name: 'REGALO SORPRESA',
-            description: 'Envía un paquete misterioso a otro clan que contiene uno de estos efectos aleatorios: +2-10 H.COINS, +8-15 puntos de batalla, o un multiplicador x2 para la próxima batalla.',
-            image: 'https://i.postimg.cc/4d5J7WGP/Photo-Room-20250302-203850-15.png'
-        },
-        'demonic-pact': {
-            name: 'PACTO DEMONÍACO',
-            description: 'Duplica todos los puntos obtenidos en la próxima batalla, pero tendrás que quedar en primer lugar y superar al Battle Boss. De lo contrario, algo malo pasará. Un trato con sus consecuencias.',
-            image: 'https://i.postimg.cc/rFdkMVDQ/Photo-Room-20250302-203850-16.png'
-        }
-    };
-    
-    // Objeto para controlar la disponibilidad de cada runa
-// Objeto para controlar la disponibilidad de cada boost
-const boostsDisponibilidad = {
-    "ESCUDO DIVINO": true,
-    "ELECCIÓN DIVINA": true,
-    "RAYO DIVINO": true,
-    "INSPIRACIÓN METEÓRICA": true,
-    "ECLIPSE TOTAL": true,
-    "COFRE DEL TESORO": true,
-    "RUNA SALVAJE": true,
-    "POTENCIADOR NEBULAR": true,
-    "RITUAL DE TRANSFERENCIA": true,
-    "DISTORSIÓN TEMPORAL": true,
-    "AGUJERO NEGRO": true,
-    "COFRE MALDITO": true,
-    "CAJA DE SCHRODINGER": true,
-    "CONTENEDOR CUÁNTICO": true,
-    "OFRENDA DE AMISTAD": true,
-    "TRANSFERENCIA DE ENERGÍA": true,
-    "IMPULSO SOLIDARIO": true,
-    "REGALO SORPRESA": true,
-    "PACTO DEMONÍACO": true
-};
-
-// Función para mostrar el popup
-function showPopup(boostName, boostDescription, boostPrice, boostImage) {
-    const popup = document.getElementById('runePopup');
-    popup.style.opacity = '0';
-    popup.style.display = 'flex';
-    document.body.style.overflow = 'hidden';
-    
-    const details = popup.querySelector('.rune-details');
-    details.querySelector('h3').textContent = boostName;
-    details.querySelector('p').textContent = boostDescription;
-    details.querySelector('.coins-display span').textContent = boostPrice;
-    
-    // Disponibilidad y botón de tienda
-    const availabilityStatus = document.getElementById('availability-status');
-    const storeButton = document.getElementById('store-button');
-    
-    // Verificar disponibilidad
-    const isAvailable = boostsDisponibilidad[boostName] || false;
-    
-    if (isAvailable) {
-        availabilityStatus.textContent = "Disponible en tienda";
-        availabilityStatus.className = "available";
-        storeButton.style.display = "inline-block";
-        storeButton.href = "/CLANS STORE/index.html"; // Ruta vacía para futuro
-    } else {
-        availabilityStatus.textContent = "No disponible en tienda";
-        availabilityStatus.className = "unavailable";
-        storeButton.style.display = "none";
-    }
-    
-    if (boostImage) {
-        details.querySelector('img').src = boostImage;
-        details.querySelector('img').style.display = 'block';
-    } else {
-        details.querySelector('img').style.display = 'none';
-    }
-
-    setTimeout(() => {
-        popup.style.opacity = '1';
-    }, 10);
-}
-
-
-// Update the closeItemPopup function
-function closeItemPopup() {
-    const popup = document.getElementById('itemPopup');
-    popup.style.opacity = '0';
-    popup.classList.remove('active');
-    
-    setTimeout(() => {
-        popup.style.display = 'none';
-        document.body.style.overflow = 'auto';
-    }, 300);
-}
-
-    
-    
-    
-
-    // Función para cerrar el popup al hacer clic fuera del contenido
-    document.getElementById('itemPopup').addEventListener('click', function(e) {
-        if (e.target === this) {
-            closeItemPopup();
-        }
     });
     
-    // Agregar listeners a los slots de inventario
-    document.addEventListener('DOMContentLoaded', function() {
-        const slots = document.querySelectorAll('.inventory-slot:not(.empty)');
-        slots.forEach(slot => {
-            slot.addEventListener('click', function() {
-                const itemType = this.getAttribute('data-item-type');
-                if (itemType) {
-                    showItemPopup(itemType);
-                }
+    links.forEach(link => {
+        link.addEventListener('mouseenter', () => {
+            gsap.to(cursor, {
+                scale: 1.5,
+                duration: 0.3
+            });
+        });
+        
+        link.addEventListener('mouseleave', () => {
+            gsap.to(cursor, {
+                scale: 1,
+                duration: 0.3
             });
         });
     });
+    
+    // Ocultar cursor en dispositivos táctiles
+    if ('ontouchstart' in window) {
+        cursor.style.display = 'none';
+    }
+}
+
+// Función para manejar el menú móvil
+function initMobileMenu() {
+    const menuToggle = document.getElementById('menu-toggle');
+    const mobileMenu = document.getElementById('mobile-menu');
+    const mobileLinks = mobileMenu.querySelectorAll('a');
+    
+    menuToggle.addEventListener('click', () => {
+        mobileMenu.classList.toggle('active');
+        if (mobileMenu.classList.contains('active')) {
+            document.body.style.overflow = 'hidden';
+        } else {
+            document.body.style.overflow = 'auto';
+        }
+    });
+    
+    mobileLinks.forEach(link => {
+        link.addEventListener('click', () => {
+            mobileMenu.classList.remove('active');
+            document.body.style.overflow = 'auto';
+        });
+    });
+}
+
+// Función para inicializar las animaciones con GSAP
+function initAnimations() {
+    // Asegurarse que todos los elementos scale-in sean visibles
+    document.querySelectorAll('.scale-in').forEach(element => {
+        element.style.opacity = '1';
+        element.style.transform = 'scale(1)';
+    });
+    
+    // Animación del texto del héroe - más simple
+    const heroTexts = document.querySelectorAll('.hero-text-animation');
+    heroTexts.forEach(text => {
+        text.style.opacity = '1';
+        text.style.transform = 'translateY(0)';
+    });
+    
+    // Configurar scroll triggers básicos sin depender tanto de GSAP
+    const observerOptions = {
+        threshold: 0.1,
+        rootMargin: '-100px 0px'
+    };
+    
+    const scrollObserver = new IntersectionObserver((entries) => {
+        entries.forEach(entry => {
+            if (entry.isIntersecting) {
+                entry.target.style.opacity = '1';
+                entry.target.style.transform = 'translateY(0) scale(1)';
+                scrollObserver.unobserve(entry.target);
+            }
+        });
+    }, observerOptions);
+    
+    // Observar elementos de categorías y ganadores
+    document.querySelectorAll('.category-card, .winner-slot').forEach(element => {
+        scrollObserver.observe(element);
+    });
+}
+// Función para animar el artwork de los Challenges
+function initArtworkAnimation() {
+    const artwork = document.getElementById('challenges-artwork');
+    if (artwork) {
+        // Aplicar animación directamente
+        artwork.style.animation = 'float 6s ease-in-out infinite';
+    }
+}
+
+// Función para inicializar Lottie
+function initLottie() {
+    // Confetti animation data
+    const confettiData = {
+        "v": "5.5.7",
+        "fr": 30,
+        "ip": 0,
+        "op": 90,
+        "w": 1920,
+        "h": 1080,
+        "nm": "Confetti",
+        "ddd": 0,
+        "assets": [],
+        "layers": [
+            {
+                "ddd": 0,
+                "ind": 1,
+                "ty": 4,
+                "nm": "Confetti 1",
+                "sr": 1,
+                "ks": {
+                    "o": {"a": 0, "k": 100, "ix": 11},
+                    "r": {"a": 0, "k": 0, "ix": 10},
+                    "p": {"a": 0, "k": [960, 540, 0], "ix": 2},
+                    "a": {"a": 0, "k": [0, 0, 0], "ix": 1},
+                    "s": {"a": 0, "k": [100, 100, 100], "ix": 6}
+                },
+                "ao": 0,
+                "shapes": [
+                    {
+                        "ty": "gr",
+                        "it": [
+                            {
+                                "ty": "rc",
+                                "d": 1,
+                                "s": {"a": 0, "k": [20, 10], "ix": 2},
+                                "p": {"a": 0, "k": [0, 0], "ix": 3},
+                                "r": {"a": 0, "k": 0, "ix": 4},
+                                "nm": "Rectangle Path 1",
+                                "mn": "ADBE Vector Shape - Rect",
+                                "hd": false
+                            },
+                            {
+                                "ty": "fl",
+                                "c": {"a": 0, "k": [0.89, 0.24, 0.24, 1], "ix": 4},
+                                "o": {"a": 0, "k": 100, "ix": 5},
+                                "r": 1,
+                                "bm": 0,
+                                "nm": "Fill 1",
+                                "mn": "ADBE Vector Graphic - Fill",
+                                "hd": false
+                            },
+                            {
+                                "ty": "rp",
+                                "c": {"a": 0, "k": 50, "ix": 1},
+                                "o": {"a": 0, "k": 0, "ix": 2},
+                                "m": 1,
+                                "ix": 3,
+                                "tr": {
+                                    "ty": "tr",
+                                    "p": {
+                                        "a": 1,
+                                        "k": [
+                                            {
+                                                "i": {"x": 0.833, "y": 0.833},
+                                                "o": {"x": 0.167, "y": 0.167},
+                                                "t": 0,
+                                                "s": [0, -600],
+                                                "to": [0, 216.667],
+                                                "ti": [0, -216.667]
+                                            },
+                                            {"t": 90, "s": [0, 700]}
+                                        ],
+                                        "ix": 2
+                                    },
+                                    "a": {"a": 0, "k": [0, 0], "ix": 1},
+                                    "s": {"a": 0, "k": [100, 100], "ix": 3},
+                                    "r": {
+                                        "a": 1,
+                                        "k": [
+                                            {
+                                                "i": {"x": [0.833], "y": [0.833]},
+                                                "o": {"x": [0.167], "y": [0.167]},
+                                                "t": 0,
+                                                "s": [0]
+                                            },
+                                            {"t": 90, "s": [360]}
+                                        ],
+                                        "ix": 4
+                                    },
+                                    "so": {"a": 0, "k": 100, "ix": 5},
+                                    "eo": {"a": 0, "k": 100, "ix": 6},
+                                    "nm": "Transform"
+                                },
+                                "nm": "Repeater 1",
+                                "mn": "ADBE Vector Filter - Repeater",
+                                "hd": false
+                            }
+                        ],
+                        "np": 2,
+                        "cix": 2,
+                        "bm": 0,
+                        "ix": 1,
+                        "mn": "ADBE Vector Group",
+                        "hd": false
+                    }
+                ],
+                "ip": 0,
+                "op": 90,
+                "st": 0,
+                "bm": 0
+            }
+        ],
+        "markers": []
+    };
+    
+    // Elemento donde se renderizará la animación
+    const confettiContainer = document.getElementById('confetti-container');
+    
+    // Inicializar la animación
+    const confettiAnimation = lottie.loadAnimation({
+        container: confettiContainer,
+        renderer: 'svg',
+        loop: true,
+        autoplay: false,
+        animationData: confettiData
+    });
+    
+    // Activar la animación cuando se haga scroll hasta la sección de ganadores
+    ScrollTrigger.create({
+        trigger: '#records',
+        start: 'top center',
+        onEnter: () => confettiAnimation.play(),
+        onLeave: () => confettiAnimation.pause(),
+        onEnterBack: () => confettiAnimation.play(),
+        onLeaveBack: () => confettiAnimation.pause()
+    });
+}
+
+// Función para filtrar challenges
+function initChallengesFilter() {
+    const filters = document.querySelectorAll('.nominee-filter');
+    const challenges = document.querySelectorAll('.nominee-item');
+    
+    filters.forEach(filter => {
+        filter.addEventListener('click', () => {
+            // Actualizar estado activo de los filtros
+            filters.forEach(f => {
+                f.classList.remove('active', 'text-heroes-red', 'border-heroes-red');
+                f.classList.add('text-white', 'hover:text-heroes-red', 'hover:border-heroes-red', 'border-white', 'border-opacity-30');
+            });
+            
+            filter.classList.add('active', 'text-heroes-red', 'border-heroes-red');
+            filter.classList.remove('text-white', 'hover:text-heroes-red', 'hover:border-heroes-red', 'border-white', 'border-opacity-30');
+            
+            const category = filter.getAttribute('data-category');
+            
+            // SOLUCIÓN AL BUG: Primero configurar todos los elementos que se ocultarán
+            if (category !== 'all') {
+                challenges.forEach(challenge => {
+                    if (challenge.getAttribute('data-category') !== category) {
+                        // Primero ocultamos sin animación para evitar parpadeos
+                        challenge.style.opacity = '0';
+                        challenge.style.transform = 'scale(0.8)';
+                        setTimeout(() => {
+                            challenge.classList.add('hidden');
+                        }, 300); // Tiempo suficiente para que termine la transición
+                    }
+                });
+            }
+            
+            // Luego mostrar los elementos correspondientes
+            setTimeout(() => {
+                challenges.forEach(challenge => {
+                    if (category === 'all' || challenge.getAttribute('data-category') === category) {
+                        challenge.classList.remove('hidden');
+                        // Pequeño delay para asegurar que el DOM ha actualizado
+                        setTimeout(() => {
+                            challenge.style.opacity = '1';
+                            challenge.style.transform = 'scale(1)';
+                        }, 50);
+                    }
+                });
+            }, category === 'all' ? 0 : 300); // Si es "all", no esperamos
+        });
+    });
+    
+    // Inicializar con "all" seleccionado
+    document.querySelector('.nominee-filter[data-category="all"]').click();
+}
+// Función para crear efecto de estrellas en expansión
+function createStarEffect() {
+    document.addEventListener('click', (e) => {
+        // Crear estrellas
+        for (let i = 0; i < 6; i++) {
+            const star = document.createElement('div');
+            star.classList.add('star-particle');
+            
+            // Posición exactamente donde se hizo clic
+            star.style.left = `${e.clientX}px`;
+            star.style.top = `${e.clientY}px`;
+            
+            // Tamaños MUCHO más grandes
+            const size = 5 + (i * 8); // Base de 50px + incremento de 15px por estrella
+            star.style.width = `${size}px`;
+            star.style.height = `${size}px`;
+            
+            // Color aleatorio de la paleta
+            const colors = ['#E53E3E', '#FFFFFF', '#1A1A1A'];
+            const randomColor = colors[i % colors.length]; 
+            star.style.backgroundColor = randomColor;
+            
+            document.body.appendChild(star);
+            
+            // Ángulo para distribución circular
+            const angle = (i / 6) * Math.PI * 2;
+            const distance = 150; // Mayor distancia
+            const xPos = Math.cos(angle) * distance;
+            const yPos = Math.sin(angle) * distance;
+            
+            // Animación con estrellas más grandes
+            gsap.to(star, {
+                duration: 0.7,
+                opacity: 10,
+                scale: 1.5, // Escala mayor
+                ease: "power1.out"
+            });
+            
+            gsap.to(star, {
+                duration: 1.8, // Duración más larga
+                x: xPos,
+                y: yPos,
+                opacity: 0,
+                scale: 2.5, // Escala MUCHO mayor al expandirse
+                ease: "power2.out",
+                onComplete: () => {
+                    star.remove();
+                }
+            });
+        }
+    });
+}
+
+// Función para inicializar el modal de desafíos
+function initChallengeModal() {
+    const modal = document.getElementById('challenge-modal');
+    const modalBackdrop = document.getElementById('modal-backdrop');
+    const closeButton = document.getElementById('close-modal');
+    const challengeItems = document.querySelectorAll('.nominee-item[data-challenge-id]');
+    
+    // Elementos del modal
+    const modalIcon = document.getElementById('modal-icon');
+    const modalTitle = document.getElementById('modal-title');
+    const modalCategory = document.getElementById('modal-category');
+    const difficultyBar = document.getElementById('difficulty-bar');
+    const difficultyText = document.getElementById('difficulty-text');
+    const modalDescription = document.getElementById('modal-description');
+    const modalReward = document.getElementById('modal-reward');
+    const whatsappTemplate = document.getElementById('whatsapp-template');
+    const copyTemplateBtn = document.getElementById('copy-template');
+    const whatsappLink = document.getElementById('whatsapp-link');
+    const notionLink = document.getElementById('notion-link');
+    
+    // Función para abrir el modal con datos del desafío
+    function openModal(challengeId) {
+        console.log("Abriendo modal para:", challengeId);
+        const challenge = challengesData[challengeId];
+        if (!challenge) {
+            console.error("No se encontró el challenge:", challengeId);
+            return;
+        }
+        
+        // Llenar datos
+        modalTitle.textContent = challenge.title;
+        modalCategory.textContent = challenge.category;
+        difficultyBar.style.width = `${challenge.difficulty * 20}%`;
+        difficultyText.textContent = challenge.difficultyText;
+        modalDescription.textContent = challenge.description;
+        modalReward.textContent = challenge.reward;
+        whatsappTemplate.textContent = challenge.whatsappTemplate;
+        
+        // Actualizar el ícono según la categoría
+        if (challenge.category.includes("Meditación")) {
+            modalIcon.setAttribute("data-lucide", "brain");
+        } else if (challenge.category.includes("Deepworking")) {
+            modalIcon.setAttribute("data-lucide", "timer");
+        } else if (challenge.category.includes("Pasos")) {
+            modalIcon.setAttribute("data-lucide", "footprints");
+        } else if (challenge.category.includes("Lectura")) {
+            modalIcon.setAttribute("data-lucide", "book-open");
+        } else {
+            modalIcon.setAttribute("data-lucide", "sparkles");
+        }
+        
+        // Actualizar links
+        notionLink.href = challenge.notionLink;
+        
+        // WhatsApp link
+        const encodedTemplate = encodeURIComponent(challenge.whatsappTemplate);
+        whatsappLink.href = `https://wa.me/?text=${encodedTemplate}`;
+        
+        // Mostrar modal
+        modal.classList.add('active');
+        modal.style.opacity = '1';
+        modal.style.pointerEvents = 'auto';
+        document.body.style.overflow = 'hidden';
+        
+        // Volver a inicializar los íconos de Lucide para que se actualice el ícono
+        lucide.createIcons({
+            attrs: {
+                class: ["w-full", "h-full"]
+            }
+        });
+    }
+    
+    // Función para cerrar el modal
+    function closeModal() {
+        modal.classList.remove('active');
+        modal.style.opacity = '0';
+        modal.style.pointerEvents = 'none';
+        document.body.style.overflow = 'auto';
+    }
+    
+    // Event listeners
+    if (challengeItems.length > 0) {
+        console.log("Registrando", challengeItems.length, "listeners para challenges");
+        challengeItems.forEach(item => {
+            item.addEventListener('click', () => {
+                const challengeId = item.getAttribute('data-challenge-id');
+                console.log("Click en challenge:", challengeId);
+                openModal(challengeId);
+            });
+        });
+    } else {
+        console.error("No se encontraron elementos con data-challenge-id");
+    }
+    
+    closeButton.addEventListener('click', () => {
+        console.log("Click en cerrar modal");
+        closeModal();
+    });
+    
+    modalBackdrop.addEventListener('click', () => {
+        console.log("Click en backdrop");
+        closeModal();
+    });
+    
+    // Copiar plantilla al portapapeles
+    copyTemplateBtn.addEventListener('click', () => {
+        console.log("Intentando copiar al portapapeles");
+        navigator.clipboard.writeText(whatsappTemplate.textContent)
+            .then(() => {
+                // Feedback visual
+                copyTemplateBtn.textContent = "¡COPIADO!";
+                copyTemplateBtn.classList.add('bg-green-600');
+                copyTemplateBtn.classList.remove('bg-heroes-red');
+                
+                setTimeout(() => {
+                    copyTemplateBtn.textContent = "COPIAR PLANTILLA";
+                    copyTemplateBtn.classList.remove('bg-green-600');
+                    copyTemplateBtn.classList.add('bg-heroes-red');
+                }, 2000);
+            })
+            .catch(err => {
+                console.error('Error al copiar: ', err);
+            });
+    });
+}
+
+
+// Inicializar todas las funciones cuando se cargue el documento
+document.addEventListener('DOMContentLoaded', () => {
+    initCustomCursor();
+    initMobileMenu();
+    initAnimations();
+    initArtworkAnimation();
+    initLottie();
+    initChallengesFilter();
+    createStarEffect();
+    initChallengeModal();
+    
+    // Inicializar los iconos de Lucide
+    lucide.createIcons();
+    
+    // Verificar modo oscuro/claro
+    if (window.matchMedia && window.matchMedia('(prefers-color-scheme: dark)').matches) {
+        document.documentElement.classList.add('dark');
+    }
+    
+    window.matchMedia('(prefers-color-scheme: dark)').addEventListener('change', event => {
+        if (event.matches) {
+            document.documentElement.classList.add('dark');
+        } else {
+            document.documentElement.classList.remove('dark');
+        }
+    });
+});
 </script>
-
-
-
-
 </body>
 </html>
