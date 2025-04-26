@@ -23,7 +23,7 @@
     <script src="https://cdnjs.cloudflare.com/ajax/libs/lottie-web/5.12.2/lottie.min.js"></script>
     
     <!-- Three.js para elementos 3D -->
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/0.157.0/three.min.js"></script>ñ
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/0.157.0/three.min.js"></script>-
     
     <!-- Inter font -->
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700;800;900&display=swap" rel="stylesheet">
@@ -3399,6 +3399,397 @@
     }
 }
 
+/* Estilos Retro para la sección de Records */
+:root {
+  --heroes-red: #E53E3E;
+  --heroes-red-dark: #C53030;
+  --pixel-shadow: 4px 4px 0 rgba(0, 0, 0, 0.8);
+  --pixel-border: 3px solid #000;
+  --glitch-color1: #00fffc;
+  --glitch-color2: #fc00ff;
+}
+
+/* Contenedor principal de Récords con estilo retro */
+#records {
+  position: relative;
+  background-color: #000;
+  background-image: 
+    linear-gradient(rgba(229, 62, 62, 0.1) 1px, transparent 1px),
+    linear-gradient(90deg, rgba(229, 62, 62, 0.1) 1px, transparent 1px);
+  background-size: 20px 20px;
+  overflow: hidden;
+}
+
+/* Efecto de líneas de escaneo retro */
+#records::before {
+  content: "";
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background: repeating-linear-gradient(
+    0deg,
+    rgba(0, 0, 0, 0.2),
+    rgba(0, 0, 0, 0.2) 1px,
+    transparent 1px,
+    transparent 2px
+  );
+  pointer-events: none;
+  z-index: 1;
+}
+
+/* Título de sección con estilo arcade */
+#records h2.arcade-font,
+.arcade-font {
+  font-family: 'Press Start 2P', cursive !important;
+  text-transform: uppercase;
+  letter-spacing: 1px;
+  position: relative;
+  z-index: 2;
+  line-height: 1.5;
+  text-shadow: var(--pixel-shadow);
+  animation: textPulse 3s infinite;
+}
+
+@keyframes textPulse {
+  0%, 100% { text-shadow: 4px 4px 0 rgba(0, 0, 0, 0.8); }
+  50% { text-shadow: 4px 4px 0 rgba(229, 62, 62, 0.5); }
+}
+
+/* Tarjetas de récords con estilo retro */
+.record-card {
+  border: var(--pixel-border) !important;
+  background-color: #111 !important;
+  box-shadow: var(--pixel-shadow) !important;
+  transition: all 0.3s ease;
+  transform-style: preserve-3d;
+  position: relative;
+  overflow: hidden;
+}
+
+.record-card::after {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background: linear-gradient(
+    45deg, 
+    transparent 65%, 
+    rgba(229, 62, 62, 0.3) 75%, 
+    rgba(229, 62, 62, 0.1) 85%, 
+    transparent 95%
+  );
+  pointer-events: none;
+  z-index: 1;
+}
+
+.record-card:hover {
+  transform: translateY(-5px) scale(1.02) !important;
+  box-shadow: 6px 6px 0 rgba(0, 0, 0, 0.9) !important;
+}
+
+.record-card:hover::after {
+  animation: cardShineFast 1.5s forwards;
+}
+
+@keyframes cardShineFast {
+  0% { transform: translateX(-100%) translateY(-100%); }
+  100% { transform: translateX(100%) translateY(100%); }
+}
+
+/* Placeholder con estilo pixel art */
+.record-placeholder {
+  position: relative;
+  z-index: 2;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  padding: 1rem;
+  text-align: center;
+}
+
+.record-placeholder-icon {
+  border: 3px solid var(--heroes-red) !important;
+  box-shadow: 3px 3px 0 rgba(0, 0, 0, 0.8);
+  padding: 0.75rem;
+  margin-bottom: 1rem;
+}
+
+.record-placeholder h3 {
+  font-family: 'Press Start 2P', cursive !important;
+  font-size: 1.5rem !important;
+  margin-bottom: 1rem;
+  text-shadow: 3px 3px 0 rgba(0, 0, 0, 0.8);
+  color: var(--heroes-red) !important;
+}
+
+.record-placeholder p {
+  text-shadow: 2px 2px 0 rgba(0, 0, 0, 0.8);
+  line-height: 1.6;
+}
+
+.record-placeholder p .highlight {
+  color: var(--heroes-red);
+  font-weight: bold;
+}
+
+@keyframes pulse-placeholder {
+  0%, 100% { opacity: 0.9; transform: scale(1); }
+  50% { opacity: 1; transform: scale(1.02); }
+}
+
+.pulse-placeholder {
+  animation: pulse-placeholder 3s ease-in-out infinite !important;
+}
+
+/* Efectos Glitch y Animaciones Pixeladas */
+.text-gradient.pixel-art {
+  font-family: 'Press Start 2P', cursive !important;
+  position: relative;
+  color: #fff !important; 
+  text-shadow: 2px 2px 0 #000;
+  background: linear-gradient(90deg, var(--heroes-red), #fff, var(--heroes-red));
+  background-size: 200% auto;
+  -webkit-background-clip: text;
+  background-clip: text;
+  -webkit-text-fill-color: transparent;
+  animation: shine 3s linear infinite, glitchText 2s infinite;
+}
+
+/* Mensaje de "Actualizado diariamente" con estilo de consola */
+#records h2 span.text-lg {
+  font-family: 'Press Start 2P', cursive;
+  font-size: 0.7rem !important;
+  position: relative;
+  overflow: hidden;
+  display: inline-block;
+  padding-right: 0.5rem;
+  color: #aaa;
+}
+
+#records h2 span.text-lg::after {
+  content: "|";
+  position: absolute;
+  right: 0;
+  top: 0;
+  animation: blink 1s infinite;
+}
+
+@keyframes blink {
+  0%, 100% { opacity: 1; }
+  50% { opacity: 0; }
+}
+
+@keyframes glitchText {
+  0%, 90%, 100% { 
+    text-shadow: 2px 2px 0 #000;
+    transform: translate(0);
+  }
+  1%, 3% { 
+    text-shadow: 
+      -1px -1px 0 var(--glitch-color1),
+      1px 1px 0 var(--glitch-color2);
+    transform: translate(-2px, 2px);
+  }
+  2%, 4% { 
+    text-shadow: 
+      1px 1px 0 var(--glitch-color1),
+      -1px -1px 0 var(--glitch-color2);
+    transform: translate(2px, -2px);
+  }
+}
+
+/* Badge de "PRÓXIMAMENTE" con estilo pixelado */
+.transform.rotate-45.text-heroes-red.font-black.text-xl.px-20.py-2.bg-black.bg-opacity-50.whitespace-nowrap {
+  font-family: 'Press Start 2P', cursive !important;
+  font-size: 0.9rem !important;
+  text-shadow: 2px 2px 0 rgba(0, 0, 0, 0.8);
+  border: 2px solid var(--heroes-red);
+  animation: pixelRotate 4s infinite alternate;
+}
+
+@keyframes pixelRotate {
+  0% { transform: rotate(44deg); }
+  50% { transform: rotate(46deg); }
+  100% { transform: rotate(44deg); }
+}
+
+/* Botones con estilo pixelado */
+#records a.bg-heroes-red,
+#records a.border-2 {
+  font-family: 'Press Start 2P', cursive !important;
+  font-size: 0.8rem;
+  border: 3px solid #000;
+  box-shadow: 4px 4px 0 rgba(0, 0, 0, 0.8);
+  text-shadow: 1px 1px 0 rgba(0, 0, 0, 0.8);
+  transition: all 0.2s ease;
+  text-decoration: none;
+}
+
+#records a.bg-heroes-red:hover,
+#records a.border-2:hover {
+  transform: translate(-2px, -2px);
+  box-shadow: 6px 6px 0 rgba(0, 0, 0, 0.8);
+}
+
+#records a.bg-heroes-red:active,
+#records a.border-2:active {
+  transform: translate(1px, 1px);
+  box-shadow: 3px 3px 0 rgba(0, 0, 0, 0.8);
+}
+
+/* Estado "próximamente" con estilo pixel art */
+.text-yellow-500 {
+  font-family: 'Press Start 2P', cursive;
+  font-size: 0.7rem !important;
+  color: #FFD700 !important;
+  text-shadow: 1px 1px 0 rgba(0, 0, 0, 0.8);
+  letter-spacing: 1px;
+  animation: yellowBlink 2s infinite;
+}
+
+@keyframes yellowBlink {
+  0%, 49%, 100% { opacity: 1; }
+  50%, 90% { opacity: 0.7; }
+}
+
+/* Mensaje motivacional con estilo retro */
+#records .mt-16 {
+  position: relative;
+  padding: 1.5rem;
+  margin-top: 3rem !important;
+  border: 3px solid var(--heroes-red);
+  background-color: rgba(0, 0, 0, 0.6);
+  box-shadow: var(--pixel-shadow);
+}
+
+#records .mt-16 p:first-child {
+  font-family: 'Press Start 2P', cursive !important;
+  font-size: 0.9rem !important;
+  color: var(--heroes-red) !important;
+  margin-bottom: 1rem !important;
+  text-shadow: 2px 2px 0 rgba(0, 0, 0, 0.8);
+}
+
+#records .mt-16::before {
+  content: "?";
+  position: absolute;
+  top: -25px;
+  left: 50%;
+  transform: translateX(-50%);
+  font-family: 'Press Start 2P', cursive;
+  font-size: 1.5rem;
+  color: #fff;
+  background-color: var(--heroes-red);
+  border: 3px solid #000;
+  width: 40px;
+  height: 40px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border-radius: 0;
+  box-shadow: var(--pixel-shadow);
+}
+
+/* Ajustes para tarjetas de récords - solución al recorte */
+.winner-slot, .record-card {
+  height: auto !important; /* Reemplaza el height fijo por auto */
+  min-height: 300px; /* Altura mínima para mantener consistencia */
+  padding: 1.5rem !important; /* Padding consistente */
+  margin-bottom: 1.5rem; /* Espacio entre tarjetas */
+  display: flex;
+  flex-direction: column;
+}
+
+/* Asegurar que el contenedor se ajusta al contenido */
+.record-placeholder {
+  padding: 1rem;
+  height: 100%;
+  width: 100%;
+}
+
+/* Ajustar el grid para móvil y PC */
+.grid.grid-cols-1.md\:grid-cols-2.lg\:grid-cols-3.gap-8.max-w-6xl.mx-auto {
+  display: grid;
+  grid-template-columns: 1fr; /* 1 columna en móvil */
+  gap: 1.5rem;
+  width: 100%;
+  max-width: 100%;
+}
+
+/* Media query para tablets */
+@media (min-width: 768px) {
+  .grid.grid-cols-1.md\:grid-cols-2.lg\:grid-cols-3.gap-8.max-w-6xl.mx-auto {
+    grid-template-columns: repeat(2, 1fr); /* 2 columnas en tablet */
+  }
+}
+
+/* Media query para PC */
+@media (min-width: 1024px) {
+  .grid.grid-cols-1.md\:grid-cols-2.lg\:grid-cols-3.gap-8.max-w-6xl.mx-auto {
+    grid-template-columns: repeat(3, 1fr); /* 3 columnas en PC */
+    max-width: 1200px;
+    margin: 0 auto;
+  }
+}
+
+/* Ajuste para asegurar que los títulos no se desborden */
+.record-placeholder h3.arcade-font {
+  font-size: 1.25rem !important; /* Más pequeño en móvil */
+  word-break: break-word;
+  line-height: 1.4;
+  margin-bottom: 0.75rem;
+}
+
+@media (min-width: 768px) {
+  .record-placeholder h3.arcade-font {
+    font-size: 1.5rem !important; /* Más grande en pantallas mayores */
+  }
+}
+
+/* Ajustar el padding del texto */
+.record-placeholder p {
+  margin-bottom: 0.75rem;
+  font-size: 0.9rem;
+  line-height: 1.6;
+}
+
+/* Ajuste para la última tarjeta */
+.record-card:last-child {
+  margin-bottom: 0;
+}
+
+/* Mejorar la distribución vertical del contenido */
+.record-placeholder-icon {
+  margin-bottom: 1rem !important;
+}
+
+/* Asegurarnos que el ícono está centrado */
+.record-placeholder-icon i {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+/* Corregir posibles desbordamientos */
+.records-grid {
+  overflow: visible;
+  width: 100%;
+  padding: 0 1rem;
+}
+
+/* Asegurar que las tarjetas no se desborden */
+section#records {
+  overflow-x: hidden;
+  width: 100%;
+}
+
+
+
     </style>
     
     <!-- Lucide Icons -->
@@ -3433,7 +3824,7 @@
 <nav class="fixed top-0 w-full bg-heroes-black bg-opacity-80 backdrop-blur-md z-50 px-4 md:px-0">
     <div class="container mx-auto py-4 flex justify-between items-center">
         <div class="flex items-center space-x-2">
-            <img src="https://i.postimg.cc/CKVSLwcQ/117-sin-t-tulo-20250323142054.png" alt="Heroes Challenges Logo" class="h-10 w-auto">
+           
             <span class="text-heroes-red font-black text-xl md:block hidden">CHALLENGES</span>
         </div>
         
@@ -3531,7 +3922,7 @@
                 <span>CÓMO PARTICIPAR</span>
                 <span class="block text-heroes-red">EN LOS CHALLENGES</span>
             </h2>
-            <p class="text-xl text-gray-300 max-w-2xl mx-auto">Sigue estos pasos para unirte a cualquier challenge y comenzar tu camino hacia la excelencia (con su debida buena recompensa).</p>
+            <p class="text-xl text-gray-300 max-w-2xl mx-auto">Sigue estos pasos para unirte a la comunidad de héroes y comenzar tu camino hacia la excelencia.</p>
         </div>
         
         <!-- Nueva implementación del timeline -->
@@ -3774,74 +4165,74 @@ a partir del [FECHA DE INICIO].
 <!-- Records Section -->
 <section id="records" class="py-20 px-4 bg-gradient-to-b from-black to-heroes-black relative">
     <div class="container mx-auto">
-        <h2 class="text-4xl md:text-5xl font-black text-center mb-16 scale-in">
-            <span class="text-gradient">RÉCORDS ACTUALES</span>
-            <span class="block text-heroes-red text-lg mt-2">Actualizado diariamente</span>
+        <h2 class="text-4xl md:text-5xl font-black text-center mb-16 scale-in arcade-font">
+            <span class="text-gradient pixel-art">RÉCORDS ACTUALES</span>
+            <span class="block text-lg mt-2 console-text">ACTUALIZADO DIARIAMENTE</span>
         </h2>
         
-        <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8 max-w-6xl mx-auto">
+        <div class="records-grid grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8 max-w-6xl mx-auto">
             <!-- BEST MONK -->
-            <div class="winner-slot p-6 rounded-xl scale-in h-72 flex items-center justify-center record-card">
+            <div class="winner-slot p-6 rounded-xl scale-in flex items-center justify-center record-card">
                 <div class="record-placeholder pulse-placeholder text-center">
                     <div class="record-placeholder-icon mb-4 mx-auto">
                         <i data-lucide="brain" class="h-10 w-10 text-heroes-red"></i>
                     </div>
-                    <h3 class="text-3xl font-black text-heroes-red mb-3">BEST MONK</h3>
+                    <h3 class="text-3xl font-black text-heroes-red mb-3 arcade-font">BEST MONK</h3>
                     <p class="text-gray-400 mb-2">Récord actual: <span class="text-white">Sin establecer</span></p>
-                    <p class="text-gray-300 max-w-xs mx-auto">¿Serás tú quien establezca el récord de meditación? El trono está vacío, esperando a su primer campeón.</p>
+                    <p class="text-gray-300 max-w-xs mx-auto">¿Serás <span class="highlight">tú</span> quien establezca el récord de meditación? El trono está <span class="highlight">vacío</span>, esperando a su primer campeón.</p>
                 </div>
             </div>
             
             <!-- BEST READER -->
-            <div class="winner-slot p-6 rounded-xl scale-in h-72 flex items-center justify-center record-card">
+            <div class="winner-slot p-6 rounded-xl scale-in flex items-center justify-center record-card">
                 <div class="record-placeholder pulse-placeholder text-center">
                     <div class="record-placeholder-icon mb-4 mx-auto">
                         <i data-lucide="book-open" class="h-10 w-10 text-heroes-red"></i>
                     </div>
-                    <h3 class="text-3xl font-black text-heroes-red mb-3">BEST READER</h3>
+                    <h3 class="text-3xl font-black text-heroes-red mb-3 arcade-font">BEST READER</h3>
                     <p class="text-gray-400 mb-2">Récord actual: <span class="text-white">Sin establecer</span></p>
-                    <p class="text-gray-300 max-w-xs mx-auto">El conocimiento espera su campeón. ¿Cuántas horas puedes dedicar a la lectura en un solo día?</p>
+                    <p class="text-gray-300 max-w-xs mx-auto">El <span class="highlight">conocimiento</span> espera su campeón. ¿Cuántas <span class="highlight">horas</span> puedes dedicar a la lectura en un solo día?</p>
                 </div>
             </div>
             
             <!-- BEST WALKER -->
-            <div class="winner-slot p-6 rounded-xl scale-in h-72 flex items-center justify-center record-card">
+            <div class="winner-slot p-6 rounded-xl scale-in flex items-center justify-center record-card">
                 <div class="record-placeholder pulse-placeholder text-center">
                     <div class="record-placeholder-icon mb-4 mx-auto">
                         <i data-lucide="footprints" class="h-10 w-10 text-heroes-red"></i>
                     </div>
-                    <h3 class="text-3xl font-black text-heroes-red mb-3">BEST WALKER</h3>
+                    <h3 class="text-3xl font-black text-heroes-red mb-3 arcade-font">BEST WALKER</h3>
                     <p class="text-gray-400 mb-2">Récord actual: <span class="text-white">Sin establecer</span></p>
-                    <p class="text-gray-300 max-w-xs mx-auto">Cada paso cuenta en este camino hacia la gloria. ¿Cuántos pasos puedes dar en 24 horas?</p>
+                    <p class="text-gray-300 max-w-xs mx-auto">Cada <span class="highlight">paso</span> cuenta en este camino hacia la gloria. ¿Cuántos pasos puedes dar en <span class="highlight">24 horas</span>?</p>
                 </div>
             </div>
             
             <!-- BEST DEEPWORKER -->
-            <div class="winner-slot p-6 rounded-xl scale-in h-72 flex items-center justify-center record-card">
+            <div class="winner-slot p-6 rounded-xl scale-in flex items-center justify-center record-card">
                 <div class="record-placeholder pulse-placeholder text-center">
                     <div class="record-placeholder-icon mb-4 mx-auto">
                         <i data-lucide="timer" class="h-10 w-10 text-heroes-red"></i>
                     </div>
-                    <h3 class="text-3xl font-black text-heroes-red mb-3">BEST DEEPWORKER</h3>
+                    <h3 class="text-3xl font-black text-heroes-red mb-3 arcade-font">BEST DEEPWORKER</h3>
                     <p class="text-gray-400 mb-2">Récord actual: <span class="text-white">Sin establecer</span></p>
-                    <p class="text-gray-300 max-w-xs mx-auto">La concentración absoluta tiene su recompensa. Demuestra que eres capaz de llevar el trabajo profundo al siguiente nivel.</p>
+                    <p class="text-gray-300 max-w-xs mx-auto">La <span class="highlight">concentración</span> absoluta tiene su recompensa. Demuestra que eres capaz de llevar el trabajo profundo al <span class="highlight">siguiente nivel</span>.</p>
                 </div>
             </div>
             
             <!-- BEST THANKFUL (próximamente) -->
-            <div class="winner-slot p-6 rounded-xl scale-in h-72 flex items-center justify-center record-card">
+            <div class="winner-slot p-6 rounded-xl scale-in flex items-center justify-center record-card">
                 <div class="record-placeholder pulse-placeholder text-center">
                     <div class="record-placeholder-icon mb-4 mx-auto">
                         <i data-lucide="heart-handshake" class="h-10 w-10 text-heroes-red"></i>
                     </div>
-                    <h3 class="text-3xl font-black text-heroes-red mb-3">BEST THANKFUL</h3>
+                    <h3 class="text-3xl font-black text-heroes-red mb-3 arcade-font">BEST THANKFUL</h3>
                     <p class="text-gray-400 mb-2">Estado: <span class="text-yellow-500">Próximamente</span></p>
-                    <p class="text-gray-300 max-w-xs mx-auto">Un corazón agradecido es un corazón que crece. Prepárate para el desafío de gratitud definitivo.</p>
+                    <p class="text-gray-300 max-w-xs mx-auto">Un <span class="highlight">corazón agradecido</span> es un corazón que crece. Prepárate para el desafío de gratitud <span class="highlight">definitivo</span>.</p>
                 </div>
             </div>
             
             <!-- ANUNCIO DE PRÓXIMO RECORD -->
-            <div class="winner-slot p-6 rounded-xl scale-in h-72 flex items-center justify-center record-card relative overflow-hidden">
+            <div class="winner-slot p-6 rounded-xl scale-in flex items-center justify-center record-card relative overflow-hidden">
                 <div class="absolute inset-0 bg-heroes-red bg-opacity-10 flex items-center justify-center">
                     <div class="transform rotate-45 text-heroes-red font-black text-xl px-20 py-2 bg-black bg-opacity-50 whitespace-nowrap">PRÓXIMAMENTE</div>
                 </div>
@@ -3849,19 +4240,19 @@ a partir del [FECHA DE INICIO].
                     <div class="record-placeholder-icon mb-4 mx-auto">
                         <i data-lucide="sparkles" class="h-10 w-10 text-heroes-red"></i>
                     </div>
-                    <h3 class="text-3xl font-black text-heroes-red mb-3">NUEVA CATEGORÍA</h3>
-                    <p class="text-gray-300 max-w-xs mx-auto">Mantente atento. Estamos preparando nuevos desafíos que pondrán a prueba todos tus límites.</p>
+                    <h3 class="text-3xl font-black text-heroes-red mb-3 arcade-font">NUEVA CATEGORÍA</h3>
+                    <p class="text-gray-300 max-w-xs mx-auto">Mantente <span class="highlight">atento</span>. Estamos preparando nuevos desafíos que pondrán a prueba <span class="highlight">todos tus límites</span>.</p>
                 </div>
             </div>
         </div>
         
         <!-- Mensaje motivacional -->
         <div class="mt-16 text-center scale-in">
-            <p class="text-xl text-heroes-red font-bold mb-4">¿Tienes lo que hace falta para aparecer aquí?</p>
-            <p class="text-gray-300">Dale con todo a los Challenges y demuestra de qué estás hecho. La primera plaza en cada categoría está esperando a su dueño.</p>
+            <p class="text-xl text-heroes-red font-bold mb-4 arcade-font">¿TIENES LO QUE HACE FALTA PARA APARECER AQUÍ?</p>
+            <p class="text-gray-300">Dale con <span class="highlight">todo</span> a los Challenges y demuestra de qué estás <span class="highlight">hecho</span>. La primera plaza en cada categoría está <span class="highlight">esperando</span> a su dueño.</p>
         </div>
         
-        <!-- Lottie animation container -->
+        <!-- Lottie animation container (reemplazado por pixel art confetti) -->
         <div class="lottie-container absolute bottom-0 left-0 w-full h-64 pointer-events-none" id="confetti-container"></div>
     </div>
 </section>
@@ -6709,6 +7100,197 @@ document.addEventListener('DOMContentLoaded', function() {
         });
     });
 });
+
+// Reemplazar la función Lottie con animación de pixel art
+function initPixelConfetti() {
+  const confettiContainer = document.getElementById('confetti-container');
+  
+  if (!confettiContainer) return;
+  
+  // Limpiar el contenedor (elimina animación Lottie si existe)
+  confettiContainer.innerHTML = '';
+  confettiContainer.style.pointerEvents = 'none';
+  
+  // Crear contenedor de pixeles
+  const pixelWrapper = document.createElement('div');
+  pixelWrapper.className = 'pixel-confetti-wrapper';
+  confettiContainer.appendChild(pixelWrapper);
+  
+  // Crear pixeles de confeti
+  const colors = ['#E53E3E', '#FFD700', '#FFFFFF', '#0088FF'];
+  const pixelCount = 50;
+  
+  for (let i = 0; i < pixelCount; i++) {
+    const pixel = document.createElement('div');
+    pixel.className = 'pixel-confetti';
+    
+    // Tamaño aleatorio entre 5 y 15px
+    const size = 5 + Math.random() * 10;
+    pixel.style.width = `${size}px`;
+    pixel.style.height = `${size}px`;
+    
+    // Color aleatorio del array
+    pixel.style.backgroundColor = colors[Math.floor(Math.random() * colors.length)];
+    
+    // Posición inicial aleatoria
+    pixel.style.left = `${Math.random() * 100}%`;
+    pixel.style.top = `0`;
+    
+    // Añadir al contenedor
+    pixelWrapper.appendChild(pixel);
+    
+    // Animación con JS
+    animatePixel(pixel);
+  }
+}
+
+function animatePixel(pixel) {
+  // Valores aleatorios para la animación
+  const duration = 2 + Math.random() * 3; // 2-5 segundos
+  const delay = Math.random() * 4; // 0-4 segundos de retraso
+  const horizontalMovement = -20 + Math.random() * 40; // Movimiento horizontal aleatorio
+  
+  // Aplicar estilos de animación
+  pixel.style.animation = `fallPixel ${duration}s ease-in ${delay}s infinite`;
+  
+  // Añadir keyframes inline para cada pixel
+  const keyframes = `
+    @keyframes fallPixel {
+      0% { 
+        transform: translate(0, -50px) rotate(0deg); 
+        opacity: 0;
+      }
+      10% {
+        opacity: 1;
+      }
+      100% { 
+        transform: translate(${horizontalMovement}px, 300px) rotate(${Math.random() * 360}deg); 
+        opacity: 0;
+      }
+    }
+  `;
+  
+  // Añadir los keyframes al documento
+  const styleEl = document.createElement('style');
+  styleEl.innerHTML = keyframes;
+  document.head.appendChild(styleEl);
+}
+
+// CSS para animación de confeti
+const pixelConfettiStyles = `
+  .pixel-confetti-wrapper {
+    position: absolute;
+    bottom: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    overflow: hidden;
+    pointer-events: none;
+  }
+  
+  .pixel-confetti {
+    position: absolute;
+    background-color: #E53E3E;
+    box-shadow: 3px 3px 0 rgba(0, 0, 0, 0.4);
+    z-index: 2;
+  }
+`;
+
+// Añadir estilos para confeti pixelado
+function addPixelConfettiStyles() {
+  const styleEl = document.createElement('style');
+  styleEl.innerHTML = pixelConfettiStyles;
+  document.head.appendChild(styleEl);
+}
+
+// Función para reemplazar la inicialización de Lottie
+document.addEventListener('DOMContentLoaded', function() {
+    // Agregar estilos para confeti pixelado
+    addPixelConfettiStyles();
+    
+    // Inicializar confeti pixelado en lugar de Lottie
+    initPixelConfetti();
+    
+    // Inicializar animaciones adicionales
+    initPixelArtAnimations();
+    
+    // Añadir highlight class a palabras en negrita
+    highlightWords();
+});
+
+// Función para inicializar animaciones de pixel art
+function initPixelArtAnimations() {
+    // Animar títulos
+    const arcadeFonts = document.querySelectorAll('.arcade-font');
+    arcadeFonts.forEach(element => {
+        if (!element.classList.contains('animated')) {
+            element.classList.add('animated');
+            element.style.opacity = '0';
+            setTimeout(() => {
+                element.style.transition = 'opacity 0.5s ease, transform 0.5s ease';
+                element.style.opacity = '1';
+                element.style.transform = 'translateY(0)';
+            }, 300);
+        }
+    });
+    
+    // Animar tarjetas con efecto escalonado
+    const recordCards = document.querySelectorAll('.record-card');
+    recordCards.forEach((card, index) => {
+        card.style.opacity = '0';
+        card.style.transform = 'translateY(20px)';
+        setTimeout(() => {
+            card.style.transition = 'opacity 0.5s ease, transform 0.5s ease';
+            card.style.opacity = '1';
+            card.style.transform = 'translateY(0)';
+        }, 200 + (index * 150));
+    });
+}
+
+// Función para añadir la clase highlight a las palabras ya en negrita
+function highlightWords() {
+    const placeholders = document.querySelectorAll('.record-placeholder p');
+    placeholders.forEach(p => {
+        p.innerHTML = p.innerHTML.replace(/<span class="highlight">([^<]+)<\/span>/g, '<span class="highlight">$1</span>');
+    });
+}
+
+// Reemplazo de la función para ScrollTrigger
+function initScrollTrigger() {
+    const records = document.querySelector('#records');
+    if (!records) return;
+    
+    // Crear un observer para activar animaciones al hacer scroll
+    const observer = new IntersectionObserver((entries) => {
+        entries.forEach(entry => {
+            if (entry.isIntersecting) {
+                // Iniciar animación de confeti cuando sea visible
+                initPixelConfetti();
+                // Animar los elementos
+                initPixelArtAnimations();
+                // Desconectar el observer
+                observer.unobserve(entry.target);
+            }
+        });
+    }, { threshold: 0.2 });
+    
+    // Observar la sección de récords
+    observer.observe(records);
+}
+
+// Reemplazar ScrollTrigger.create con nuestra función
+if (typeof ScrollTrigger !== 'undefined') {
+    const originalCreate = ScrollTrigger.create;
+    ScrollTrigger.create = function(config) {
+        if (config && config.trigger === '#records') {
+            // Usar nuestra implementación para #records
+            initScrollTrigger();
+        } else {
+            // Usar la implementación original para otros casos
+            return originalCreate.apply(this, arguments);
+        }
+    };
+}
 
 </script>
 
