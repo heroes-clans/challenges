@@ -172,23 +172,11 @@
             margin: 0 auto;
         }
         
-        .winner-slot::before {
-            content: '';
-            position: absolute;
-            inset: 0;
-            border-radius: inherit;
-            padding: 2px;
-            background: linear-gradient(45deg, #E53E3E, transparent, #E53E3E);
-            -webkit-mask: linear-gradient(#fff 0 0) content-box, linear-gradient(#fff 0 0);
-            -webkit-mask-composite: xor;
-            mask-composite: exclude;
-            animation: rotate 3s linear infinite;
-        }
         
-        @keyframes rotate {
-            from { transform: rotate(0deg); }
-            to { transform: rotate(360deg); }
-        }
+       
+       
+       
+       
         
         /* Animación para escala */
         .scale-in {
@@ -3491,9 +3479,7 @@
   box-shadow: 6px 6px 0 rgba(0, 0, 0, 0.9) !important;
 }
 
-.record-card:hover::after {
-  animation: cardShineFast 1.5s forwards;
-}
+
 
 @keyframes cardShineFast {
   0% { transform: translateX(-100%) translateY(-100%); }
@@ -3788,7 +3774,637 @@ section#records {
   width: 100%;
 }
 
+/* ESTILOS RETRO 8-BIT PARA CATEGORÍAS */
+.retro-category-card {
+    background-color: #0A0A0A;
+    border: 4px solid #E53E3E;
+    box-shadow: 8px 8px 0px rgba(0, 0, 0, 0.8);
+    transition: all 0.2s ease;
+    position: relative;
+    overflow: visible;
+    z-index: 1;
+    transform: translateZ(0);
+}
 
+.retro-category-card::before {
+    content: '';
+    position: absolute;
+    top: -2px;
+    left: -2px;
+    right: -2px;
+    bottom: -2px;
+    background: repeating-linear-gradient(
+        45deg,
+        #E53E3E,
+        #E53E3E 5px,
+        #FF0000 5px,
+        #FF0000 10px
+    );
+    z-index: -1;
+    opacity: 0.2;
+    transition: opacity 0.3s ease;
+}
+
+.retro-category-card:hover {
+    transform: translate(-4px, -4px);
+    box-shadow: 12px 12px 0px rgba(0, 0, 0, 0.8);
+}
+
+.retro-category-card:hover::before {
+    opacity: 0.4;
+}
+
+.retro-category-card:active {
+    transform: translate(0px, 0px);
+    box-shadow: 4px 4px 0px rgba(0, 0, 0, 0.8);
+}
+
+.retro-icon-container {
+    position: relative;
+    width: 100%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    margin-bottom: 1rem;
+    overflow: hidden;
+}
+
+.retro-icon {
+    filter: drop-shadow(3px 3px 0px rgba(0, 0, 0, 0.8));
+    image-rendering: pixelated;
+    transition: transform 0.2s ease;
+}
+
+.retro-category-card:hover .retro-icon {
+    transform: scale(1.1);
+}
+
+.retro-title {
+    font-family: 'Press Start 2P', cursive;
+    font-size: 1.2rem;
+    color: #E53E3E;
+    margin-bottom: 1rem;
+    line-height: 1.4;
+    text-shadow: 3px 3px 0px rgba(0, 0, 0, 0.8);
+    transition: transform 0.2s ease;
+}
+
+.retro-category-card:hover .retro-title {
+    transform: scale(1.05);
+}
+
+.retro-desc {
+    font-size: 0.95rem;
+    line-height: 1.6;
+    color: rgba(255, 255, 255, 0.8);
+}
+
+.retro-desc strong {
+    color: #FFFFFF;
+    font-weight: bold;
+}
+
+/* Media queries para responsividad */
+@media (max-width: 768px) {
+    .retro-title {
+        font-size: 1rem;
+    }
+    
+    .retro-desc {
+        font-size: 0.9rem;
+    }
+}
+
+
+/* Efecto de escaneo CRT */
+.record-card::before {
+    content: "";
+    position: absolute;
+    top: -100%;
+    left: -100%;
+    height: 300%;
+    width: 300%;
+    background: repeating-linear-gradient(
+        0deg,
+        rgba(0, 0, 0, 0),
+        rgba(0, 0, 0, 0) 5px,
+        rgba(229, 62, 62, 0.1) 5px,
+        rgba(229, 62, 62, 0.1) 10px
+    );
+    animation: scanline 8s linear infinite;
+    pointer-events: none;
+    z-index: -1;
+}
+
+/* Efecto pixelado alrededor del borde */
+
+
+@keyframes scanline {
+    0% {
+        transform: translateY(-30%) rotate(1deg);
+    }
+    100% {
+        transform: translateY(0%) rotate(0deg);
+    }
+}
+
+
+
+
+.record-card:hover .pixel-effect {
+    display: block;
+}
+
+.record-card {
+    position: relative;
+}
+
+
+
+
+   
+
+
+
+
+.record-placeholder h3::before {
+    left: 2px;
+    text-shadow: -1px 0 #00FFFF;
+    clip-path: polygon(0 0, 100% 0, 100% 45%, 0 45%);
+    animation: glitch-before 3s infinite linear alternate-reverse;
+}
+
+.record-placeholder h3::after {
+    left: -2px;
+    text-shadow: 1px 0 #FFFF00;
+    clip-path: polygon(0 55%, 100% 55%, 100% 100%, 0 100%);
+    animation: glitch-after 2s infinite linear alternate-reverse;
+}
+
+@keyframes text-glitch {
+    0%, 90%, 100% { 
+        transform: translate(0); 
+        text-shadow: 2px 2px 0 #000;
+    }
+    98% {
+        transform: translate(-1px, 1px);
+        text-shadow: -1px -1px 0 #00FFFF, 1px 1px 0 #FFFF00;
+    }
+    99% {
+        transform: translate(1px, -1px);
+        text-shadow: 1px 1px 0 #00FFFF, -1px -1px 0 #FFFF00;
+    }
+}
+
+@keyframes glitch-before {
+    0% { transform: translate(0); }
+    20% { transform: translate(-2px, 2px); }
+    40% { transform: translate(-2px, -2px); }
+    60% { transform: translate(2px, 2px); }
+    80% { transform: translate(2px, -2px); }
+    100% { transform: translate(0); }
+}
+
+@keyframes glitch-after {
+    0% { transform: translate(0); }
+    20% { transform: translate(2px, -2px); }
+    40% { transform: translate(2px, 2px); }
+    60% { transform: translate(-2px, -2px); }
+    80% { transform: translate(-2px, 2px); }
+    100% { transform: translate(0); }
+}
+
+/* Efecto de pixel art para el fondo */
+#records {
+    position: relative;
+    background-color: #000;
+    background-image: 
+        linear-gradient(rgba(229, 62, 62, 0.05) 1px, transparent 1px),
+        linear-gradient(90deg, rgba(229, 62, 62, 0.05) 1px, transparent 1px);
+    background-size: 20px 20px;
+    z-index: 1;
+}
+
+/* Capa de "ruido" pixelado */
+#records::before {
+    content: "";
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 250 250' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noiseFilter'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.65' numOctaves='3' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noiseFilter)'/%3E%3C/svg%3E");
+    opacity: 0.05;
+    animation: noise-shift 1s steps(2) infinite;
+    pointer-events: none;
+    z-index: -1;
+}
+
+/* Líneas de escaneo */
+#records::after {
+    content: "";
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: repeating-linear-gradient(
+        0deg,
+        rgba(0, 0, 0, 0.15),
+        rgba(0, 0, 0, 0.15) 1px,
+        transparent 1px,
+        transparent 8px
+    );
+    pointer-events: none;
+    animation: scanlines 8s linear infinite;
+    z-index: 0;
+}
+
+@keyframes noise-shift {
+    0%, 100% { transform: translateX(0); }
+    10%, 90% { transform: translateX(-1px); }
+    20%, 80% { transform: translateX(1px); }
+    30%, 70% { transform: translateX(-2px); }
+    40%, 60% { transform: translateX(2px); }
+    50% { transform: translateX(-1px); }
+}
+
+@keyframes scanlines {
+    0% { background-position: 0 0; }
+    100% { background-position: 0 100%; }
+}
+
+/* ESTILOS RETRO 8-BIT PARA CATEGORÍAS */
+:root {
+    --pixel-shadow: 4px 4px 0 #000;
+    --heroes-red: #E53E3E;
+    --heroes-red-glow: rgba(229, 62, 62, 0.4);
+}
+
+/* Contenedor principal de la sección con efectos retro */
+#categories {
+    position: relative;
+    background-color: #0A0A0A;
+    background-image: 
+        linear-gradient(rgba(229, 62, 62, 0.05) 1px, transparent 1px),
+        linear-gradient(90deg, rgba(229, 62, 62, 0.05) 1px, transparent 1px);
+    background-size: 20px 20px;
+    overflow: hidden;
+}
+
+/* Superposición de líneas de escaneo */
+#categories::after {
+    content: "";
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: repeating-linear-gradient(
+        0deg,
+        rgba(0, 0, 0, 0.1),
+        rgba(0, 0, 0, 0.1) 1px,
+        transparent 1px,
+        transparent 4px
+    );
+    pointer-events: none;
+    z-index: 1;
+}
+
+/* Título principal estilo arcade */
+#categories h2.arcade-title {
+    font-family: 'Press Start 2P', cursive !important;
+    color: #fff;
+    text-transform: uppercase;
+    letter-spacing: 2px;
+    text-shadow: 
+        var(--pixel-shadow),
+        0 0 10px var(--heroes-red-glow);
+    line-height: 1.5;
+    margin-bottom: 2.5rem;
+    position: relative;
+    display: inline-block;
+    z-index: 5;
+}
+
+#categories h2.arcade-title span {
+    color: var(--heroes-red);
+    position: relative;
+    display: inline-block;
+    animation: textGlitch 3s infinite alternate;
+}
+
+#categories h2.arcade-title::before,
+#categories h2.arcade-title::after {
+    content: attr(data-text);
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    z-index: -1;
+}
+
+/* Tarjetas de categoría estilo retro */
+.retro-category-card {
+    background-color: #0A0A0A;
+    border: 4px solid var(--heroes-red);
+    box-shadow: var(--pixel-shadow);
+    transition: all 0.2s ease;
+    position: relative;
+    overflow: hidden;
+    z-index: 2;
+    transform: translateZ(0);
+}
+
+/* Efecto de patrón de fondo para tarjetas */
+.retro-category-card::before {
+    content: '';
+    position: absolute;
+    top: -2px;
+    left: -2px;
+    right: -2px;
+    bottom: -2px;
+    background: repeating-linear-gradient(
+        45deg,
+        var(--heroes-red),
+        var(--heroes-red) 5px,
+        #FF0000 5px,
+        #FF0000 10px
+    );
+    z-index: -1;
+    opacity: 0.2;
+    transition: opacity 0.3s ease;
+}
+
+/* Efectos hover para tarjetas */
+.retro-category-card:hover {
+    transform: translate(-4px, -4px);
+    box-shadow: 8px 8px 0 rgba(0, 0, 0, 0.9);
+}
+
+.retro-category-card:hover::before {
+    opacity: 0.4;
+}
+
+.retro-category-card:active {
+    transform: translate(0, 0);
+    box-shadow: 4px 4px 0 rgba(0, 0, 0, 0.8);
+}
+
+/* Contenedor de ícono con brillo */
+.retro-icon-container {
+    position: relative;
+    width: 100%;
+    height: 120px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    margin-bottom: 1.5rem;
+    overflow: hidden;
+}
+
+.retro-icon-container::before {
+    content: '';
+    position: absolute;
+    width: 100%;
+    height: 100%;
+    background: radial-gradient(circle at 50% 50%, rgba(229, 62, 62, 0.3), transparent 70%);
+    opacity: 0.5;
+    z-index: 1;
+    animation: pulsate 2s ease-in-out infinite alternate;
+}
+
+/* Ícono pixelado */
+.retro-icon {
+    width: 64px;
+    height: 64px;
+    color: var(--heroes-red);
+    filter: drop-shadow(4px 4px 0 rgba(0, 0, 0, 0.8));
+    image-rendering: pixelated;
+    transition: transform 0.2s ease;
+    z-index: 2;
+}
+
+.retro-category-card:hover .retro-icon {
+    transform: scale(1.1) rotate(5deg);
+}
+
+/* Título de categoría estilo 8-bit */
+.retro-title {
+    font-family: 'Press Start 2P', cursive !important;
+    font-size: 1.2rem;
+    color: var(--heroes-red);
+    margin-bottom: 1.2rem;
+    line-height: 1.4;
+    text-shadow: var(--pixel-shadow);
+    transition: transform 0.3s ease;
+    text-transform: uppercase;
+}
+
+.retro-category-card:hover .retro-title {
+    transform: scale(1.05);
+    text-shadow: var(--pixel-shadow), 0 0 10px var(--heroes-red-glow);
+}
+
+/* Texto de descripción */
+.retro-desc {
+    font-family: 'Press Start 2P', cursive !important;
+    font-size: 0.7rem;
+    line-height: 1.7;
+    color: rgba(255, 255, 255, 0.8);
+    letter-spacing: 0.03rem;
+}
+
+.retro-desc strong {
+    color: #FFFFFF;
+    font-weight: bold;
+    text-shadow: 0 0 5px rgba(255, 255, 255, 0.5);
+}
+
+/* Efecto de píxel en las esquinas de las tarjetas */
+.pixel-corner {
+    position: absolute;
+    width: 8px;
+    height: 8px;
+    background-color: var(--heroes-red);
+    z-index: 3;
+}
+
+.pixel-corner.top-left {
+    top: 0;
+    left: 0;
+}
+
+.pixel-corner.top-right {
+    top: 0;
+    right: 0;
+}
+
+.pixel-corner.bottom-left {
+    bottom: 0;
+    left: 0;
+}
+
+.pixel-corner.bottom-right {
+    bottom: 0;
+    right: 0;
+}
+
+/* Banner retro para categoría destacada */
+.retro-banner {
+    position: absolute;
+    top: 20px;
+    right: -35px;
+    background: var(--heroes-red);
+    color: white;
+    font-family: 'Press Start 2P', cursive !important;
+    font-size: 0.6rem;
+    padding: 8px 40px;
+    transform: rotate(45deg);
+    box-shadow: var(--pixel-shadow);
+    z-index: 10;
+    text-transform: uppercase;
+}
+
+/* Botón retro para categorías */
+.retro-button {
+    display: inline-block;
+    font-family: 'Press Start 2P', cursive !important;
+    background-color: var(--heroes-red);
+    color: white;
+    font-size: 0.7rem;
+    padding: 0.7rem 1rem;
+    margin-top: 1.5rem;
+    border: none;
+    box-shadow: var(--pixel-shadow);
+    transition: all 0.2s ease;
+    position: relative;
+    overflow: hidden;
+    text-transform: uppercase;
+}
+
+.retro-button::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: -100%;
+    width: 100%;
+    height: 100%;
+    background: linear-gradient(
+        90deg,
+        transparent,
+        rgba(255, 255, 255, 0.2),
+        transparent
+    );
+    transition: left 0.5s ease;
+}
+
+.retro-button:hover {
+    transform: translate(-2px, -2px);
+    box-shadow: 6px 6px 0 rgba(0, 0, 0, 0.8);
+}
+
+.retro-button:hover::before {
+    left: 100%;
+}
+
+.retro-button:active {
+    transform: translate(0, 0);
+    box-shadow: 2px 2px 0 rgba(0, 0, 0, 0.8);
+}
+
+/* Separador retro */
+.retro-separator {
+    height: 4px;
+    background: repeating-linear-gradient(
+        90deg,
+        transparent,
+        transparent 10px,
+        var(--heroes-red) 10px,
+        var(--heroes-red) 20px
+    );
+    margin: 3rem 0;
+    position: relative;
+    box-shadow: 0 2px 0 rgba(0, 0, 0, 0.8);
+}
+
+.retro-separator::before,
+.retro-separator::after {
+    content: '';
+    position: absolute;
+    width: 8px;
+    height: 8px;
+    background-color: var(--heroes-red);
+    top: -2px;
+    box-shadow: 1px 1px 0 rgba(0, 0, 0, 0.8);
+}
+
+.retro-separator::before {
+    left: 0;
+}
+
+.retro-separator::after {
+    right: 0;
+}
+
+/* Media queries para responsividad */
+@media (max-width: 768px) {
+    .retro-title {
+        font-size: 1rem;
+    }
+    
+    .retro-desc {
+        font-size: 0.65rem;
+        line-height: 1.6;
+    }
+    
+    .retro-button {
+        padding: 0.6rem 0.8rem;
+        font-size: 0.65rem;
+    }
+    
+    .retro-icon {
+        width: 50px;
+        height: 50px;
+    }
+}
+
+/* Animaciones */
+@keyframes pulsate {
+    0%, 100% {
+        opacity: 0.5;
+        transform: scale(1);
+    }
+    50% {
+        opacity: 0.8;
+        transform: scale(1.05);
+    }
+}
+
+@keyframes textGlitch {
+    0%, 90%, 100% {
+        text-shadow: var(--pixel-shadow), 0 0 10px var(--heroes-red-glow);
+        transform: translate(0);
+    }
+    95% {
+        text-shadow:
+            2px 0 #00fffc,
+            -2px 0 #fc00ff;
+        transform: translate(2px);
+    }
+}
+
+/* Efectos adicionales para el contenedor */
+.glitch-pixel {
+    position: absolute;
+    width: 5px;
+    height: 5px;
+    background-color: var(--heroes-red);
+    pointer-events: none;
+    opacity: 0;
+    z-index: 2;
+}
 
     </style>
     
@@ -3825,7 +4441,7 @@ section#records {
     <div class="container mx-auto py-4 flex justify-between items-center">
         <div class="flex items-center space-x-2">
            
-            <span class="text-heroes-red font-black text-xl md:block hidden">CHALLENGES</span>
+            <span class="text-heroes-red font-black text-xl md:block hidden arcade-font">CHALLENGES</span>
         </div>
         
         <!-- Desktop Navigation -->
@@ -4092,75 +4708,68 @@ a partir del [FECHA DE INICIO].
 <section id="categories" class="py-20 px-4 bg-gradient-to-b from-heroes-black to-black relative">
     <div class="container mx-auto">
         <h2 class="text-4xl md:text-5xl font-black text-center mb-16 scale-in arcade-font">
-    <span class="text-heroes-red">CATEGORÍAS</span>
-</h2>
+            <span class="text-heroes-red">CATEGORÍAS</span>
+        </h2>
         
         <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
             <!-- Categoría 1 - MEDITACIÓN -->
-            <div class="bg-heroes-black p-6 rounded-lg border border-heroes-red border-opacity-20 scale-in category-card">
-                <div class="flex justify-center items-center mb-6 h-48 overflow-hidden">
-                    <i data-lucide="brain" class="w-32 h-32 text-heroes-red"></i>
+            <div class="p-6 rounded-lg retro-category-card scale-in">
+                <div class="retro-icon-container mb-6 h-48 overflow-hidden">
+                    <i data-lucide="brain" class="w-32 h-32 text-heroes-red retro-icon"></i>
                 </div>
-                <h3 class="text-xl font-bold text-heroes-red mb-2">Meditación</h3>
-                <p class="text-gray-300">Entrena tu mente, alcanza niveles más profundos de concentración y encuentra esa calma interior que tanto buscas. Desde meditaciones diarias hasta maratones intensivas.</p>
+                <h3 class="retro-title">Meditación</h3>
+                <p class="retro-desc">Entrena tu <strong>mente</strong>, alcanza niveles más profundos de <strong>concentración</strong> y encuentra esa <strong>calma interior</strong> que tanto buscas. Desde meditaciones diarias hasta maratones intensivas.</p>
             </div>
             
             <!-- Categoría 2 - DEEPWORKING -->
-            <div class="bg-heroes-black p-6 rounded-lg border border-heroes-red border-opacity-20 scale-in category-card">
-                <div class="flex justify-center items-center mb-6 h-48 overflow-hidden">
-                    <i data-lucide="timer" class="w-32 h-32 text-heroes-red"></i>
+            <div class="p-6 rounded-lg retro-category-card scale-in">
+                <div class="retro-icon-container mb-6 h-48 overflow-hidden">
+                    <i data-lucide="timer" class="w-32 h-32 text-heroes-red retro-icon"></i>
                 </div>
-                <h3 class="text-xl font-bold text-heroes-red mb-2">Deepworking</h3>
-                <p class="text-gray-300">Elimina distracciones y alcanza ese estado de flujo donde tu productividad se dispara. Perfecto si buscas concentrarte a fondo y hacer que cada minuto de trabajo cuente.</p>
+                <h3 class="retro-title">Deepworking</h3>
+                <p class="retro-desc">Elimina <strong>distracciones</strong> y alcanza ese estado de <strong>flujo</strong> donde tu productividad se dispara. Perfecto si buscas <strong>concentrarte</strong> a fondo y hacer que cada minuto de trabajo cuente.</p>
             </div>
             
             <!-- Categoría 3 - PASOS -->
-            <div class="bg-heroes-black p-6 rounded-lg border border-heroes-red border-opacity-20 scale-in category-card">
-                <div class="flex justify-center items-center mb-6 h-48 overflow-hidden">
-                    <i data-lucide="footprints" class="w-32 h-32 text-heroes-red"></i>
+            <div class="p-6 rounded-lg retro-category-card scale-in">
+                <div class="retro-icon-container mb-6 h-48 overflow-hidden">
+                    <i data-lucide="footprints" class="w-32 h-32 text-heroes-red retro-icon"></i>
                 </div>
-                <h3 class="text-xl font-bold text-heroes-red mb-2">Pasos</h3>
-                <p class="text-gray-300">Mueve ese cuerpo y activa tu mente. Supera tus propios límites con desafíos que van desde caminatas diarias hasta verdaderas maratones que pondrán a prueba tu resistencia física.</p>
+                <h3 class="retro-title">Pasos</h3>
+                <p class="retro-desc">Mueve ese <strong>cuerpo</strong> y activa tu mente. Supera tus propios <strong>límites</strong> con desafíos que van desde caminatas diarias hasta verdaderas <strong>maratones</strong> que pondrán a prueba tu resistencia física.</p>
             </div>
             
             <!-- Categoría 4 - LECTURA -->
-            <div class="bg-heroes-black p-6 rounded-lg border border-heroes-red border-opacity-20 scale-in category-card">
-                <div class="flex justify-center items-center mb-6 h-48 overflow-hidden">
-                    <i data-lucide="book-open" class="w-32 h-32 text-heroes-red"></i>
+            <div class="p-6 rounded-lg retro-category-card scale-in">
+                <div class="retro-icon-container mb-6 h-48 overflow-hidden">
+                    <i data-lucide="book-open" class="w-32 h-32 text-heroes-red retro-icon"></i>
                 </div>
-                <h3 class="text-xl font-bold text-heroes-red mb-2">Lectura</h3>
-                <p class="text-gray-300">Devora libros, expande tus horizontes y alimenta tu cerebro con nuevas ideas. Compite por leer más, ya sea por páginas, libros completos o manteniendo una racha diaria.</p>
+                <h3 class="retro-title">Lectura</h3>
+                <p class="retro-desc">Devora <strong>libros</strong>, expande tus horizontes y alimenta tu <strong>cerebro</strong> con nuevas ideas. Compite por leer más, ya sea por páginas, libros completos o manteniendo una <strong>racha diaria</strong>.</p>
             </div>
             
             <!-- Categoría 5 - AGRADECIMIENTO -->
-            <div class="bg-heroes-black p-6 rounded-lg border border-heroes-red border-opacity-20 scale-in category-card">
-                <div class="flex justify-center items-center mb-6 h-48 overflow-hidden">
-                    <i data-lucide="heart-handshake" class="w-32 h-32 text-heroes-red"></i>
+            <div class="p-6 rounded-lg retro-category-card scale-in">
+                <div class="retro-icon-container mb-6 h-48 overflow-hidden">
+                    <i data-lucide="heart-handshake" class="w-32 h-32 text-heroes-red retro-icon"></i>
                 </div>
-                <h3 class="text-xl font-bold text-heroes-red mb-2">Agradecimiento</h3>
-                <p class="text-gray-300">Cultiva el hábito de dar gracias por lo que tienes y verás cómo cambia tu forma de ver el mundo. Una práctica sencilla pero poderosa que cambia tu mentalidad y atrae lo positivo.</p>
+                <h3 class="retro-title">Agradecimiento</h3>
+                <p class="retro-desc">Cultiva el hábito de <strong>dar gracias</strong> por lo que tienes y verás cómo cambia tu forma de ver el mundo. Una práctica sencilla pero <strong>poderosa</strong> que cambia tu mentalidad y atrae lo positivo.</p>
             </div>
             
             <!-- Categoría 6 - NUEVAS CATEGORÍAS PRÓXIMAMENTE -->
-            <div class="bg-heroes-black p-6 rounded-lg border border-heroes-red border-opacity-20 scale-in category-card">
-                <div class="flex justify-center items-center mb-6 h-48 overflow-hidden">
-                    <i data-lucide="sparkles" class="w-32 h-32 text-heroes-red"></i>
+            <div class="p-6 rounded-lg retro-category-card scale-in">
+                <div class="retro-icon-container mb-6 h-48 overflow-hidden">
+                    <i data-lucide="sparkles" class="w-32 h-32 text-heroes-red retro-icon"></i>
                 </div>
-                <h3 class="text-xl font-bold text-heroes-red mb-2">Próximamente más...</h3>
-                <p class="text-gray-300">Estamos cocinando nuevos challenge para mantenerte fuera de tu zona de confort y en constante evolución. Mantente al tanto porque se vienen cosas épicas.</p>
+                <h3 class="retro-title">Próximamente más...</h3>
+                <p class="retro-desc">Estamos cocinando nuevos <strong>challenge</strong> para mantenerte fuera de tu <strong>zona de confort</strong> y en constante evolución. Mantente al tanto porque se vienen cosas <strong>épicas</strong>.</p>
             </div>
             
-            <!-- Banner de Récords -->
-            <div class="bg-heroes-black p-6 rounded-lg border border-heroes-red border-opacity-20 scale-in category-card col-span-1 lg:col-span-3">
-                <div class="flex justify-center items-center mb-6 h-56 overflow-hidden">
-                    <i data-lucide="trophy" class="w-40 h-40 text-heroes-red"></i>
-                </div>
-                <h3 class="text-xl font-bold text-heroes-red mb-2">Tabla de Récords</h3>
-                <p class="text-gray-300">¿Te crees capaz de hacer historia? Aquí mostramos a los héroes que han llevado estos desafíos al extremo. Tu nombre podría brillar en esta tabla si tienes lo que hace falta. ¿Te atreves?</p>
-            </div>
-        </div>
+            
     </div>
 </section>
+
 
 <!-- Records Section -->
 <section id="records" class="py-20 px-4 bg-gradient-to-b from-black to-heroes-black relative">
