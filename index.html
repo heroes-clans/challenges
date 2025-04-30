@@ -5744,6 +5744,44 @@ section#records {
    
 }
 
+/* Estilos para el iframe de Notion */
+.notion-iframe-container {
+    position: relative;
+    width: 100%;
+    background-color: rgba(0, 0, 0, 0.2);
+    border-radius: 0.5rem;
+    overflow: hidden;
+}
+
+.notion-iframe-container iframe {
+    opacity: 0;
+    transition: opacity 0.5s ease;
+    min-height: 400px;
+    background: transparent;
+}
+
+.notion-iframe-container iframe.loaded {
+    opacity: 1;
+}
+
+.notion-iframe-loader {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background-color: rgba(10, 10, 10, 0.7);
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    transition: opacity 0.3s ease;
+}
+
+.notion-iframe-loader.hidden {
+    opacity: 0;
+    pointer-events: none;
+}
 
 
     </style>
@@ -6028,7 +6066,65 @@ a partir del [FECHA DE INICIO].
                             <p>Los puntos se otorgan INMEDIATAMENTE después de que un admin verifique tus pruebas y confirme que has completado el challenge con éxito. Esos puntos se sumarán automáticamente al total de tu clan en la tabla de clasificación.</p>
                         </div>
                     </div>
+                    <!-- FAQ Item 4 -->
+<div class="faq-panel">
+    <button class="faq-trigger">
+        <div class="faq-question">
+            <div class="faq-icon">
+                <i data-lucide="help-circle" class="h-5 w-5"></i>
+            </div>
+            <span>¿Puedo repetir un challenge?</span>
+        </div>
+        <div class="faq-arrow">
+            <i data-lucide="chevron-down" class="h-5 w-5"></i>
+        </div>
+    </button>
+    <div class="faq-content">
+        <p>No, no se pueden repetir challenges en la misma temporada de Heroes Clans. Puedes probar otra dificultad si quieres seguir desafiándote en la misma categoría.</p>
+    </div>
+</div>
+
+<!-- FAQ Item 5 -->
+<div class="faq-panel">
+    <button class="faq-trigger">
+        <div class="faq-question">
+            <div class="faq-icon">
+                <i data-lucide="help-circle" class="h-5 w-5"></i>
+            </div>
+            <span>¿Varios del clan pueden hacer el mismo challenge?</span>
+        </div>
+        <div class="faq-arrow">
+            <i data-lucide="chevron-down" class="h-5 w-5"></i>
+        </div>
+    </button>
+    <div class="faq-content">
+        <p>No, solo 1 persona del clan puede hacer un challenge en específico y puntuar. (Es posible que en un futuro esto sea modificado, estamos probando aún el terreno)</p>
+    </div>
+</div>
+
+<!-- FAQ Item 6 -->
+<div class="faq-panel">
+    <button class="faq-trigger">
+        <div class="faq-question">
+            <div class="faq-icon">
+                <i data-lucide="help-circle" class="h-5 w-5"></i>
+            </div>
+            <span>¿Siempre puedo romper un récord?</span>
+        </div>
+        <div class="faq-arrow">
+            <i data-lucide="chevron-down" class="h-5 w-5"></i>
+        </div>
+    </button>
+    <div class="faq-content">
+        <p>Siempre cuando quieras puedes romper el récord actual o establecerlo, ese sí no hay límite.</p>
+    </div>
+</div>
+
                 </div>
+                
+                
+
+
                 
                 <!-- Botón de acción final -->
                 <div class="faq-action">
@@ -7381,19 +7477,26 @@ a partir del [FECHA DE INICIO].
             </div>
             
             <!-- Enviar pruebas -->
-            <div class="mb-6 evidence-section">
-                <h4 class="text-lg font-bold text-white mb-2 section-title">
-                    <span class="section-icon"><i data-lucide="upload" class="w-5 h-5"></i></span>
-                    Enviar pruebas
-                </h4>
-                <div class="evidence-container">
-                    <p class="text-gray-300 text-sm mb-3">Haz clic en el botón para enviar tus evidencias y completar el desafío:</p>
-                    <a id="notion-link" href="#" target="_blank" class="action-button notion-button">
-                        <span class="button-icon"><i data-lucide="external-link" class="w-4 h-4"></i></span>
-                        <span>ENVIAR PRUEBA EN NOTION</span>
-                    </a>
-                </div>
+<div class="mb-6 evidence-section">
+    <h4 class="text-lg font-bold text-white mb-2 section-title">
+        <span class="section-icon"><i data-lucide="upload" class="w-5 h-5"></i></span>
+        Enviar pruebas
+    </h4>
+    <div class="evidence-container">
+        <p class="text-gray-300 text-sm mb-3">Aquí puedes enviar tus evidencias y completar el desafío directamente:</p>
+        <div class="notion-iframe-container">
+            <iframe id="notion-iframe" src="" frameborder="0" class="w-full rounded-lg" height="400"></iframe>
+            <div class="notion-iframe-loader flex items-center justify-center">
+                <svg class="animate-spin -ml-1 mr-3 h-8 w-8 text-heroes-red" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24">
+                    <circle class="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" stroke-width="4"></circle>
+                    <path class="opacity-75" fill="currentColor" d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4zm2 5.291A7.962 7.962 0 014 12H0c0 3.042 1.135 5.824 3 7.938l3-2.647z"></path>
+                </svg>
+                <span class="text-white">Cargando formulario...</span>
             </div>
+        </div>
+    </div>
+</div>
+
             
             <!-- Separador estilo cómic -->
             <div class="comic-separator">
@@ -8065,9 +8168,25 @@ function openModal(challengeId) {
     // Actualizar la imagen
     artworkContainer.innerHTML = `<img src="${challenge.image}" alt="${challenge.title}" class="modal-artwork">`;
     
+    
         
-      // Actualizar links
-notionLink.href = challenge.notionLink;
+      // Actualizar iframe de Notion
+const notionIframe = document.getElementById('notion-iframe');
+const notionLoader = document.querySelector('.notion-iframe-loader');
+
+// Resetear estado
+notionIframe.classList.remove('loaded');
+notionLoader.classList.remove('hidden');
+
+// Cargar nueva URL
+notionIframe.src = challenge.notionLink;
+
+// Evento para detectar cuando el iframe ha cargado
+notionIframe.onload = function() {
+    notionIframe.classList.add('loaded');
+    notionLoader.classList.add('hidden');
+};
+
 
 // WhatsApp link (solo abre la app, no envía el mensaje directamente)
 whatsappLink.href = "https://wa.me/";
@@ -9240,6 +9359,42 @@ if (typeof ScrollTrigger !== 'undefined') {
             return originalCreate.apply(this, arguments);
         }
     };
+}
+
+// Verificar si el iframe carga correctamente (solución a posible X-Frame-Options)
+notionIframe.onerror = function() {
+    showIframeError();
+};
+
+// Si después de 10 segundos el iframe no ha cargado, mostrar error
+let iframeTimeout = setTimeout(() => {
+    if (!notionIframe.classList.contains('loaded')) {
+        showIframeError();
+    }
+}, 10000);
+
+// Función para mostrar error si el iframe no carga
+function showIframeError() {
+    clearTimeout(iframeTimeout);
+    notionLoader.innerHTML = `
+        <svg class="w-12 h-12 text-heroes-red mb-3" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 9v2m0 4h.01m-6.938 4h13.856c1.54 0 2.502-1.667 1.732-3L13.732 4c-.77-1.333-2.694-1.333-3.464 0L3.34 16c-.77 1.333.192 3 1.732 3z"></path>
+        </svg>
+        <p class="text-white text-center mb-3">No se pudo cargar el formulario directamente.</p>
+        <a href="${challenge.notionLink}" target="_blank" class="action-button notion-button">
+            <span class="button-icon"><i data-lucide="external-link" class="w-4 h-4"></i></span>
+            <span>ABRIR EN NOTION</span>
+        </a>
+    `;
+    
+    // Reinicializar iconos Lucide
+    if (typeof lucide !== 'undefined') {
+        lucide.createIcons({
+            attrs: {
+                class: ["w-full", "h-full"]
+            }
+        });
+    }
 }
 
 </script>
