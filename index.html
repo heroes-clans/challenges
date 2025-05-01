@@ -5744,43 +5744,714 @@ section#records {
    
 }
 
-/* Estilos para el iframe de Notion */
-.notion-iframe-container {
+.notion-button {
+    background: #3461FD;
+    color: white;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    gap: 0.5rem;
+    padding: 0.75rem 1.5rem;
+    border-radius: 6px;
+    font-weight: bold;
+    text-transform: uppercase;
+    font-size: 0.85rem;
+    letter-spacing: 0.05em;
+    transition: all 0.3s cubic-bezier(0.34, 1.56, 0.64, 1);
     position: relative;
-    width: 100%;
-    background-color: rgba(0, 0, 0, 0.2);
-    border-radius: 0.5rem;
     overflow: hidden;
+    box-shadow: 0 4px 10px rgba(52, 97, 253, 0.3);
 }
 
-.notion-iframe-container iframe {
-    opacity: 0;
-    transition: opacity 0.5s ease;
-    min-height: 400px;
-    background: transparent;
+.notion-button:hover {
+    background: #2351ED;
+    transform: translateY(-2px);
+    box-shadow: 0 8px 15px rgba(52, 97, 253, 0.4);
 }
 
-.notion-iframe-container iframe.loaded {
-    opacity: 1;
+.notion-button:active {
+    transform: translateY(0);
+    box-shadow: 0 2px 5px rgba(52, 97, 253, 0.4);
 }
 
-.notion-iframe-loader {
+.notion-button::before {
+    content: '';
     position: absolute;
     top: 0;
-    left: 0;
+    left: -100%;
     width: 100%;
     height: 100%;
-    background-color: rgba(10, 10, 10, 0.7);
-    display: flex;
-    flex-direction: column;
-    justify-content: center;
-    align-items: center;
-    transition: opacity 0.3s ease;
+    background: linear-gradient(
+        90deg,
+        transparent,
+        rgba(255, 255, 255, 0.2),
+        transparent
+    );
+    transition: all 0.3s ease;
 }
 
-.notion-iframe-loader.hidden {
-    opacity: 0;
-    pointer-events: none;
+.notion-button:hover::before {
+    left: 100%;
+}
+
+
+/* ESTILOS RETRO ARCADE PARA HERO SECTION */
+:root {
+  --retro-red: #E53E3E;
+  --retro-red-dark: #C53030;
+  --retro-black: #0A0A0A;
+  --retro-white: #FFFFFF;
+  --pixel-size: 4px;
+  --scanline-opacity: 0.15;
+}
+
+/* Fuente retro para toda la sección hero */
+#home * {
+  font-family: 'Press Start 2P', cursive;
+  letter-spacing: 0.05em;
+}
+
+/* Contenedor principal SIN borde pixelado */
+#home {
+  position: relative;
+  overflow: hidden;
+  background-color: var(--retro-black);
+}
+
+/* Escaneo de pantalla CRT */
+#home::before {
+  content: "";
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background: repeating-linear-gradient(
+    0deg,
+    rgba(0, 0, 0, var(--scanline-opacity)),
+    rgba(0, 0, 0, var(--scanline-opacity)) 2px,
+    transparent 2px,
+    transparent 4px
+  );
+  pointer-events: none;
+  z-index: 2;
+  animation: scanline-drift 60s linear infinite;
+}
+
+/* Brillo y parpadeo sutil como monitor viejo */
+#home::after {
+  content: "";
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  box-shadow: inset 0 0 150px rgba(229, 62, 62, 0.2);
+  animation: crt-flicker 4s infinite;
+  pointer-events: none;
+  z-index: 1;
+}
+
+/* Animación de scanlines */
+@keyframes scanline-drift {
+  0% { background-position: 0 0; }
+  100% { background-position: 0 100%; }
+}
+
+/* Parpadeo aleatorio como monitor CRT */
+@keyframes crt-flicker {
+  0% { opacity: 1; }
+  3% { opacity: 0.8; }
+  6% { opacity: 1; }
+  7% { opacity: 0.9; }
+  9% { opacity: 1; }
+  11% { opacity: 0.9; }
+  20% { opacity: 1; }
+  80% { opacity: 1; }
+  83% { opacity: 0.8; }
+  87% { opacity: 1; }
+  100% { opacity: 1; }
+}
+
+/* Cursor personalizado estilo arcade */
+body.arcade-cursor {
+  cursor: url("data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAACAAAAAgCAYAAABzenr0AAAACXBIWXMAAAsTAAALEwEAmpwYAAAF0WlUWHRYTUw6Y29tLmFkb2JlLnhtcAAAAAAAPD94cGFja2V0IGJlZ2luPSLvu78iIGlkPSJXNU0wTXBDZWhpSHpyZVN6TlRjemtjOWQiPz4gPHg6eG1wbWV0YSB4bWxuczp4PSJhZG9iZTpuczptZXRhLyIgeDp4bXB0az0iQWRvYmUgWE1QIENvcmUgNi4wLWMwMDIgNzkuMTY0NDYwLCAyMDIwLzA1LzEyLTE2OjA0OjE3ICAgICAgICAiPiA8cmRmOlJERiB4bWxuczpyZGY9Imh0dHA6Ly93d3cudzMub3JnLzE5OTkvMDIvMjItcmRmLXN5bnRheC1ucyMiPiA8cmRmOkRlc2NyaXB0aW9uIHJkZjphYm91dD0iIiB4bWxuczp4bXA9Imh0dHA6Ly9ucy5hZG9iZS5jb20veGFwLzEuMC8iIHhtbG5zOmRjPSJodHRwOi8vcHVybC5vcmcvZGMvZWxlbWVudHMvMS4xLyIgeG1sbnM6cGhvdG9zaG9wPSJodHRwOi8vbnMuYWRvYmUuY29tL3Bob3Rvc2hvcC8xLjAvIiB4bWxuczp4bXBNTT0iaHR0cDovL25zLmFkb2JlLmNvbS94YXAvMS4wL21tLyIgeG1sbnM6c3RFdnQ9Imh0dHA6Ly9ucy5hZG9iZS5jb20veGFwLzEuMC9zVHlwZS9SZXNvdXJjZUV2ZW50IyIgeG1wOkNyZWF0b3JUb29sPSJBZG9iZSBQaG90b3Nob3AgMjEuMiAoV2luZG93cykiIHhtcDpDcmVhdGVEYXRlPSIyMDIzLTA1LTI0VDIxOjQ1OjU0KzAyOjAwIiB4bXA6TW9kaWZ5RGF0ZT0iMjAyMy0wNS0yNFQyMTo0Nzo0MyswMjowMCIgeG1wOk1ldGFkYXRhRGF0ZT0iMjAyMy0wNS0yNFQyMTo0Nzo0MyswMjowMCIgZGM6Zm9ybWF0PSJpbWFnZS9wbmciIHBob3Rvc2hvcDpDb2xvck1vZGU9IjMiIHBob3Rvc2hvcDpJQ0NQcm9maWxlPSJzUkdCIElFQzYxOTY2LTIuMSIgeG1wTU06SW5zdGFuY2VJRD0ieG1wLmlpZDo2YzYzMDQ0MS0xZWU5LTRlNGMtYTQ2Ni02OGI1MWMwNmM5NjkiIHhtcE1NOkRvY3VtZW50SUQ9ImFkb2JlOmRvY2lkOnBob3Rvc2hvcDplZDI3YjQyYy05NzcyLTM4NGQtODg1OS1jOGJlZmE4NmU5NmIiIHhtcE1NOk9yaWdpbmFsRG9jdW1lbnRJRD0ieG1wLmRpZDo3ZjM2NDVjMi0wZTQ0LWFiNDgtOWZhYS05YzI2YmI2YTk1N2MiPiA8eG1wTU06SGlzdG9yeT4gPHJkZjpTZXE+IDxyZGY6bGkgc3RFdnQ6YWN0aW9uPSJjcmVhdGVkIiBzdEV2dDppbnN0YW5jZUlEPSJ4bXAuaWlkOjdmMzY0NWMyLTBlNDQtYWI0OC05ZmFhLTljMjZiYjZhOTU3YyIgc3RFdnQ6d2hlbj0iMjAyMy0wNS0yNFQyMTo0NTo1NCswMjowMCIgc3RFdnQ6c29mdHdhcmVBZ2VudD0iQWRvYmUgUGhvdG9zaG9wIDIxLjIgKFdpbmRvd3MpIi8+IDxyZGY6bGkgc3RFdnQ6YWN0aW9uPSJzYXZlZCIgc3RFdnQ6aW5zdGFuY2VJRD0ieG1wLmlpZDo2YzYzMDQ0MS0xZWU5LTRlNGMtYTQ2Ni02OGI1MWMwNmM5NjkiIHN0RXZ0OndoZW49IjIwMjMtMDUtMjRUMjE6NDc6NDMrMDI6MDAiIHN0RXZ0OnNvZnR3YXJlQWdlbnQ9IkFkb2JlIFBob3Rvc2hvcCAyMS4yIChXaW5kb3dzKSIgc3RFdnQ6Y2hhbmdlZD0iLyIvPiA8L3JkZjpTZXE+IDwveG1wTU06SGlzdG9yeT4gPC9yZGY6RGVzY3JpcHRpb24+IDwvcmRmOlJERj4gPC94OnhtcG1ldGE+IDw/eHBhY2tldCBlbmQ9InIiPz7hTdlIAAADVElEQVRYhe2Wz0sUYRzGP7PrrrvmoiXmEla0eUhCsQKFbh4yjx4KunaOsENh0K1DQRBBl7p0i8BbQWiXwLqYlwgJhP6AUjNKN3fXb/PdZXZ21Flnd4zowBf2+77P+z7z8Mz7Pt9hxRiD+9Ga/wCrshKtqRqNqUJhIAz0aXuLzPuxClwCBbdz+r4GYupbVc6EAiwWXwGmgNnlF8/GKwnx1Nbo0MCTA714gGNgGpgAJoEztz3PFm+k03hFDT1gEJNL2IwBXcWrOTgZ27hUZkRrqsZQc5eVgA5sDjLZpwA9k2PYSvAPUKkwDISi0dlMGx1aVbOVUHR2DphUuQZ/gFUplHXRVMc6BqiKjQJbvlQtqgBJoGHgdhLDutjTwJgvVSUA8GjUP4GOZT+r4kWXnWRmgPdA7XqpNgxs5ZVmA1j3QXFZ0b8mY7n7Qg2ckuG/AeArF1aLJvpbCRhOFgGXQtHZnZLf5q7Q99NLc9eJ2TnUDFgF0q9DfCxEeVZz4DXQAEzoPgxMt31oXjLGZBwA41xMALEDM1tAi/5vBdLJ1cjI0dJ0KLkaGVF/AOgbO2hrmU9EtQxBrNbdFJtHi5NdE4euNkv+cKYZzXNPq0pSgUguhvnowZsS8vBGAnrWIrn0Qi/wTklYUP2Mu1LfXDdDXRPxz6GuwSUX5hMQPl+ZaslkMvUQWwEyJRu60EkVUlwLbEPruxagRXyN4sv1QKAa4Hh5KpzN5huBN4oATrrHqnx8NsUzMLwaB0YvxwNFgcxXyNH8+kTQFSo0DoxmDZz5aJfNdZcKTUl33qGQVwhK/tI5h5s82HVxbcB5XPIlG+mYQngMVHlIwLZCeMuMi6HKJQFDPtcCbnFiufEt3QxFFZLXgV2ga95hgBrgvSuEMYV0VgkBkzXA+9J5h2qb3wdO6/tP0Oci67quL8FPnRfumD5NnXsC9GE7ZEcmffWQNcAGcOIcRz3hQiUgqu+2JGAHnZPgPQFeZWxRK3Jbc7nnw75KwBZ5B/zQeQ2bfb3i24Eb3iAFn/h7PfAnfPNHK9+kGXgLjGP73T2f+Jf8PcrNENjnVB3Qq31fPwG/AQYYBHk+SOoqAAAAAElFTkSuQmCC"), auto;
+}
+
+/* Rejilla de fondo estilo arcade */
+.arcade-grid {
+  position: absolute;
+  inset: 0;
+  background-image: 
+    linear-gradient(90deg, rgba(229, 62, 62, 0.1) 1px, transparent 1px),
+    linear-gradient(0deg, rgba(229, 62, 62, 0.1) 1px, transparent 1px);
+  background-size: 20px 20px;
+  z-index: 0;
+}
+
+/* Partículas para el easter egg */
+.retro-pixel {
+  position: fixed;
+  width: 8px;
+  height: 8px;
+  background-color: var(--retro-red);
+  pointer-events: none;
+  z-index: 1000;
+  transform: translate(-50%, -50%) scale(0);
+  animation: pixel-appear 0.3s forwards, pixel-float 2s forwards;
+}
+
+@keyframes pixel-appear {
+  0% { transform: translate(-50%, -50%) scale(0); }
+  100% { transform: translate(-50%, -50%) scale(1); }
+}
+
+@keyframes pixel-float {
+  0% { transform: translate(-50%, -50%) scale(1); opacity: 1; }
+  100% { transform: translate(-50%, calc(-50% - 50px)) scale(0); opacity: 0; }
+}
+
+/* ESTILOS PARA TÍTULOS Y TEXTOS RETRO */
+
+/* Título principal con efecto simplificado */
+.hero-text-animation {
+  position: relative;
+  line-height: 1.5;
+  margin-bottom: 1rem;
+}
+
+/* Título HEROES con sombra simple */
+.hero-text-animation .text-gradient {
+  position: relative;
+  display: inline-block;
+  background: linear-gradient(90deg, #E53E3E, #FF5252, #E53E3E);
+  background-size: 200% auto;
+  color: transparent;
+  -webkit-background-clip: text;
+  background-clip: text;
+  -webkit-text-fill-color: transparent;
+  animation: shine 3s linear infinite;
+  text-shadow: none;
+}
+
+/* Efecto de texto con sombra simple */
+.hero-text-animation .text-gradient::before {
+  content: attr(data-text);
+  position: absolute;
+  top: 2px;
+  left: 2px;
+  width: 100%;
+  height: 100%;
+  color: black;
+  z-index: -1;
+  -webkit-text-fill-color: black;
+}
+
+@keyframes shine {
+  0% { background-position: 0% center; }
+  100% { background-position: 200% center; }
+}
+
+/* Línea "CHALLENGES" con efecto de pixelado */
+.hero-text-animation .text-heroes-red {
+  position: relative;
+  display: inline-block;
+  text-shadow: 4px 4px 0 black;
+  letter-spacing: 2px;
+}
+
+/* Subtítulo con estilo arcade */
+.scale-in {
+  opacity: 1;
+  transform: scale(1);
+  text-shadow: 3px 3px 0 black;
+  transform-origin: left center;
+  font-size: 0.95rem !important;
+  letter-spacing: 1px;
+  margin-bottom: 1.5rem;
+}
+
+/* Texto descriptivo con marca de escáner */
+.text-gray-300.max-w-xl.scale-in {
+  position: relative;
+  font-size: 0.7rem !important;
+  line-height: 1.8 !important;
+  margin-bottom: 2rem;
+  letter-spacing: 0;
+  background: linear-gradient(90deg, 
+    transparent 0%, 
+    rgba(255,255,255,0.8) 50%, 
+    transparent 100%);
+  background-size: 200% 100%;
+  -webkit-background-clip: text;
+  background-clip: text;
+  animation: scan-text 3s linear infinite;
+}
+
+@keyframes scan-text {
+  0% { background-position: -100% 0; }
+  100% { background-position: 200% 0; }
+}
+
+/* Texto mejorado de "SELECT YOUR CHALLENGE" */
+.press-start-text {
+  color: #FFFFFF;
+  font-size: 0.9rem;
+  text-align: auto;
+  margin-top: 1rem;
+  margin-bottom: 1rem;
+  text-shadow: 2px 2px 0 rgba(0, 0, 0, 0.5);
+  position: relative;
+  animation: glow-pulse 1.5s ease-in-out infinite alternate;
+  letter-spacing: 1px;
+}
+
+
+
+.press-start-text::before {
+  content: '> ';
+  animation: cursor-blink 1s step-end infinite;
+}
+
+.press-start-text::after {
+  content: ' <';
+  animation: cursor-blink 1s step-end infinite;
+}
+
+@keyframes cursor-blink {
+  0%, 100% { opacity: 1; }
+  50% { opacity: 0; }
+}
+
+@keyframes glow-pulse {
+  0% { 
+    text-shadow: 2px 2px 0 rgba(0,0,0,0.5), 
+                0 0 5px rgba(229, 62, 62, 0); 
+  }
+  100% { 
+    text-shadow: 2px 2px 0 rgba(0,0,0,0.5), 
+                0 0 15px rgba(229, 62, 62, 0.8); 
+  }
+}
+
+/* BOTONES ESTILO ARCADE */
+
+/* Base para botones arcade */
+.arcade-button {
+  position: relative;
+  padding: 0.8rem 1.5rem;
+  font-family: 'Press Start 2P', cursive;
+  font-size: 0.8rem;
+  text-transform: uppercase;
+  color: white;
+  background-color: var(--retro-red);
+  border: none;
+  border-radius: 0;
+  box-shadow: 
+    0 6px 0 #7A0000,
+    0 8px 10px rgba(0, 0, 0, 0.4);
+  transition: all 0.1s ease;
+  cursor: pointer;
+  transform: translateY(0);
+  text-shadow: 2px 2px 0 rgba(0, 0, 0, 0.5);
+  margin-right: 1rem;
+  margin-bottom: 1rem;
+  overflow: hidden;
+}
+
+.arcade-button:hover {
+  transform: translateY(-2px);
+  box-shadow: 
+    0 8px 0 #7A0000,
+    0 10px 15px rgba(0, 0, 0, 0.3);
+}
+
+.arcade-button:active {
+  transform: translateY(4px);
+  box-shadow: 
+    0 2px 0 #7A0000,
+    0 3px 5px rgba(0, 0, 0, 0.4);
+}
+
+/* Resplandor/brillo al pasar el cursor */
+.arcade-button::after {
+  content: '';
+  position: absolute;
+  top: -50%;
+  left: -25%;
+  width: 150%;
+  height: 200%;
+  background: linear-gradient(
+    to bottom,
+    rgba(255, 255, 255, 0) 0%,
+    rgba(255, 255, 255, 0.2) 50%,
+    rgba(255, 255, 255, 0) 100%
+  );
+  transform: rotate(25deg);
+  transition: all 0.5s ease;
+  opacity: 0;
+}
+
+.arcade-button:hover::after {
+  opacity: 1;
+  left: 100%;
+}
+
+/* Botón secundario (outline) */
+.arcade-button-outline {
+  background-color: transparent;
+  color: var(--retro-red);
+  border: 4px solid var(--retro-red);
+  box-shadow: 
+    0 6px 0 #7A0000,
+    0 8px 10px rgba(0, 0, 0, 0.4);
+}
+
+.arcade-button-outline:hover {
+  background-color: rgba(229, 62, 62, 0.1);
+}
+
+/* Responsive para móviles */
+@media (max-width: 768px) {
+  .arcade-button {
+    font-size: 0.7rem;
+    padding: 0.7rem 1.2rem;
+    margin-right: 0.8rem;
+  }
+}
+
+/* ESTILOS PARA EL ARTWORK */
+
+/* Contenedor de imagen con efecto pixelado */
+.pixel-container {
+  position: relative;
+  animation: float 6s ease-in-out infinite;
+  filter: drop-shadow(5px 5px 0 black);
+  transition: all 0.5s ease;
+}
+
+/* Efecto de pixelado en la imagen */
+.pixel-artwork {
+  image-rendering: pixelated;
+  transition: all 0.3s ease;
+}
+
+/* Animación de pixelación al hacer hover */
+.pixel-container:hover .pixel-artwork {
+  filter: contrast(1.1);
+  transform: scale(1.03) rotate(1deg);
+}
+
+/* Responsive ajustado */
+@media (min-width: 1024px) {
+  .pixel-container {
+    transform: translateX(25px); /* Desplazamiento a la derecha en PC */
+  }
+}
+
+/* Ajustes para dispositivos móviles */
+@media (max-width: 768px) {
+  .pixel-container {
+    max-width: 85%;
+    margin: 0 auto;
+  }
+  
+  #home {
+    padding-top: 4rem !important;
+    padding-bottom: 3rem !important;
+  }
+  
+  .hero-text-animation {
+    text-align: center;
+  }
+  
+  .scale-in {
+    text-align: center;
+    margin-left: auto;
+    margin-right: auto;
+  }
+  
+  .text-gray-300.max-w-xl.scale-in {
+    margin-left: auto;
+    margin-right: auto;
+    text-align: center;
+  }
+  
+  .flex.space-x-4 {
+    justify-content: center;
+  }
+}
+
+/* Ajustes adicionales para móviles más pequeños */
+
+  
+ 
+  
+  .scale-in {
+    font-size: 0.8rem !important;
+  }
+  
+  .text-gray-300.max-w-xl.scale-in {
+    font-size: 0.65rem !important;
+  }
+}
+
+/* Añade estos estilos CSS */
+/* Mejoras generales para espaciado y responsividad */
+.container {
+    padding-left: 1.5rem;
+    padding-right: 1.5rem;
+    max-width: 1280px;
+    margin-left: auto;
+    margin-right: auto;
+}
+
+/* Mejoras específicas para el hero */
+#home {
+    padding-left: 1rem;
+    padding-right: 1rem;
+    padding-top: 6rem !important;
+}
+
+.press-start-text {
+    color: #FFFFFF;
+    font-size: 1rem;
+    margin-top: 1.5rem;
+    margin-bottom: 1.5rem;
+    text-shadow: 2px 2px 0 rgba(0, 0, 0, 0.5);
+    position: relative;
+    animation: glow-pulse 1.5s ease-in-out infinite alternate;
+    letter-spacing: 1px;
+    width: 100%;
+    text-align: center;
+}
+
+@media (min-width: 768px) {
+    .press-start-text {
+        text-align: left;
+        font-size: 1.1rem;
+    }
+}
+
+.arcade-button {
+    min-width: 160px;
+    text-align: center;
+}
+
+/* Mejoras para el artwork en desktop */
+@media (min-width: 1024px) {
+    .pixel-container {
+        margin-right: -20px; /* Empuja el artwork hacia la derecha en desktop */
+    }
+    
+    #challenges-artwork {
+        transform: translateX(25px); /* Ajuste fino para el posicionamiento */
+        margin-left: auto; /* Alinea a la derecha */
+    }
+}
+
+/* Correcciones para el tamaño de letra de los encabezados */
+h2.arcade-font, 
+.arcade-font.text-5xl, 
+.arcade-font.text-4xl {
+    font-size: 2rem !important; /* Restaura el tamaño de los títulos */
+    line-height: 1.3 !important;
+    margin-bottom: 1.5rem !important;
+}
+
+@media (min-width: 768px) {
+    h2.arcade-font, 
+    .arcade-font.text-5xl, 
+    .arcade-font.text-4xl {
+        font-size: 2.5rem !important;
+    }
+}
+
+/* Estilos para mejorar los bordes y espaciado en secciones */
+section {
+    padding-left: 1.5rem !important;
+    padding-right: 1.5rem !important;
+}
+
+/* Mejoras para secciones específicas */
+#about, #categories, #challenges, #records {
+    padding-left: 1.5rem !important;
+    padding-right: 1.5rem !important;
+    overflow-x: hidden; /* Previene scroll horizontal no deseado */
+}
+
+.hero-text-animation {
+    text-align: left !important;
+    width: 100%;
+}
+
+@media (max-width: 768px) {
+    .hero-text-animation {
+        text-align: center !important;
+    }
+    
+    .scale-in {
+        text-align: center !important;
+    }
+}
+
+/* Ajustes para el espaciado en dispositivos móviles */
+@media (max-width: 640px) {
+    section {
+        padding-left: 1rem !important;
+        padding-right: 1rem !important;
+    }
+    
+    .container {
+        padding-left: 1rem;
+        padding-right: 1rem;
+    }
+    
+    .arcade-button {
+        padding: 0.7rem 1rem;
+        font-size: 0.8rem;
+    }
+}
+
+/* Mejoras para los botones arcade y su contenedor */
+.arcade-button {
+    position: relative;
+    padding: 0.8rem 1.5rem;
+    font-family: 'Press Start 2P', cursive;
+    font-size: 0.8rem;
+    text-transform: uppercase;
+    color: white;
+    background-color: var(--retro-red, #E53E3E);
+    border: none;
+    border-radius: 0;
+    box-shadow: 
+        0 6px 0 #7A0000,
+        0 8px 10px rgba(0, 0, 0, 0.4);
+    transition: all 0.1s ease;
+    cursor: pointer;
+    transform: translateY(0);
+    text-shadow: 2px 2px 0 rgba(0, 0, 0, 0.5);
+    margin-bottom: 1rem;
+    overflow: hidden;
+    min-width: 140px;
+    display: inline-block;
+    text-align: center;
+}
+
+/* Contenedor de botones para mejor alineación */
+.flex.flex-wrap.gap-4 {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 1rem;
+    justify-content: center;
+}
+
+@media (min-width: 768px) {
+    .flex.flex-wrap.gap-4 {
+        justify-content: flex-start;
+    }
+}
+
+/* Mejoras para el artwork y su contenedor */
+#challenges-artwork {
+    transition: all 0.5s ease;
+    max-width: 100%;
+    transform-origin: center;
+}
+
+.pixel-container {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    width: 100%;
+    max-width: 90%;
+    margin: 0 auto;
+}
+
+@media (min-width: 1024px) {
+    .pixel-container {
+        max-width: 95%;
+        margin-right: 0;
+        justify-content: flex-end;
+    }
+    
+    #challenges-artwork {
+        transform: translateX(30px); /* Empuje más pronunciado a la derecha */
+    }
+}
+
+@media (min-width: 1280px) {
+    #challenges-artwork {
+        transform: translateX(40px); /* Aún más hacia la derecha en pantallas muy grandes */
+    }
+}
+
+
+
+@media (min-width: 1024px) {
+    .hero-text-animation .text-gradient {
+        font-size: 3.6rem;
+    }
+
+    .hero-text-animation .text-heroes-red {
+        font-size: 3.6rem;
+    }
+}
+
+@media (min-width: 1280px) {
+    .hero-text-animation .text-gradient {
+        font-size: 3.6rem;
+    }
+
+    
+
+/* Ajustes para el artwork en PC */
+@media (min-width: 1024px) {
+    .pixel-container {
+        max-width: 90% !important; /* Reducir ligeramente el tamaño máximo */
+        transform: translateX(-15px); /* Mover un poco a la izquierda */
+       
+    }
+    
+    #challenges-artwork {
+        transform: scale(0.95); /* Reducir un poco la escala */
+        transform-origin: center right; /* Punto de origen de la transformación */
+    }
+}
+
+@media (min-width: 1280px) {
+    .pixel-container {
+        max-width: 85%;
+    }
+}
+
+/* Mejoras en el layout del contenedor principal */
+@media (min-width: 1024px) {
+    .container.mx-auto.z-10 {
+        padding-left: 2rem;
+        padding-right: 2rem;
+    }
+    
+    .flex.flex-col.lg\:flex-row.items-center.justify-between {
+        align-items: flex-start; /* Alinear al inicio en vez de al centro */
+    }
+    
+    .lg\:w-1\/2.flex.flex-col.items-start.space-y-6.mb-10.lg\:mb-0.max-w-xl {
+        padding-top: 2rem; /* Dar más espacio arriba */
+        max-width: 650px; /* Ampliar el máximo ancho del contenedor de texto */
+    }
+}
+
+/* Ajuste para la alineación del texto "SELECT YOUR CHALLENGE" */
+.press-start-text {
+    text-align: center; /* Mantiene centrado en móvil */
+    width: 100%;
+}
+
+@media (min-width: 768px) {
+    .press-start-text {
+        text-align: left !important; /* Alinea a la izquierda en tablets y PC */
+    }
 }
 
 
@@ -5852,42 +6523,35 @@ section#records {
 </nav>
 
 <!-- Hero Section -->
-<section id="home" class="min-h-screen flex items-center justify-center pt-20 pb-16 px-4 overflow-hidden relative">
-    <div class="absolute inset-0 z-0">
-        <svg xmlns="http://www.w3.org/2000/svg" width="100%" height="100%">
-            <defs>
-                <pattern id="grid" width="20" height="20" patternUnits="userSpaceOnUse">
-                    <path d="M 20 0 L 0 0 0 20" fill="none" stroke="#E53E3E" stroke-width="0.5" stroke-opacity="0.15"/>
-                </pattern>
-            </defs>
-            <rect width="100%" height="100%" fill="url(#grid)" />
-        </svg>
-    </div>
+<section id="home" class="min-h-screen flex items-center justify-center pt-24 pb-16 px-6 overflow-hidden relative">
+    <!-- Rejilla de fondo arcade -->
+    <div class="arcade-grid"></div>
     
     <div class="container mx-auto z-10">
-        <div class="flex flex-col lg:flex-row items-center">
-            <div class="lg:w-1/2 flex flex-col items-start space-y-6 mb-10 lg:mb-0">
-                <h1 class="text-5xl md:text-7xl lg:text-8xl font-black hero-text-animation">
-                    <span class="text-gradient inline-block">HEROES</span>
+        <div class="flex flex-col lg:flex-row items-center justify-between">
+            <div class="lg:w-1/2 flex flex-col items-start space-y-6 mb-10 lg:mb-0 max-w-xl">
+                <h1 class="text-4xl md:text-5xl lg:text-6xl xl:text-7xl font-black hero-text-animation">
+                    <span class="text-gradient" data-text="HEROES">HEROES</span>
                     <span class="block text-heroes-red">CHALLENGES</span>
                 </h1>
-                <h2 class="text-2xl md:text-3xl font-bold text-white scale-in">Retos que pondrán a prueba tus habilidades a cambio de recompensas</h2>
-                <p class="text-lg md:text-xl text-gray-300 max-w-xl scale-in">
+                <h2 class="text-xl md:text-2xl font-bold text-white scale-in">Retos que pondrán a prueba tus habilidades</h2>
+                <p class="text-gray-300 max-w-xl scale-in">
                     Demuestra tu constancia, disciplina y determinación completando retos que te harán crecer mientras apoyas a tu clan.
                 </p>
-                <div class="flex space-x-4 scale-in">
-                    <a href="#categories" class="bg-heroes-red text-heroes-black px-8 py-3 rounded-md font-bold hover-effect">
+                <div class="press-start-text w-full text-center md:text-left">SELECT YOUR CHALLENGE</div>
+                <div class="flex flex-wrap gap-4 w-full md:w-auto">
+                    <a href="#categories" class="arcade-button">
                         CHALLENGES
                     </a>
-                    <a href="#about" class="border-2 border-heroes-red text-heroes-red px-8 py-3 rounded-md font-bold hover-effect">
-                        VER INFO
+                    <a href="#about" class="arcade-button arcade-button-outline">
+                        INFO
                     </a>
                 </div>
             </div>
             
-            <div class="lg:w-1/2 relative flex justify-center items-center">
-                <div id="challenges-artwork" class="w-full max-w-md xl:max-w-lg">
-                    <img src="https://i.postimg.cc/0QB18TdN/Photo-Room-20250406-163526.png" alt="Heroes Challenges Artwork" class="w-full h-auto">
+            <div class="lg:w-1/2 relative flex justify-center lg:justify-end items-center">
+                <div id="challenges-artwork" class="w-full max-w-md xl:max-w-lg pixel-container transform lg:translate-x-0">
+                    <img src="https://i.postimg.cc/0QB18TdN/Photo-Room-20250406-163526.png" alt="Heroes Challenges Artwork" class="w-full h-auto pixel-artwork">
                 </div>
             </div>
         </div>
@@ -5899,6 +6563,8 @@ section#records {
         </div>
     </div>
 </section>
+
+
 
 <!-- ABOUT SECTION -->
 <section id="about" class="py-20 px-4 relative overflow-hidden">
@@ -7483,19 +8149,14 @@ a partir del [FECHA DE INICIO].
         Enviar pruebas
     </h4>
     <div class="evidence-container">
-        <p class="text-gray-300 text-sm mb-3">Aquí puedes enviar tus evidencias y completar el desafío directamente:</p>
-        <div class="notion-iframe-container">
-            <iframe id="notion-iframe" src="" frameborder="0" class="w-full rounded-lg" height="400"></iframe>
-            <div class="notion-iframe-loader flex items-center justify-center">
-                <svg class="animate-spin -ml-1 mr-3 h-8 w-8 text-heroes-red" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24">
-                    <circle class="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" stroke-width="4"></circle>
-                    <path class="opacity-75" fill="currentColor" d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4zm2 5.291A7.962 7.962 0 014 12H0c0 3.042 1.135 5.824 3 7.938l3-2.647z"></path>
-                </svg>
-                <span class="text-white">Cargando formulario...</span>
-            </div>
-        </div>
+        <p class="text-gray-300 text-sm mb-3">Envía tus evidencias aquí directamente para completar el challenge:</p>
+        <a id="notion-link" href="#" target="_blank" class="action-button notion-button w-full text-center">
+            <span class="button-icon"><i data-lucide="external-link" class="w-4 h-4"></i></span>
+            <span>ENVIAR PRUEBAS A NOTION</span>
+        </a>
     </div>
 </div>
+
 
             
             <!-- Separador estilo cómic -->
@@ -8170,22 +8831,10 @@ function openModal(challengeId) {
     
     
         
-      // Actualizar iframe de Notion
-const notionIframe = document.getElementById('notion-iframe');
-const notionLoader = document.querySelector('.notion-iframe-loader');
+     // Actualizar enlace de Notion
+const notionLink = document.getElementById('notion-link');
+notionLink.href = challenge.notionLink;
 
-// Resetear estado
-notionIframe.classList.remove('loaded');
-notionLoader.classList.remove('hidden');
-
-// Cargar nueva URL
-notionIframe.src = challenge.notionLink;
-
-// Evento para detectar cuando el iframe ha cargado
-notionIframe.onload = function() {
-    notionIframe.classList.add('loaded');
-    notionLoader.classList.add('hidden');
-};
 
 
 // WhatsApp link (solo abre la app, no envía el mensaje directamente)
@@ -9397,6 +10046,72 @@ function showIframeError() {
     }
 }
 
+
+// SCRIPT PARA EFECTOS RETRO INTERACTIVOS
+
+// Función para crear efecto de estrellas/píxeles al hacer click
+function createRetroPixels(e) {
+  // Crear varios píxeles en una posición aleatoria cerca del clic
+  for (let i = 0; i < 8; i++) {
+    setTimeout(() => {
+      const pixel = document.createElement('div');
+      pixel.classList.add('retro-pixel');
+      
+      // Color aleatorio del píxel (limitado a paleta retro)
+      const colors = ['#E53E3E', '#FFFFFF', '#FFD700', '#00CFFF'];
+      pixel.style.backgroundColor = colors[Math.floor(Math.random() * colors.length)];
+      
+      // Tamaño aleatorio (pixelado)
+      const size = 4 + Math.floor(Math.random() * 6) * 2; // Solo tamaños pares para mantener el estilo pixelado
+      pixel.style.width = `${size}px`;
+      pixel.style.height = `${size}px`;
+      
+      // Posición: un poco aleatoria alrededor del clic
+      const offsetX = Math.random() * 40 - 20;
+      const offsetY = Math.random() * 40 - 20;
+      pixel.style.left = `${e.clientX + offsetX}px`;
+      pixel.style.top = `${e.clientY + offsetY}px`;
+      
+      // Añadir al DOM
+      document.body.appendChild(pixel);
+      
+      // Remover después de la animación
+      setTimeout(() => {
+        pixel.remove();
+      }, 2000);
+    }, i * 50); // Crear píxeles con un pequeño retraso entre ellos
+  }
+}
+
+// Activar el cursor personalizado
+document.body.classList.add('arcade-cursor');
+
+// Easter egg: efecto de píxeles al hacer clic en cualquier parte del hero
+document.getElementById('home').addEventListener('click', createRetroPixels);
+
+// Añadir atributo 'data-text' para el efecto de sombra
+document.addEventListener('DOMContentLoaded', () => {
+  const heroText = document.querySelector('.text-gradient');
+  if (heroText) {
+    heroText.setAttribute('data-text', heroText.textContent);
+  }
+  
+  // Asegurarnos de que el layout es correcto en dispositivos móviles
+  function adjustMobileLayout() {
+    if (window.innerWidth <= 768) {
+      const heroContainer = document.querySelector('#home .container');
+      if (heroContainer) {
+        heroContainer.style.display = 'flex';
+        heroContainer.style.flexDirection = 'column';
+        heroContainer.style.alignItems = 'center';
+      }
+    }
+  }
+  
+  // Llamar inicialmente y en cada resize
+  adjustMobileLayout();
+  window.addEventListener('resize', adjustMobileLayout);
+});
 </script>
 
 
