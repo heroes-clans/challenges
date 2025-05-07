@@ -9185,15 +9185,6 @@ participantesData.extremedeepworker2 = [
         fechaLimite: "2025-05-05T23:59:59", // El mismo día a las 23:59:59
         estado: "superado",
         tiempoRestante: 75 // Este valor será recalculado automáticamente por la función
-    },
-    {
-        nombre: "Tomas Colome",
-        clan: "Sirius",
-        avatar: "https://pfst.cf2.poecdn.net/base/image/5071fb19d458c37afaee269b3aee4f73f1270fc994c9b739e6c56fd27dbdac73?w=400&h=400",
-        fechaInicio: "2025-05-03", // 2 de mayo de 2025
-        fechaLimite: "2025-05-03T23:59:59", // 2 de mayo de 2025 a las 23:59:59 (24 horas)
-        estado: "superado",
-        tiempoRestante: 75 // Este valor será recalculado automáticamente por la función
     }
 ];
 
@@ -9224,6 +9215,15 @@ participantesData.bestdeepworker = [
         fechaInicio: "2025-05-03", // 2 de mayo de 2025
         fechaLimite: "2025-05-03T23:59:59", // 2 de mayo de 2025 a las 23:59:59 (24 horas)
         estado: "en_mision",
+        tiempoRestante: 75 // Este valor será recalculado automáticamente por la función
+    },
+        {
+        nombre: "Tomas Colome",
+        clan: "Sirius",
+        avatar: "https://pfst.cf2.poecdn.net/base/image/5071fb19d458c37afaee269b3aee4f73f1270fc994c9b739e6c56fd27dbdac73?w=400&h=400",
+        fechaInicio: "2025-05-03", // 2 de mayo de 2025
+        fechaLimite: "2025-05-03T23:59:59", // 2 de mayo de 2025 a las 23:59:59 (24 horas)
+        estado: "superado",
         tiempoRestante: 75 // Este valor será recalculado automáticamente por la función
     }
 ];
@@ -9491,6 +9491,87 @@ participantesData.reader2 = [
         tiempoRestante: 75 // Este valor será recalculado automáticamente por la función
     }
 ];
+
+// Añadir Tiziano Matias para BEST READER
+participantesData.bestreader.push({
+    nombre: "Tiziano Matias",
+    clan: "Antares",
+    avatar: "https://assets.skool.com/f/28f7072497c242daac9a5946b87d94d5/e236dcbe2a454a5f8ac355f5e0449e6769d6a7a7160845c19cd3a3692e971bd3",
+    fechaInicio: "2025-05-07", // 6 de mayo + 1 día
+    fechaLimite: "2025-05-07T23:59:59",
+    estado: "en_mision",
+    tiempoRestante: 75
+});
+
+// Añadir Ronny Rodríguez para EXTREME READER II
+participantesData.extremereader2.push({
+    nombre: "Ronny Rodríguez",
+    clan: "Antares",
+    avatar: "https://assets.skool.com/f/5d5a503aec1a401e8750720c42db5c1f/c6a8a48d6b1e4745ba62e30c94c2d6aec4366cddb7d84ba2a91235752f2223b3",
+    fechaInicio: "2025-05-08", // 7 de mayo + 1 día
+    fechaLimite: "2025-05-08T23:59:59",
+    estado: "en_mision",
+    tiempoRestante: 75
+});
+
+// Añadir Giancarlo para BEST MONK
+participantesData.bestmonk.push({
+    nombre: "Giancarlo",
+    clan: "Arturo",
+    avatar: "https://assets.skool.com/f/c0ab5e7ee1a5459c98e6c3335c02cea4/5efe71b9c35e44d4a6b638be84024951aa20e43d994b4e13a1cf50d039b1c7d9-md.jpg",
+    fechaInicio: "2025-05-07", // 6 de mayo + 1 día
+    fechaLimite: "2025-05-07T23:59:59",
+    estado: "en_mision",
+    tiempoRestante: 75
+});
+
+// Añadir Giancarlo para EXTREME WALKER I
+participantesData.extremewalker1.push({
+    nombre: "Giancarlo",
+    clan: "Arturo",
+    avatar: "https://assets.skool.com/f/c0ab5e7ee1a5459c98e6c3335c02cea4/5efe71b9c35e44d4a6b638be84024951aa20e43d994b4e13a1cf50d039b1c7d9-md.jpg",
+    fechaInicio: "2025-05-08", // 7 de mayo + 1 día
+    fechaLimite: "2025-05-08T23:59:59",
+    estado: "en_mision",
+    tiempoRestante: 75
+});
+
+// Crear array para MONK II si no existe y añadir a Joako R
+if (!participantesData.monk2) {
+    participantesData.monk2 = [];
+}
+
+participantesData.monk2.push({
+    nombre: "Joako R",
+    clan: "Vega",
+    avatar: "https://assets.skool.com/f/c70389590add48979a1a045431ae7dab/f3cd33d0de584804a42fa3097a84d41ac1179ca491f547488d54b4c5fa1ca82b-md.jpg",
+    fechaInicio: "2025-05-10", // 9 de mayo + 1 día
+    fechaLimite: "2025-05-13T23:59:59", // 3 días después
+    estado: "en_mision",
+    tiempoRestante: 75
+});
+
+// Añadir Gero para EXTREME MONK II
+participantesData.extrememonk2.push({
+    nombre: "Gero",
+    clan: "Sirius",
+    avatar: "https://assets.skool.com/f/1674b65364504c3795df12170a9e36e2/e198da17f8dc45ef863b8553359261d6e464327ff1114192a9257aa9ed639d92-md.jpg",
+    fechaInicio: "2025-05-08", // 7 de mayo + 1 día
+    fechaLimite: "2025-05-08T23:59:59",
+    estado: "en_mision",
+    tiempoRestante: 75
+});
+
+// Añadir Juan David Padilla para WALKER I
+participantesData.walker1.push({
+    nombre: "Juan David Padilla",
+    clan: "Antares",
+    avatar: "https://assets.skool.com/f/1285c0e75dc3489db19fe6442ecac51c/f560fca0a1ab4086bb7ee9fca940f3943749dc62059f40c0811ad4cd1c458a80",
+    fechaInicio: "2025-05-08", // 7 de mayo + 1 día
+    fechaLimite: "2025-05-10T23:59:59", // 3 días consecutivos
+    estado: "en_mision",
+    tiempoRestante: 75
+});
 
 /* |FIN DE LA BASE DE DATOS| */
 
