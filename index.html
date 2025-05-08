@@ -6455,6 +6455,7 @@ section {
 }
 
 
+
     </style>
     
     <!-- Lucide Icons -->
@@ -6538,15 +6539,21 @@ section {
                 <p class="text-gray-300 max-w-xl scale-in">
                     Demuestra tu constancia, disciplina y determinación completando retos que te harán crecer mientras apoyas a tu clan.
                 </p>
-                <div class="press-start-text w-full text-center md:text-left">SELECT YOUR CHALLENGE</div>
-                <div class="flex flex-wrap gap-4 w-full md:w-auto">
-                    <a href="#categories" class="arcade-button">
-                        CHALLENGES
-                    </a>
-                    <a href="#about" class="arcade-button arcade-button-outline">
-                        INFO
-                    </a>
-                </div>
+                
+                <div class="flex flex-wrap gap-4 w-full md:w-auto justify-center">
+    <a href="#challenges" class="arcade-button">
+        CHALLENGES
+    </a>
+    <a href="#about" class="arcade-button arcade-button-outline">
+        INFO
+    </a>
+    <a href="https://heroes-clans.github.io/app/" class="arcade-button arcade-button-clans">
+        VOLVER A CLANS
+    </a>
+</div>
+
+
+
             </div>
             
             <div class="lg:w-1/2 relative flex justify-center lg:justify-end items-center">
@@ -6883,18 +6890,20 @@ a partir del [FECHA DE INICIO].
         </h2>
         
         <div class="records-grid grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8 max-w-6xl mx-auto">
-            <!-- BEST MONK -->
-            <div class="winner-slot p-6 rounded-xl scale-in flex items-center justify-center record-card">
-                <div class="record-placeholder pulse-placeholder text-center">
-                    <div class="record-placeholder-icon mb-4 mx-auto">
-                        <i data-lucide="brain" class="h-10 w-10 text-heroes-red"></i>
-                    </div>
-                    <h3 class="text-3xl font-black text-heroes-red mb-3 arcade-font">BEST MONK</h3>
-                    <p class="text-gray-400 mb-2">Récord actual: <span class="text-white">Sin establecer</span></p>
-                    <p class="text-gray-300 max-w-xs mx-auto">¿Serás <span class="highlight">tú</span> quien establezca el récord de meditación? El trono está <span class="highlight">vacío</span>, esperando a su primer campeón.</p>
-                </div>
-            </div>
-            
+            <!-- BEST MONK - Sebastián Herrera -->
+<div class="winner-slot p-6 rounded-xl scale-in flex items-center justify-center record-card">
+    <div class="record-placeholder pulse-placeholder text-center">
+        <div class="flex justify-center items-center mb-4">
+            <img src="https://assets.skool.com/f/f17650a69ee145a4b3ac06b303b7e256/3373ae377f7f47bbbac4f97c8ed2be430375904b82b84317bfb0689a9d085f05" 
+                alt="Sebastián Herrera" 
+                class="w-20 h-20 rounded-full border-4 border-heroes-red object-cover shadow-lg">
+        </div>
+        <h3 class="text-3xl font-black text-heroes-red mb-3 arcade-font">BEST MONK</h3>
+        <p class="text-gray-400 mb-2">Récord actual: <span class="text-white">16 horas</span></p>
+        <p class="text-gray-300 max-w-xs mx-auto"><span class="highlight">Sebastián Herrera</span> se la ha sacado y ha puesto el primer récord de meditación. Con una cifra <span class="highlight">bastante difícil</span> de superar.</p>
+    </div>
+</div>
+
             <!-- BEST READER -->
             <div class="winner-slot p-6 rounded-xl scale-in flex items-center justify-center record-card">
                 <div class="record-placeholder pulse-placeholder text-center">
@@ -6919,17 +6928,20 @@ a partir del [FECHA DE INICIO].
                 </div>
             </div>
             
-            <!-- BEST DEEPWORKER -->
-            <div class="winner-slot p-6 rounded-xl scale-in flex items-center justify-center record-card">
-                <div class="record-placeholder pulse-placeholder text-center">
-                    <div class="record-placeholder-icon mb-4 mx-auto">
-                        <i data-lucide="timer" class="h-10 w-10 text-heroes-red"></i>
-                    </div>
-                    <h3 class="text-3xl font-black text-heroes-red mb-3 arcade-font">BEST DEEPWORKER</h3>
-                    <p class="text-gray-400 mb-2">Récord actual: <span class="text-white">Sin establecer</span></p>
-                    <p class="text-gray-300 max-w-xs mx-auto">La <span class="highlight">concentración</span> absoluta tiene su recompensa. Demuestra que eres capaz de llevar el trabajo profundo al <span class="highlight">siguiente nivel</span>.</p>
-                </div>
-            </div>
+         <!-- BEST DEEPWORKER - Yeray Rios -->
+<div class="winner-slot p-6 rounded-xl scale-in flex items-center justify-center record-card">
+    <div class="record-placeholder pulse-placeholder text-center">
+        <div class="flex justify-center items-center mb-4">
+            <img src="https://assets.skool.com/f/e1a339da64eb4c859eb4d86314b4ced4/132ac855fbcf40f0a2146fa53d5a2d5b005bc9350bc241bfb1145ee7a04aebd3" 
+                alt="Yeray Rios" 
+                class="w-20 h-20 rounded-full border-4 border-heroes-red object-cover shadow-lg">
+        </div>
+        <h3 class="text-3xl font-black text-heroes-red mb-3 arcade-font">BEST DEEPWORKER</h3>
+        <p class="text-gray-400 mb-2">Récord actual: <span class="text-white">17 horas 14 minutos</span></p>
+        <p class="text-gray-300 max-w-xs mx-auto"><span class="highlight">Yeray Rios</span> ha alcanzado la cima de la productividad con una <span class="highlight">concentración sobrehumana</span>. ¿ESTO QUE COÑO ES?</p>
+    </div>
+</div>
+
             
             <!-- BEST THANKFUL (próximamente) -->
             <div class="winner-slot p-6 rounded-xl scale-in flex items-center justify-center record-card">
@@ -9196,7 +9208,7 @@ participantesData.bestdeepworker = [
         avatar: "https://assets.skool.com/f/1285c0e75dc3489db19fe6442ecac51c/f560fca0a1ab4086bb7ee9fca940f3943749dc62059f40c0811ad4cd1c458a80",
         fechaInicio: "2025-05-05", // 4 de mayo de 2025 + 1 día
         fechaLimite: "2025-05-05T23:59:59", // El mismo día a las 23:59:59
-        estado: "en_mision",
+        estado: "superado",
         tiempoRestante: 75 // Este valor será recalculado automáticamente por la función
     },
     {
@@ -9205,7 +9217,7 @@ participantesData.bestdeepworker = [
         avatar: "https://pfst.cf2.poecdn.net/base/image/b7fce886ca6d88b663aa9c8fbf5c59195f6779aaa31c5f2f3b1bf743e8c24c7f?w=317&h=316",
         fechaInicio: "2025-05-05", // 4 de mayo de 2025
         fechaLimite: "2025-05-08T12:00:00", // 3 de mayo de 2025 a las 12:00 (72 horas)
-        estado: "en_mision",
+        estado: "superado",
         tiempoRestante: 75 // Este valor será recalculado automáticamente por la función
     },
     {
@@ -9234,8 +9246,8 @@ participantesData.bestwalker = [
         nombre: "Joso",
         clan: "Sirius",
         avatar: "https://assets.skool.com/f/dbd088ec1fb44a32ad5deee24e1f55d8/72f9d29b71104b4d94244e32c41de65cac5373c01bb148e9ba9932863f791924-md.jpg",
-        fechaInicio: "2025-05-08", // 7 de mayo de 2025 + 1 día
-        fechaLimite: "2025-05-08T23:59:59", // El mismo día a las 23:59:59
+        fechaInicio: "2025-05-10", // 7 de mayo de 2025 + 1 día
+        fechaLimite: "2025-05-10T23:59:59", // El mismo día a las 23:59:59
         estado: "en_mision",
         tiempoRestante: 75 // Este valor será recalculado automáticamente por la función
     }
@@ -9333,7 +9345,7 @@ participantesData.bestmonk = [
         avatar: "https://assets.skool.com/f/f17650a69ee145a4b3ac06b303b7e256/3373ae377f7f47bbbac4f97c8ed2be430375904b82b84317bfb0689a9d085f05",
         fechaInicio: "2025-05-04", // 3 de mayo de 2025 + 1 día
         fechaLimite: "2025-05-04T23:59:59", // El mismo día a las 23:59:59
-        estado: "en_mision",
+        estado: "superado",
         tiempoRestante: 75 // Este valor será recalculado automáticamente por la función
     },
 ];
@@ -9552,7 +9564,7 @@ participantesData.monk2.push({
 });
 
 // Añadir Gero para EXTREME MONK II
-participantesData.extrememonk2.push({
+participantesData.bestmonk.push({
     nombre: "Gero",
     clan: "Sirius",
     avatar: "https://assets.skool.com/f/1674b65364504c3795df12170a9e36e2/e198da17f8dc45ef863b8553359261d6e464327ff1114192a9257aa9ed639d92-md.jpg",
@@ -9572,6 +9584,62 @@ participantesData.walker1.push({
     estado: "en_mision",
     tiempoRestante: 75
 });
+
+// Añadir Adam Amador para EXTREME DEEPWORKER I
+participantesData.extremedeepworker1.push({
+    nombre: "Adam Amador",
+    clan: "Antares",
+    avatar: "https://assets.skool.com/f/391533bba0cc40359928c2e27b410b77/c936a6f82f0846998cf13da2e4cab74107c1e900da0b4a78b3d6480536349671",
+    fechaInicio: "2025-05-08", // 7 de mayo + 1 día
+    fechaLimite: "2025-05-08T23:59:59", // El mismo día a las 23:59:59
+    estado: "en_mision",
+    tiempoRestante: 75 // Este valor será recalculado automáticamente
+});
+
+// Añadir Adrián Marchante para EXTREME READER II
+participantesData.extremereader2.push({
+    nombre: "Adrián Marchante",
+    clan: "Vega",
+    avatar: "https://assets.skool.com/f/43dec0b772ae4251a51ba972cc8f7c83/b3ce903bd736416da35b09f0d60668759913edd0de0a445da8e1e38dab71c0c0",
+    fechaInicio: "2025-05-11", // 10 de mayo + 1 día
+    fechaLimite: "2025-05-11T23:59:59", // El mismo día a las 23:59:59
+    estado: "en_mision",
+    tiempoRestante: 75 // Este valor será recalculado automáticamente
+});
+
+// Añadir Eric Cuenca para EXTREME MONK II (es su segundo reto de este tipo)
+participantesData.extrememonk2.push({
+    nombre: "Eric Cuenca",
+    clan: "Arturo",
+    avatar: "https://assets.skool.com/f/78be60c46e9b4753a8231743f4b4a430/d3bb9a0d89c244dc829e6c8bd1667da28d1023d251424ca388acee7854cb57b1",
+    fechaInicio: "2025-05-10", // 9 de mayo + 1 día
+    fechaLimite: "2025-05-10T23:59:59", // El mismo día a las 23:59:59
+    estado: "en_mision",
+    tiempoRestante: 75 // Este valor será recalculado automáticamente
+});
+
+// Añadir Mateo Ortega para EXTREME WALKER II
+participantesData.extremewalker2.push({
+    nombre: "Mateo Ortega",
+    clan: "Vega",
+    avatar: "https://assets.skool.com/f/b34122a966214c6fb9737c4d64eb74f2/3d309e6f44e8473d8b6cddfcef5cec6337a4bef9a0dc4727bbd2a7ac37eaf2bc",
+    fechaInicio: "2025-05-11", // 10 de mayo + 1 día
+    fechaLimite: "2025-05-11T23:59:59", // El mismo día a las 23:59:59
+    estado: "en_mision",
+    tiempoRestante: 75 // Este valor será recalculado automáticamente
+});
+
+// Añadir Matias Varas para DEEPWORKER II
+participantesData.deepworker2.push({
+    nombre: "Matias Varas",
+    clan: "Sirius",
+    avatar: "https://assets.skool.com/f/e7baa80448c44c4a83ecdb81dae704ee/4e77a568043e4445b87a9da928105d4863d93ede44244ca3bdf4770ec9c0f5d9",
+    fechaInicio: "2025-05-09", // 8 de mayo + 1 día
+    fechaLimite: "2025-05-11T23:59:59", // 3 días consecutivos
+    estado: "en_mision",
+    tiempoRestante: 75 // Este valor será recalculado automáticamente
+});
+
 
 /* |FIN DE LA BASE DE DATOS| */
 
